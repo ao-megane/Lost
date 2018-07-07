@@ -137,7 +137,7 @@ Dot Player::GetCenter() {
 	return center;
 }
 
-void Player::Set(int levelFlag) {
+void Player::Set() {
 	//if(levelFlag = 1)
 	center.Set(100, GROUND_HEIGHT - P_HEIGHT / 2);
 	weakArea.Set(center, P_W_WIDTH, P_W_HEIGHT);

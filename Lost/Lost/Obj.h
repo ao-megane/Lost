@@ -57,7 +57,7 @@ private:
 
 class Circle {
 public:
-	int Set(int x,int y,int range);
+	int Set(int x, int y, int range);
 
 private:
 	int range;

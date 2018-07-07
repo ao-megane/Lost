@@ -14,7 +14,7 @@ public:/*
 	void PlayAttack_w();
 	void PlayGet();
 	void PlayJump();
-	void Set(int levelFlag);			//プレイ開始時（座標周辺）
+	void Set();			//リスポーン設定()
 	void SetStand();		//privateをいじる関数
 	void UpdataStand(int count);//ダッシュ中の座標やらをいじる関数
 	void SetWalk();		
