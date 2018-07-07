@@ -1,11 +1,12 @@
 #ifndef OBJ_H
 #define OBJ_H
 
-class Dot{
+class Dot{//int型の点
 public:/*
 	Dot();
 	~Dot();*/
-	int Set(int x);
+	int Setx(int x);
+	int Sety(int y);
 	int Set(int x,int y);			//左上、右下
 	int Get_x();
 	int Get_y();
@@ -25,7 +26,7 @@ private:
 	int y;
 };
 
-class Square{
+class Square{//int四つ
 public:
 	int Set(Dot a, Dot b);
 	int Set(Dot a, int w, int h);
@@ -38,8 +39,8 @@ public:
 		Set(LU - a, RD - a);
 	};
 	void operator - (int a) {		//Squareのx平行移動
-		LU.Set(LU.Get_x() - a);
-		RD.Set(RD.Get_x() - a);
+		LU.Setx(LU.Get_x() - a);
+		RD.Setx(RD.Get_x() - a);
 	};
 	bool operator & (Square a) {	//あたり判定演算子　true で重なってる
 	//if (a[2]<b[0] || a[0]>b[2] || a[1] > b[3] || a[3] < b[1]) return 当たってない
@@ -55,12 +56,15 @@ private:
 	Dot RD;
 };
 
-class Circle {
+class Circle {//方向付き円
 public:
-	int Set(int x, int y, int range);
+	int Set(int x, int y, double range, double dir);
+	int Set(Dot a, double range, double dir);
+	int Move(int dx, int dy);
 
 private:
-	int range;
+	double range;
+	double dir;	//0~2PI
 	Dot center;
 };
 

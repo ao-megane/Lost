@@ -31,10 +31,13 @@ const int ThumbTrig = 16383; //thumb‚Ì–³‹‚·‚é”ÍˆÍ `32767
 const int DISP_WIDTH = 2160;	//‰æ–Ê‚Ì‘å‚«‚³(Surfacepro3)
 const int DISP_HEIGHT = 1440;
 
-const int P_RANGE = 200;	//ƒvƒŒƒCƒ„[‚Ì‘å‚«‚³
+const int P_SIZE = 200;	//ƒvƒŒƒCƒ„[‚Ì”¼Œa
+const int P_REBORN_X = 50;
+const int P_REBORN_Y = 1000;
+const double P_FULL_SPEED = 20;
 //ª”»’èŒn «•`‰æŒn
-const double P_WIDTH = 1 * P_RANGE;
-const double P_HEIGHT = 1 * P_RANGE;
+const double P_WIDTH = 1 * P_SIZE;
+const double P_HEIGHT = 1 * P_SIZE;
 
 const int HUSBAND_RANGE = 300;	//ål‚Ì‘å‚«‚³
 //ª”»’èŒn «•`‰æŒn
