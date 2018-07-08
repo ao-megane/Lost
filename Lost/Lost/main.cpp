@@ -94,37 +94,22 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			flag = 8;
 			break;
 		case 2://playing
-			//EnemyMngSet(levelFlag, count, girl.GetCenter());
-			//player.Updata(count, Key);
-			//girl.Updata(count, player.PriJump);
-			//EnemyMngUpdata(count);
+			EnemyMngSet(count);
+			player.Updata(count, Key);
+			EnemyMngUpdata(count);
 
 			//EnemyMngJudge(&player, &girl, count, ScorePass(), levelFlag);
 
-			//if (girl.GetHP() <= 0) {
-			//	flag = 3;
-			//	girl.SetWalk();
-			//	SetLoser(levelFlag, count);
-			//}
-			//if (levelFlag == 0 && count >= NORMAL_COUNT) {
-			//	flag = 4;
-			//	girl.SetWalk();
-			//	SetWinner(levelFlag, count, ScorePass());
-			//}
-			//if (levelFlag == 1 && count >= HARD_COUNT) {
-			//	girl.SetWalk();
-			//	flag = 4;
-			//	SetWinner(levelFlag, count, ScorePass());
-			//}
-			//if (PAUSE == 1) flag = 7;
+			
+			if (PAUSE == 1) flag = 7;
 
-			//EnemyMngDraw();
-			//girl.Draw();
-			//player.Draw();
-			////DrawLine(0, GROUND_HEIGHT, DISP_WIDTH, GROUND_HEIGHT, RED, FALSE);
-			////DrawLine(0, BIRD_HIGH, DISP_WIDTH, BIRD_HIGH, RED, FALSE);
+			player.Draw();
+			EnemyMngDraw();
+			
+			//DrawLine(0, GROUND_HEIGHT, DISP_WIDTH, GROUND_HEIGHT, RED, FALSE);
+			//DrawLine(0, BIRD_HIGH, DISP_WIDTH, BIRD_HIGH, RED, FALSE);
 
-			//DrawChore(count, girl.GetHP(), levelFlag);
+			DrawChore();
 			break;
 		case 3://gameover
 			/*EnemyMngUpdata(count);

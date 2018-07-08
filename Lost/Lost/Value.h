@@ -31,6 +31,12 @@ const int ThumbTrig = 16383; //thumb‚Ì–³‹‚·‚é”ÍˆÍ `32767
 const int DISP_WIDTH = 2160;	//‰æ–Ê‚Ì‘å‚«‚³(Surfacepro3)
 const int DISP_HEIGHT = 1440;
 
+const int DOOR = GetColor(0, 255, 0);
+const int WALL = GetColor(0, 0, 0);
+const int STEP1 = GetColor(255, 0, 0);
+const int STEP2 = GetColor(0, 0, 255);
+c
+
 const int P_SIZE = 200;	//ƒvƒŒƒCƒ„[‚Ì”¼Œa
 const int P_REBORN_X = 50;
 const int P_REBORN_Y = 1000;

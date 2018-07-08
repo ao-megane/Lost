@@ -1,6 +1,7 @@
 #include"Chore.h"
 #include"DxLib.h"
 #include"Value.h"
+#include"Obj.h"
 #include<fstream>
 #include<string>
 #include<iostream>
@@ -75,14 +76,6 @@ int PlayChoice() {
 	return 0;
 }
 
-int ChoreSet(int levelFlag) {
-	Score = 20000;
-	Keeper = 0;
-	flag = 0;
-	proFlag = 0;
-	return 0;
-}
-
 int* ScorePass() {
 	return &Score;
 }
@@ -136,7 +129,7 @@ int DrawPrologue(int b) {
 	return 0;
 }
 
-int DrawPause(int count) {
+int DrawPause() {
 	//DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Pause, true);
 	DrawFormatString(0, 0, RED, "PAUSE");
 	return 0;
@@ -165,6 +158,7 @@ int DrawManual(int b) {
 	}
 	return 0;
 }
+
 int DrawCredit() {
 	DrawFormatStringFToHandle(DISP_WIDTH / 2, DISP_HEIGHT / 2, RED, nishiki, "CREDIT!");
 	//DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Credit2, true);
@@ -183,19 +177,69 @@ void DrawChore(int count, int HP,int levelFlag) {
 	//DrawFormatStringFToHandle(DISP_WIDTH - 500, 10, BROWN, nishiki, "SCORE : %5d", Score);
 }
 
-int SetBack(int floor) {
-	switch (floor)
-	{
-	case 0://floor1
+bool floor1;//今の階を表すフラグ
+bool step1;
+bool step2;
+bool floor2;
+
+int SetBack() {
+	if (floor1) {
 		DrawFormatString(0, 0, RED, "FLOOR1");
-		break;
-	case 1://floor2
-		DrawFormatString(0, 0, RED, "FLOOR2");
-		break;
-	default:
-		break;
+	}
+	else if (step1) {
+		DrawFormatString(0, 0, RED, "step1");
+	}
+	else if (step2) {
+		DrawFormatString(0, 0, RED, "step2");
+	}
+	else if (floor2) {
+		DrawFormatString(0, 0, RED, "floor2");
 	}
 	return 0;
+}
+
+int SetFloor1() {
+	floor1 = true;
+	step1 = false;
+	step2 = false;
+	floor2 = false;
+	return 0;
+}
+int SetStep1() {
+	floor1 = false;
+	step1 = true;
+	step2 = false;
+	floor2 = false;
+	return 0;
+}
+int SetStep2() {
+	floor1 = false;
+	step1 = false;
+	step2 = true;
+	floor2 = false;
+	return 0;
+}
+int SetFloor2() {
+	floor1 = false;
+	step1 = false;
+	step2 = false;
+	floor2 = true;
+	return 0;
+}
+
+int GetNowFloorHandle() {
+	if (floor1) {
+		return Floor1;
+	}
+	else if (step1) {
+		return 0;
+	}
+	else if (step2) {
+		return 0;
+	}
+	else if (floor2) {
+		return Floor2;
+	}
 }
 
 int UpdataBack(int count) {//count使わなくてもできる(?)
@@ -221,8 +265,7 @@ int InputFile(std::string file) {
 		std::cout << "入力ファイルをオープンできません" << std:: endl;
 		return 1;
 	}
-	fin >> normalPlayers >> normalWinner >> normalHighScore;
-	fin >> hardPlayers >> hardWinner >> hardHighScore;
+	fin >> NumofPlayers >> NumofWinner >> HighScore;
 
 	return 0;
 }
@@ -242,35 +285,22 @@ int UpdataFile(std::string file, int levelFlag, int score) {
 		std::cout << "出力ファイルをオープンできません" << std::endl;
 		return 1;
 	}
-	fout << normalPlayers << "\n" << normalWinner << "\n" << normalHighScore << "\n";
-	fout << hardPlayers << "\n" << hardWinner << "\n" << hardHighScore;
+	fout << NumofPlayers << "\n" << NumofWinner << "\n" << HighScore << "\n";
 
 	return 0;
 }
 
 int SetWinner(int levelFlag, int count,int* score) {
 	Keeper = count;
-	if (levelFlag == 0) {
-		normalPlayers++;
-		normalWinner++;
-		if (normalHighScore < *score) normalHighScore = *score;
-	}
-	else if (levelFlag == 1) {
-		hardPlayers++;
-		hardWinner++;
-		if (hardHighScore < *score) hardHighScore = *score;
-	}
+	NumofPlayers++;
+	NumofWinner++;
+	if (HighScore < *score) HighScore = *score;
 	flag = 1;
 	return 0;
 }
 int SetLoser(int levelFlag, int count) {
 	Keeper = count;
-	if (levelFlag == 0) {
-		normalPlayers++;
-	}
-	else if (levelFlag == 1) {
-		hardPlayers++;
-	}
+	NumofPlayers++;
 	flag = 1;
 	return 0;
 }
@@ -316,6 +346,19 @@ int DrawLoseBord(int count) {
 		return 1;
 	}
 	return 0;
+}
+
+bool IsHitColor(Circle x, int a, int image) {
+	//半径の正方形作って，その中で円内の点を判定
+	if (image == 0)//階段内
+		return false;
+	for (int i = x.Getx() - x.GetRadius(); i < x.Getx() + x.GetRadius(); i++) {
+		for (int j = x.Getx() - x.GetRadius(); j < x.Getx() + x.GetRadius(); j++) {
+			if ((i*i + j*j) <= x.GetRadius()*x.GetRadius())
+				if (a == GetPixelPalCodeSoftImage(image, x.Getx(), x.Gety()))
+					return true;
+		}
+	}	 
 }
 
 /*----------------------------------------------------------------------------------------------*/

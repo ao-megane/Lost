@@ -11,11 +11,11 @@ int Floor1Draw();
 
 int Floor2Draw();
 
+int GetNowFloorHandle();
+
 int PlayMove();
 
 int PlayChoice();
-
-int ChoreSet(int levelFlag);
 
 int* ScorePass();
 
@@ -29,11 +29,19 @@ int DrawManual(int b);
 
 int DrawCredit();
 
-int DrawPause(int count);
+int DrawPause();
 
 void DrawChore(int count, int HP,int levelFlag);
 
-int SetBack(int stageFlag);
+int SetBack();
+
+int SetFloor1();
+
+int SetStep1();
+
+int SetStep2();
+
+int SetFloor2();
 
 int UpdataBack(int count);
 
@@ -58,6 +66,8 @@ int DrawWinBord(int count);
 int SetWinner(int levelFlag,int count,int* score);
 
 int WinnerUpdata(int count);
+
+bool IsHitColor(Circle x,int colorHandle,int imageHandle);
 
 void FpsTimeFanction();
 

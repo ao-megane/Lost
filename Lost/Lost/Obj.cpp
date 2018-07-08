@@ -59,13 +59,13 @@ Dot Square::Get_RD() {
 int Circle::Set(int a, int b, double c, double d) {
 	center.Setx(a);
 	center.Sety(b);
-	range = c;
+	radius= c;
 	dir = d;
 	return 0;
 }
 int Circle::Set(Dot a, double b, double c) {
 	center = a;
-	range = b;
+	radius = b;
 	dir = c;
 	return 0;
 }
@@ -82,5 +82,14 @@ int Circle::Move(int dx, int dy) {
 		dir = atan(dy / dx);
 
 	return 0;
+}
+int Circle::Getx() {
+	return center.Get_x();
+}
+int Circle::Gety() {
+	return center.Get_y();
+}
+double Circle::GetRadius() {
+	return radius;
 }
 

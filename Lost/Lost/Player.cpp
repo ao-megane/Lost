@@ -25,14 +25,15 @@ int Player::Initialize() {
 int Player::Updata(int Key[], int flag) {
 	player.Move(THUMB_X * GetSpeed(), THUMB_Y * GetSpeed());
 
-	if (/*プレイヤーの行く末が壁*/) {//back
+	if (IsHitColor(player,WALL,GetNowFloorHandle())) {//壁ならback
+		player.Move(-THUMB_X * GetSpeed(), -THUMB_Y * GetSpeed());
 	}
-	if (/*片足*/) { 
-		if (/*行く末がドア*/) {//back
-
+	if (!lArm) {//左手がなければ 
+		if (IsHitColor(player, DOOR, GetNowFloorHandle())) {//ドアならback
+			player.Move(-THUMB_X * GetSpeed(), -THUMB_Y * GetSpeed());
 		}
 	}
-	if (/*行く末が階段*/) {//step、returnとかで知らせればよいか
+	if (IsHitColor(player, STEP1, GetNowFloorHandle())) {//現在地を仕込む
 
 	}
 	
