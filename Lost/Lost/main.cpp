@@ -30,7 +30,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Player player;
 	InputInitialize(Key);
 	player.Initialize();
-	EnemyMngInitialize();
+	//EnemyMngInitialize();
 	SystemInitialize();
 	InputFile("kanuma2017.txt");
 
@@ -42,14 +42,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	int up = 0;
 	while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen()) {
 
-		GetJoypadXInputState(DX_INPUT_PAD1, &input);
+		//GetJoypadXInputState(DX_INPUT_PAD1, &input);
 		//InputUpdata(input, Key);
 		InputUpdata(Key);
 		//PrintInput(Key);
 
 		UpdataBack(count);
 		DrawBack();
-
 
 		switch (flag) {
 		case 0://OP
@@ -60,13 +59,27 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 			if (down == 1) {
 				PlayMove();
-				if (selectFlag == 3) selectFlag = 0;
+				if (selectFlag == 2) selectFlag = 0;
 				else selectFlag++;
 			}
 			if (up == 1) {
 				PlayMove();
-				if (selectFlag == 0) selectFlag = 3;
+				if (selectFlag == 0) selectFlag = 2;
 				else selectFlag--;
+			}
+			switch (selectFlag)
+			{
+			case 0://play
+				DrawFormatString(0, 30, RED, "Å®PLAY!!");
+				break;
+			case 1://manual
+				DrawFormatString(0, 30, RED, "Å®MANUAL!!");
+				break;
+			case 2://credit
+				DrawFormatString(0, 30, RED, "Å®CREDIT!!");
+				break;
+			default:
+				break;
 			}
 			if (B == 1) {
 				PlayChoice();
@@ -88,13 +101,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			break;
 		case 1://Loading
 			count = 0;
-			player.Initialize();
-			EnemyMngInitialize(1);
+			player.Set();
+			//EnemyMngInitialize(1);
+			flag = 2;
 			break;
 		case 2://playing
 			//EnemyMngSet(count);
 			player.Updata(Key,0);
-			EnemyMngUpdata(count);
+			//EnemyMngUpdata(count);
 
 			//EnemyMngJudge(&player, &girl, count, ScorePass(), levelFlag);
 
@@ -102,13 +116,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			if (PAUSE == 1) flag = 7;
 
 			player.Draw();
-			EnemyMngDraw();
+			//EnemyMngDraw();
 			player.UIDraw(count);
 			
 			//DrawLine(0, GROUND_HEIGHT, DISP_WIDTH, GROUND_HEIGHT, RED, FALSE);
 			//DrawLine(0, BIRD_HIGH, DISP_WIDTH, BIRD_HIGH, RED, FALSE);
 
 			//DrawChore();
+			PrintInput(Key);
 			break;
 		case 3://gameover
 			/*EnemyMngUpdata(count);

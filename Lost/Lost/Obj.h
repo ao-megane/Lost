@@ -64,7 +64,9 @@ public:
 	Dot GetDot();
 	int Getx();
 	int Gety();
+	double GetDir();
 	double GetRadius();
+	//int Updata();
 
 private:
 	double radius;

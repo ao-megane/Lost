@@ -1,5 +1,6 @@
 #ifndef PLAYER
 #define PLAYER
+#include"Obj.h"
 
 class Player {
 private:
@@ -17,12 +18,14 @@ private:
 	double Speed;
 	int Pimage;
 public:
-	Player();
-	~Player();
+	//Player();
+	//~Player();
 	int Initialize();
+	int Set();
 	int Reborn();
-	int SetPimage(char a[]);
+	int SetPimage(int imageHandle);
 	double GetSpeed();
+	Circle Getplayer();
 	int Updata(int Key[],int flag);
 	int Draw();
 	int UIDraw(int count);

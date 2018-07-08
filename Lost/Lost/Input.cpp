@@ -2,10 +2,10 @@
 #include"Value.h"
 //#include"math.h"
 
-#pragma(push)
-#pragma warning ( disable : 4789 )
+//#pragma(push)
+//#pragma warning ( disable : 4789 )
 // unused code that generates compiler warning C4789
-#pragma(pop)
+//#pragma(pop)
 
 void InputInitialize(int key[]) {
 	for (int i = 0; i < 20; i++)

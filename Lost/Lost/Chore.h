@@ -19,9 +19,9 @@ int PlayChoice();
 
 int* ScorePass();
 
-int PlayBGM();
-
 int DrawOP();
+
+int PlayBGM();
 
 int DrawPrologue(int b);
 
@@ -70,6 +70,8 @@ int WinnerUpdata(int count);
 bool IsHitColorCtoAll(Circle x,int colorHandle,int imageHandle);
 
 bool IsHitColorDot(Dot x, int colorHandle, int imageHandle);
+
+Dot RotateDot(double thita, Dot x, Dot c);
 
 void FpsTimeFanction();
 

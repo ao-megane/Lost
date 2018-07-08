@@ -50,11 +50,11 @@ int SystemInitialize() {
 
 
 	if (AddFontResourceEx("Font/nishiki-teki.ttf", FR_PRIVATE, NULL) == 0) {
-		printfDx("AddFontResourceEx失敗\n");
+		//printfDx("AddFontResourceEx失敗\n");
 	}
 	nishiki = CreateFontToHandle("Nishiki-teki", 60, -1, DX_FONTTYPE_ANTIALIASING_8X8);
 	if (nishiki == -1) {
-		printfDx("CreateFontToHandle失敗\n");
+		//printfDx("CreateFontToHandle失敗\n");
 	}
 	Keeper = 0;
 	flag = 0;
@@ -85,7 +85,7 @@ int PlayBGM() {
 	return 0;
 }
 
-int DrawOP(int levelFlag) {
+int DrawOP() {
 	//DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Tytle, true);
 	DrawFormatString(0, 0, RED, "TYTLE");
 	/*DrawModiGraph(
@@ -102,19 +102,19 @@ int DrawPrologue(int b) {
 	{
 	case 0:
 		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Prologue[1], true);
-		DrawFormatString(0, 0, RED, "PROLOGUE1");
+		DrawFormatString(0, 20, RED, "PROLOGUE1");
 		break;
 	case 1:
 		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Prologue[2], true);
-		DrawFormatString(0, 0, RED, "PROLOGUE2");
+		DrawFormatString(0, 40, RED, "PROLOGUE2");
 		break;
 	case 2:
 		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Prologue[3], true);
-		DrawFormatString(0, 0, RED, "PROLOGUE3");
+		DrawFormatString(0, 80, RED, "PROLOGUE3");
 		break;
 	case 3:
 		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Prologue[4], true);
-		DrawFormatString(0, 0, RED, "PROLOGUE4");
+		DrawFormatString(0, 120, RED, "PROLOGUE4");
 		break;
 	default:
 		break;
@@ -165,17 +165,17 @@ int DrawCredit() {
 	return 0;
 }
 
-//void DrawChore() {
-//	DrawFormatString(0, 0, RED, "UI?");
-//	//if (count < NORMAL_COUNT) {
-//	//	DrawModiGraph(
-//	//		UI_MARGIN_WIDTH, UI_MARGIN_HEIGHT,
-//	//		UI_WIDTH + UI_MARGIN_WIDTH, UI_MARGIN_HEIGHT,
-//	//		UI_WIDTH + UI_MARGIN_WIDTH, UI_HEIGHT + UI_MARGIN_HEIGHT,
-//	//		UI_MARGIN_WIDTH, UI_HEIGHT + UI_MARGIN_HEIGHT, UIBack, true);
-//
-//	//DrawFormatStringFToHandle(DISP_WIDTH - 500, 10, BROWN, nishiki, "SCORE : %5d", Score);
-//}
+void DrawChore() {
+	DrawFormatString(0, 0, RED, "UI?");
+	//if (count < NORMAL_COUNT) {
+	//	DrawModiGraph(
+	//		UI_MARGIN_WIDTH, UI_MARGIN_HEIGHT,
+	//		UI_WIDTH + UI_MARGIN_WIDTH, UI_MARGIN_HEIGHT,
+	//		UI_WIDTH + UI_MARGIN_WIDTH, UI_HEIGHT + UI_MARGIN_HEIGHT,
+	//		UI_MARGIN_WIDTH, UI_HEIGHT + UI_MARGIN_HEIGHT, UIBack, true);
+
+	//DrawFormatStringFToHandle(DISP_WIDTH - 500, 10, BROWN, nishiki, "SCORE : %5d", Score);
+}
 
 bool floor1;//今の階を表すフラグ
 bool step1;
@@ -271,11 +271,11 @@ int InputFile(std::string file) {
 }
 
 int DrawData() {
-	DrawFormatStringToHandle(DISP_WIDTH / 2 - 500, 50, BROWN, nishiki, "プレイ人数:%3d", NumofPlayers);
+	/*DrawFormatStringToHandle(DISP_WIDTH / 2 - 500, 50, BROWN, nishiki, "プレイ人数:%3d", NumofPlayers);
 	DrawFormatStringToHandle(DISP_WIDTH / 2 + 0, 50, BROWN, nishiki, "クリア率:%5.2f%%", (double)(NumofWinner)/(double)(NumofPlayers) * 100.0);
 	DrawFormatStringToHandle(DISP_WIDTH / 2 + 500, 50, BROWN, nishiki, "ハイスコア:%5d", HighScore);
-
-	DrawFormatString(0, 0, RED, "DATA!");
+	*/
+	DrawFormatString(0, 100, RED, "DATA!");
 	return 0;
 }
 
@@ -367,6 +367,13 @@ bool IsHitColorDot(Dot x, int a, int image) {
 		return true;
 	else
 		return false;
+}
+
+Dot RotateDot(double thita, Dot x, Dot c) {
+	Dot ans;
+	ans.Setx((x.Get_x() - c.Get_x())*cos(-thita + PI / 2) - (x.Get_y() - c.Get_y())*sin(-thita + PI / 2) + c.Get_x());
+	ans.Sety((x.Get_x() - c.Get_x())*sin(-thita + PI / 2) + (x.Get_y() - c.Get_y())*cos(-thita + PI / 2) + c.Get_y());
+	return ans;
 }
 
 /*----------------------------------------------------------------------------------------------*/

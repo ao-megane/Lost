@@ -73,13 +73,22 @@ int Circle::Move(int dx, int dy) {
 	center.Setx(center.Get_x() + dx);
 	center.Sety(center.Get_y() + dy);
 
+	//if (dx > 0) dir = atan(dy / dx) /*+ PI*/;
+	//else if (dx == 0 && dy >= 0)
+	//	dir = 1 / 2 * PI;
+	//else if (dx == 0 && dy <= 0)
+	//	dir = 3 / 2 * PI;
+	//else if (dx < 0) 
+	//	dir = atan(dy / dx);
+
 	if (dx < 0) dir = atan(dy / dx) + PI;
 	else if (dx == 0 && dy >= 0)
-		dir = 1 / 2 * PI;
-	else if (dx == 0 && dy <= 0)
 		dir = 3 / 2 * PI;
-	else if (dx > 0) 
-		dir = atan(dy / dx);
+	else if (dx == 0 && dy <= 0)
+		dir = PI / 2;
+	else if (dx > 0) dir = atan(dy / dx);
+
+	while (dir < 0) dir += 2 * PI;
 
 	return 0;
 }
@@ -91,6 +100,9 @@ int Circle::Getx() {
 }
 int Circle::Gety() {
 	return center.Get_y();
+}
+double Circle::GetDir() {
+	return dir;
 }
 double Circle::GetRadius() {
 	return radius;

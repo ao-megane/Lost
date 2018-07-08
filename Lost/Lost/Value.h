@@ -38,10 +38,10 @@ const int STEP2 = GetColor(0, 0, 255);
 const int FLOOR1 = GetColor(0, 0, 255);
 const int FLOOR2 = GetColor(0, 0, 255);
 
-const int P_SIZE = 200;	//プレイヤーの半径
+const int P_SIZE = 20;	//プレイヤーの半径
 const int P_REBORN_X = 50;
 const int P_REBORN_Y = 1000;
-const double P_FULL_SPEED = 20;
+const double P_FULL_SPEED = 0.02;
 //↑判定系 ↓描画系
 const double P_WIDTH = 1 * P_SIZE;
 const double P_HEIGHT = 1 * P_SIZE;
