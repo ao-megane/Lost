@@ -83,6 +83,9 @@ int Circle::Move(int dx, int dy) {
 
 	return 0;
 }
+Dot Circle::GetDot() {
+	return center;
+}
 int Circle::Getx() {
 	return center.Get_x();
 }

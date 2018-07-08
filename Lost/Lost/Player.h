@@ -20,11 +20,12 @@ public:
 	Player();
 	~Player();
 	int Initialize();
+	int Reborn();
 	int SetPimage(char a[]);
-	int SetPcircle;
 	double GetSpeed();
 	int Updata(int Key[],int flag);
 	int Draw();
+	int UIDraw(int count);
 };
 
 

@@ -165,17 +165,17 @@ int DrawCredit() {
 	return 0;
 }
 
-void DrawChore(int count, int HP,int levelFlag) {
-	DrawFormatString(0, 0, RED, "UI?");
-	//if (count < NORMAL_COUNT) {
-	//	DrawModiGraph(
-	//		UI_MARGIN_WIDTH, UI_MARGIN_HEIGHT,
-	//		UI_WIDTH + UI_MARGIN_WIDTH, UI_MARGIN_HEIGHT,
-	//		UI_WIDTH + UI_MARGIN_WIDTH, UI_HEIGHT + UI_MARGIN_HEIGHT,
-	//		UI_MARGIN_WIDTH, UI_HEIGHT + UI_MARGIN_HEIGHT, UIBack, true);
-
-	//DrawFormatStringFToHandle(DISP_WIDTH - 500, 10, BROWN, nishiki, "SCORE : %5d", Score);
-}
+//void DrawChore() {
+//	DrawFormatString(0, 0, RED, "UI?");
+//	//if (count < NORMAL_COUNT) {
+//	//	DrawModiGraph(
+//	//		UI_MARGIN_WIDTH, UI_MARGIN_HEIGHT,
+//	//		UI_WIDTH + UI_MARGIN_WIDTH, UI_MARGIN_HEIGHT,
+//	//		UI_WIDTH + UI_MARGIN_WIDTH, UI_HEIGHT + UI_MARGIN_HEIGHT,
+//	//		UI_MARGIN_WIDTH, UI_HEIGHT + UI_MARGIN_HEIGHT, UIBack, true);
+//
+//	//DrawFormatStringFToHandle(DISP_WIDTH - 500, 10, BROWN, nishiki, "SCORE : %5d", Score);
+//}
 
 bool floor1;//¡‚ÌŠK‚ð•\‚·ƒtƒ‰ƒO
 bool step1;
@@ -348,7 +348,7 @@ int DrawLoseBord(int count) {
 	return 0;
 }
 
-bool IsHitColor(Circle x, int a, int image) {
+bool IsHitColorCtoAll(Circle x, int a, int image) {
 	//”¼Œa‚Ì³•ûŒ`ì‚Á‚ÄC‚»‚Ì’†‚Å‰~“à‚Ì“_‚ð”»’è
 	if (image == 0)//ŠK’i“à
 		return false;
@@ -358,7 +358,15 @@ bool IsHitColor(Circle x, int a, int image) {
 				if (a == GetPixelPalCodeSoftImage(image, x.Getx(), x.Gety()))
 					return true;
 		}
-	}	 
+	}
+	return false;
+}
+
+bool IsHitColorDot(Dot x, int a, int image) {
+	if (a == GetPixelPalCodeSoftImage(image, x.Get_x(), x.Get_y()))
+		return true;
+	else
+		return false;
 }
 
 /*----------------------------------------------------------------------------------------------*/

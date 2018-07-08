@@ -34,7 +34,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SystemInitialize();
 	InputFile("kanuma2017.txt");
 
-	SetBack(1);
+	SetBack();
 	PlayBGM();
 
 	flag = 0;
@@ -88,14 +88,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			break;
 		case 1://Loading
 			count = 0;
-			player.Set();
+			player.Initialize();
 			EnemyMngInitialize(1);
-			ChoreSet();
-			flag = 8;
 			break;
 		case 2://playing
-			EnemyMngSet(count);
-			player.Updata(count, Key);
+			//EnemyMngSet(count);
+			player.Updata(Key,0);
 			EnemyMngUpdata(count);
 
 			//EnemyMngJudge(&player, &girl, count, ScorePass(), levelFlag);
@@ -105,11 +103,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 			player.Draw();
 			EnemyMngDraw();
+			player.UIDraw(count);
 			
 			//DrawLine(0, GROUND_HEIGHT, DISP_WIDTH, GROUND_HEIGHT, RED, FALSE);
 			//DrawLine(0, BIRD_HIGH, DISP_WIDTH, BIRD_HIGH, RED, FALSE);
 
-			DrawChore();
+			//DrawChore();
 			break;
 		case 3://gameover
 			/*EnemyMngUpdata(count);
@@ -148,7 +147,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			}
 			break;
 		case 7://É|Å[ÉY
-			DrawPause(count);
+			DrawPause();
 			count--;
 			if (B == 1) flag = 2;
 			if (A == 1) flag = 0;

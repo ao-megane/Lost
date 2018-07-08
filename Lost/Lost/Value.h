@@ -35,7 +35,8 @@ const int DOOR = GetColor(0, 255, 0);
 const int WALL = GetColor(0, 0, 0);
 const int STEP1 = GetColor(255, 0, 0);
 const int STEP2 = GetColor(0, 0, 255);
-c
+const int FLOOR1 = GetColor(0, 0, 255);
+const int FLOOR2 = GetColor(0, 0, 255);
 
 const int P_SIZE = 200;	//ÉvÉåÉCÉÑÅ[ÇÃîºåa
 const int P_REBORN_X = 50;

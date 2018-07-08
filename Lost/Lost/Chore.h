@@ -31,7 +31,7 @@ int DrawCredit();
 
 int DrawPause();
 
-void DrawChore(int count, int HP,int levelFlag);
+//void DrawChore();
 
 int SetBack();
 
@@ -67,7 +67,9 @@ int SetWinner(int levelFlag,int count,int* score);
 
 int WinnerUpdata(int count);
 
-bool IsHitColor(Circle x,int colorHandle,int imageHandle);
+bool IsHitColorCtoAll(Circle x,int colorHandle,int imageHandle);
+
+bool IsHitColorDot(Dot x, int colorHandle, int imageHandle);
 
 void FpsTimeFanction();
 

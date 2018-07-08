@@ -61,6 +61,7 @@ public:
 	int Set(int x, int y, double range, double dir);
 	int Set(Dot a, double range, double dir);
 	int Move(int dx, int dy);
+	Dot GetDot();
 	int Getx();
 	int Gety();
 	double GetRadius();
