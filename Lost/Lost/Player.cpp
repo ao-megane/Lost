@@ -40,10 +40,10 @@ int Player::Updata(int Key[], int flag) {
 	DrawFormatString(0, 60, RED, "%d", WALL);
 	DrawFormatString(0, 80, RED, "%d", GetPixelPalCodeSoftImage(GetNowFloorSoftHandle(), player.GetDot().Getx(), player.GetDot().Gety()));
 
-	if (!(THUMB_X == 0 && THUMB_Y == 0))	//問題なければ進む
-		player.Move(THUMB_X * GetSpeed() / 100.0, THUMB_Y * GetSpeed() / 100.0);
+	//if (!(THUMB_X == 0 && THUMB_Y == 0))	//問題なければ進む
+	//	player.Move(THUMB_X * GetSpeed() / 100.0, THUMB_Y * GetSpeed() / 100.0);
 
-	if (Wall.IsHitPlayer(player,GetNowFloorSoftHandle())) {//壁ならback
+	if (Wall.IsHitPlayer(player,GetNowFloorSoftHandle())) {//slack参考
 		DrawFormatString(0, 100, RED, "壁！！！！！！");
 		player.Back(THUMB_X * GetSpeed() / 100.0, THUMB_Y * GetSpeed() / 100.0);
 		return 0;

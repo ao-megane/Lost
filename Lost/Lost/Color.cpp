@@ -24,8 +24,10 @@ bool Color::IsHitPlayer(Circle x, int Handle) {
 				((i - x.Getx())*(i - x.Getx()) + (j - x.Gety())*(j - x.Gety())) >= (x.GetRadius())*(x.GetRadius())) {
 				GetPixelSoftImage(Handle, i, j, &colordecoi[0], &colordecoi[1], &colordecoi[2], 0);
 				DrawPixel(i, j, BLUE);
-				if (r == colordecoi[0] && g == colordecoi[1] && b == colordecoi[2])
-					isHitflag =  true;
+				if (r == colordecoi[0] && g == colordecoi[1] && b == colordecoi[2]) {
+					isHitflag = true;
+					DrawPixel(i, j, RED);
+				}
 			}
 		}
 	}
