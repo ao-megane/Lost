@@ -11,7 +11,7 @@ int Floor1Draw();
 
 int Floor2Draw();
 
-int GetNowFloorHandle();
+int GetNowFloorSoftHandle();
 
 int PlayMove();
 
@@ -67,9 +67,9 @@ int SetWinner(int levelFlag,int count,int* score);
 
 int WinnerUpdata(int count);
 
-bool IsHitColorCtoAll(Circle x,int colorHandle,int imageHandle);
+//bool IsHitColorCtoAll(Circle x,int colorHandle,int imageHandle);
 
-bool IsHitColorDot(Dot x, int colorHandle, int imageHandle);
+//bool IsHitColorDot(Dot x, int colorHandle, int imageHandle);
 
 Dot RotateDot(double thita, Dot x, Dot c);
 

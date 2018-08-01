@@ -75,15 +75,20 @@ int Circle::Move(double dx, double dy) {
 
 	if (dx < 0) dir = atan(-dy / dx) + PI;
 	else if (dx == 0 && -dy >= 0)
-		dir = 3 / 2 * PI;
+		dir = 1 / 2 * PI;
 	else if (dx == 0 && -dy <= 0)
-		dir = PI / 2;
+		dir = 3 / 2 * PI;
 	else if (dx > 0) dir = atan(-dy / dx);
 
 	while (dir < 0) dir += 2 * PI;
 
 	return 0;
 
+	return 0;
+}
+int Circle::Back(double dx, double dy) {
+	center.Setx(center.Getx() - dx);
+	center.Sety(center.Gety() - dy);
 	return 0;
 }
 Dot Circle::GetDot() {

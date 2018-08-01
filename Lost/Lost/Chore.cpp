@@ -11,6 +11,9 @@
 
 int Floor1;
 int Floor2;
+int Floor1data;
+int Floor2data;
+
 int Clear;
 int GameOver;
 int Loading;
@@ -39,8 +42,12 @@ int Score;
 int nishiki;
 int SystemInitialize() {
 	Clear = LoadGraph("images/System/Clear1.png");
-	Floor1 = LoadGraph("images/maps/floor1-data.png");
-	Floor2 = LoadGraph("images/maps/floor2-data.png");
+	//Floor1 = LoadGraph("images/maps/floor1-data.png");
+	Floor1 = LoadGraph("images/maps/test.png");
+	Floor1data = LoadSoftImage("images/maps/test.png");
+	//Floor2 = LoadGraph("images/maps/floor2-data.png");
+	Floor2 = LoadGraph("images/maps/test.png");
+	Floor2data = LoadSoftImage("images/maps/test.png");
 	Prologue[0] = LoadGraph("images/system/prologue/1.png");
 	Prologue[1] = LoadGraph("images/system/prologue/2.png");
 	Prologue[2] = LoadGraph("images/system/prologue/3.png");
@@ -227,7 +234,8 @@ int SetFloor2() {
 	return 0;
 }
 
-int GetNowFloorHandle() {
+int GetNowFloorSoftHandle() {
+	return Floor1data;
 	if (floor1) {
 		return Floor1;
 	}
@@ -247,6 +255,8 @@ int UpdataBack(int count) {//countégÇÌÇ»Ç≠ÇƒÇ‡Ç≈Ç´ÇÈ(?)
 }
 
 int DrawBack() {
+	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Floor1, true);
+	DrawFormatString(0, 20, RED, "Draw BackGround");
 	return 0;
 }
 
@@ -348,26 +358,26 @@ int DrawLoseBord(int count) {
 	return 0;
 }
 
-bool IsHitColorCtoAll(Circle x, int a, int image) {
-	//îºåaÇÃê≥ï˚å`çÏÇ¡ÇƒÅCÇªÇÃíÜÇ≈â~ì‡ÇÃì_ÇîªíË
-	if (image == 0)//äKíiì‡
-		return false;
-	for (int i = x.Getx() - x.GetRadius(); i < x.Getx() + x.GetRadius(); i++) {
-		for (int j = x.Getx() - x.GetRadius(); j < x.Getx() + x.GetRadius(); j++) {
-			if ((i*i + j*j) <= x.GetRadius()*x.GetRadius())
-				if (a == GetPixelPalCodeSoftImage(image, x.Getx(), x.Gety()))
-					return true;
-		}
-	}
-	return false;
-}
-
-bool IsHitColorDot(Dot x, int a, int image) {
-	if (a == GetPixelPalCodeSoftImage(image, x.Getx(), x.Gety()))
-		return true;
-	else
-		return false;
-}
+//bool IsHitColorCtoAll(Circle x, int a, int softimage) {
+//	//îºåaÇÃê≥ï˚å`çÏÇ¡ÇƒÅCÇªÇÃíÜÇ≈â~ì‡ÇÃì_ÇîªíË
+//	if (softimage == 0)
+//		return false;
+//	for (double i = x.Getx() - x.GetRadius(); i < x.Getx() + x.GetRadius(); i++) {
+//		for (double j = x.Gety() - x.GetRadius(); j < x.Gety() + x.GetRadius(); j++) {
+//			if (((i - x.Getx())*(i - x.Getx()) + (j - x.Gety())*(j - x.Gety())) <= x.GetRadius()*x.GetRadius())
+//				if (a == GetPixelPalCodeSoftImage(softimage, x.Getx(), x.Gety()))
+//					return true;
+//		}
+//	}
+//	return false;
+//}
+//
+//bool IsHitColorDot(Dot x, int a, int image) {
+//	if (a == GetPixelPalCodeSoftImage(image, x.Getx(), x.Gety()))
+//		return true;
+//	else
+//		return false;
+//}
 
 Dot RotateDot(double thita, Dot x, Dot c) {
 	Dot ans;

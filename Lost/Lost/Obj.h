@@ -61,6 +61,7 @@ public:
 	int Set(int x, int y, double range, double dir);
 	int Set(Dot a, double range, double dir);
 	int Move(double dx, double dy);
+	int Back(double dx, double dy);
 	Dot GetDot();
 	int Getx();
 	int Gety();

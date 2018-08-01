@@ -2,12 +2,16 @@
 #include"Player.h"
 #include"Value.h"
 #include"Chore.h"
-#include "EnemyMng.h"
+#include"EnemyMng.h"
+#include"Color.h"
 
 int normalImage;
+Color Wall;
+
 
 int Player::Initialize() {
 	normalImage = LoadGraph("images/player/normal.png");
+	Wall.Initialize(0, 0, 0);
 	SetPimage(normalImage);
 	return 0;
 }
@@ -32,35 +36,44 @@ int Player::Reborn() {
 }
 
 int Player::Updata(int Key[], int flag) {
-	if(!(THUMB_X == 0 && THUMB_Y == 0))
-	player.Move(THUMB_X * GetSpeed(), THUMB_Y * GetSpeed());
 
-	if (IsHitColorCtoAll(player,WALL,GetNowFloorHandle())) {//壁ならback
-		player.Move(-THUMB_X * GetSpeed(), -THUMB_Y * GetSpeed());
+	DrawFormatString(0, 60, RED, "%d", WALL);
+	DrawFormatString(0, 80, RED, "%d", GetPixelPalCodeSoftImage(GetNowFloorSoftHandle(), player.GetDot().Getx(), player.GetDot().Gety()));
+
+	if (!(THUMB_X == 0 && THUMB_Y == 0))	//問題なければ進む
+		player.Move(THUMB_X * GetSpeed() / 100.0, THUMB_Y * GetSpeed() / 100.0);
+
+	if (Wall.IsHitPlayer(player,GetNowFloorSoftHandle())) {//壁ならback
+		DrawFormatString(0, 100, RED, "壁！！！！！！");
+		player.Back(THUMB_X * GetSpeed() / 100.0, THUMB_Y * GetSpeed() / 100.0);
+		return 0;
 	}
-	if (!lArm) {//左手がなければ
-		if (IsHitColorCtoAll(player, DOOR, GetNowFloorHandle())) {//ドアならback
-			player.Move(-THUMB_X * GetSpeed(), -THUMB_Y * GetSpeed());
-		}
-	}
-	if (IsHitColorDot(player.GetDot(), FLOOR1, GetNowFloorHandle())) {//現在地を仕込む
-		SetFloor1();
-	}
-	if (IsHitColorDot(player.GetDot(), STEP1, GetNowFloorHandle())) {//現在地を仕込む
-		SetStep1();
-	}
-	if (IsHitColorDot(player.GetDot(), STEP2, GetNowFloorHandle())) {//現在地を仕込む
-		SetStep2();
-	}
-	if (IsHitColorDot(player.GetDot(), FLOOR2, GetNowFloorHandle())) {//現在地を仕込む
-		SetFloor2();
-	}
+	//if (!lArm) {//左手がなければ
+	//	if (IsHitColorCtoAll(player, DOOR, GetNowFloorSoftHandle())) {//ドアならback
+	//		player.Move(-THUMB_X * GetSpeed(), -THUMB_Y * GetSpeed());
+	//	}
+	//}
+
+	//if (IsHitColorDot(player.GetDot(), FLOOR1, GetNowFloorSoftHandle())) {//現在地を仕込む
+	//	//SetFloor1();
+	//}
+	//if (IsHitColorDot(player.GetDot(), STEP1, GetNowFloorSoftHandle())) {//現在地を仕込む
+	//	SetStep1();
+	//}
+	//if (IsHitColorDot(player.GetDot(), STEP2, GetNowFloorSoftHandle())) {//現在地を仕込む
+	//	SetStep2();
+	//}
+	//if (IsHitColorDot(player.GetDot(), FLOOR2, GetNowFloorSoftHandle())) {//現在地を仕込む
+	//	SetFloor2();
+	//}
+	
+
 	
 	return 0;
 }
 
 Dot decoi[4];
-int Player::Draw() {//ここも大変、特にマスク処理
+int Player::Draw() {//ここも大変、特にマスク処理 ←　マスクは画像の上書きで行く，とりあえず全体表示をしっかり
 
 	if (rEye) {
 
@@ -94,7 +107,7 @@ int Player::Draw() {//ここも大変、特にマスク処理
 	return 0;
 }
 int Player::UIDraw(int count) {
-	DrawFormatString(0, 0, RED, "UI?");
+	DrawFormatString(0, 20, RED, "Draw UI");
 	//if (count < NORMAL_COUNT) {
 	//	DrawModiGraph(
 	//		UI_MARGIN_WIDTH, UI_MARGIN_HEIGHT,

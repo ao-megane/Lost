@@ -13,6 +13,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		SetWindowSizeChangeEnableFlag(TRUE);
 		SetWindowSizeExtendRate(0.6);
 		ChangeWindowMode(TRUE);
+		SetBackgroundColor(200, 200, 200);
 	}
 
 
@@ -110,7 +111,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			//EnemyMngUpdata(count);
 
 			//EnemyMngJudge(&player, &girl, count, ScorePass(), levelFlag);
-
 			
 			if (PAUSE == 1) flag = 7;
 
@@ -122,7 +122,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			//DrawLine(0, BIRD_HIGH, DISP_WIDTH, BIRD_HIGH, RED, FALSE);
 
 			//DrawChore();
-			PrintInput(Key);
 			break;
 		case 3://gameover
 			/*EnemyMngUpdata(count);
