@@ -363,7 +363,7 @@ bool IsHitColorCtoAll(Circle x, int a, int image) {
 }
 
 bool IsHitColorDot(Dot x, int a, int image) {
-	if (a == GetPixelPalCodeSoftImage(image, x.Get_x(), x.Get_y()))
+	if (a == GetPixelPalCodeSoftImage(image, x.Getx(), x.Gety()))
 		return true;
 	else
 		return false;
@@ -371,8 +371,8 @@ bool IsHitColorDot(Dot x, int a, int image) {
 
 Dot RotateDot(double thita, Dot x, Dot c) {
 	Dot ans;
-	ans.Setx((x.Get_x() - c.Get_x())*cos(-thita + PI / 2) - (x.Get_y() - c.Get_y())*sin(-thita + PI / 2) + c.Get_x());
-	ans.Sety((x.Get_x() - c.Get_x())*sin(-thita + PI / 2) + (x.Get_y() - c.Get_y())*cos(-thita + PI / 2) + c.Get_y());
+	ans.Setx((x.Getx() - c.Getx())*cos(-thita) - (x.Gety() - c.Gety())*sin(-thita) + c.Getx());
+	ans.Sety((x.Getx() - c.Getx())*sin(-thita) + (x.Gety() - c.Gety())*cos(-thita) + c.Gety());
 	return ans;
 }
 

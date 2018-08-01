@@ -14,24 +14,43 @@ void InputInitialize(int key[]) {
 
 void InputUpdata(XINPUT_STATE input, int Key[]) {
 
-	GetJoypadXInputState(DX_INPUT_PAD1, &input);
-	if (input.Buttons[12]) A++; else A = 0;
-	if (input.Buttons[13]) B++; else B = 0;
-	if (input.Buttons[14]) X++; else X = 0;
-	if (input.Buttons[15]) Y++; else Y = 0;
-	if (input.Buttons[9]) RIGHT++; else RIGHT = 0;
-	if (input.Buttons[8]) LEFT++; else LEFT = 0;
-	if (input.Buttons[4]) PAUSE++; else PAUSE = 0;
-	if (input.LeftTrigger > Trig) L_TRIG++; else L_TRIG = 0;
-	if (input.RightTrigger > Trig) R_TRIG++; else R_TRIG = 0;
+	if (GetJoypadXInputState(DX_INPUT_PAD1, &input) == 0) {
+		if (input.Buttons[12]) A++; else A = 0;
+		if (input.Buttons[13]) B++; else B = 0;
+		if (input.Buttons[14]) X++; else X = 0;
+		if (input.Buttons[15]) Y++; else Y = 0;
+		if (input.Buttons[9]) RIGHT++; else RIGHT = 0;
+		if (input.Buttons[8]) LEFT++; else LEFT = 0;
+		if (input.Buttons[4]) PAUSE++; else PAUSE = 0;
+		if (input.LeftTrigger > Trig) L_TRIG++; else L_TRIG = 0;
+		if (input.RightTrigger > Trig) R_TRIG++; else R_TRIG = 0;
 
-	if ((input.ThumbLY * input.ThumbLY + input.ThumbLX * input.ThumbLX) < ThumbTrig * ThumbTrig) {
-		THUMB_Y = 0;
-		THUMB_X = 0;
+		if ((input.ThumbLY * input.ThumbLY + input.ThumbLX * input.ThumbLX) < ThumbTrig * ThumbTrig) {
+			THUMB_Y = 0;
+			THUMB_X = 0;
+		}
+		else {
+			THUMB_Y = (-1) * input.ThumbLY / 32767.0 * 100;
+			THUMB_X = input.ThumbLX / 32767.0 * 100;
+		}
 	}
+
+	//-----------------------------------------------------------------
 	else {
-		THUMB_Y = (-1) * input.ThumbLY / 32767.0 * 100;
-		THUMB_X = input.ThumbLX / 32767.0 * 100;
+		if (CheckHitKey(KEY_INPUT_RIGHT) && CheckHitKey(KEY_INPUT_RSHIFT)) THUMB_X = 55;
+		else if (CheckHitKey(KEY_INPUT_RIGHT)) THUMB_X = 100;
+		else if (CheckHitKey(KEY_INPUT_LEFT) && CheckHitKey(KEY_INPUT_RSHIFT)) THUMB_X = -55;
+		else if (CheckHitKey(KEY_INPUT_LEFT)) THUMB_X = -100;
+		else THUMB_X = 0;
+		if (CheckHitKey(KEY_INPUT_UP)) THUMB_Y = -100;	//‚È‚º‚©80‚¾‚Á‚½
+		else if (CheckHitKey(KEY_INPUT_DOWN)) THUMB_Y = 100;	//‚È‚º‚©80‚¾‚Á‚½
+		else THUMB_Y = 0;
+		if (CheckHitKey(KEY_INPUT_D)) B++; else B = 0;
+		if (CheckHitKey(KEY_INPUT_S)) A++; else A = 0;
+		if (CheckHitKey(KEY_INPUT_W)) Y++; else Y = 0;
+		if (CheckHitKey(KEY_INPUT_A)) X++; else X = 0;
+
+		if (CheckHitKey(KEY_INPUT_P)) PAUSE++; else PAUSE = 0;
 	}
 
 }
@@ -43,8 +62,8 @@ void InputUpdata(int Key[]) {
 	else if (CheckHitKey(KEY_INPUT_LEFT) && CheckHitKey(KEY_INPUT_RSHIFT)) THUMB_X = -55;
 	else if (CheckHitKey(KEY_INPUT_LEFT)) THUMB_X = -100;
 	else THUMB_X = 0;
-		 if (CheckHitKey(KEY_INPUT_UP)) THUMB_Y = -80;
-	else if (CheckHitKey(KEY_INPUT_DOWN)) THUMB_Y = 80;
+		 if (CheckHitKey(KEY_INPUT_UP)) THUMB_Y = -100;	//‚È‚º‚©80‚¾‚Á‚½
+	else if (CheckHitKey(KEY_INPUT_DOWN)) THUMB_Y = 100;	//‚È‚º‚©80‚¾‚Á‚½
 	else THUMB_Y = 0;
 	if (CheckHitKey(KEY_INPUT_D)) B++; else B = 0;
 	if (CheckHitKey(KEY_INPUT_S)) A++; else A = 0;

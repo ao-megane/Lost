@@ -32,6 +32,7 @@ int Player::Reborn() {
 }
 
 int Player::Updata(int Key[], int flag) {
+	if(!(THUMB_X == 0 && THUMB_Y == 0))
 	player.Move(THUMB_X * GetSpeed(), THUMB_Y * GetSpeed());
 
 	if (IsHitColorCtoAll(player,WALL,GetNowFloorHandle())) {//壁ならback
@@ -67,25 +68,25 @@ int Player::Draw() {//ここも大変、特にマスク処理
 	if (lEye) {
 
 	}
-	decoi[0].Setx(player.GetDot().Get_x() - P_SIZE);
-	decoi[0].Sety(player.GetDot().Get_y() - P_SIZE);
+	decoi[0].Setx(player.GetDot().Getx() - P_SIZE);
+	decoi[0].Sety(player.GetDot().Gety() - P_SIZE);
 	decoi[0] = RotateDot(player.GetDir(), decoi[0], player.GetDot());
 
-	decoi[1].Setx(player.GetDot().Get_x() + P_SIZE);
-	decoi[1].Sety(player.GetDot().Get_y() - P_SIZE);
+	decoi[1].Setx(player.GetDot().Getx() + P_SIZE);
+	decoi[1].Sety(player.GetDot().Gety() - P_SIZE);
 	decoi[1] = RotateDot(player.GetDir(), decoi[1], player.GetDot());
 
-	decoi[2].Setx(player.GetDot().Get_x() + P_SIZE);
-	decoi[2].Sety(player.GetDot().Get_y() + P_SIZE);
+	decoi[2].Setx(player.GetDot().Getx() + P_SIZE);
+	decoi[2].Sety(player.GetDot().Gety() + P_SIZE);
 	decoi[2] = RotateDot(player.GetDir(), decoi[2], player.GetDot());
 
-	decoi[3].Setx(player.GetDot().Get_x() - P_SIZE);
-	decoi[3].Sety(player.GetDot().Get_y() + P_SIZE);
+	decoi[3].Setx(player.GetDot().Getx() - P_SIZE);
+	decoi[3].Sety(player.GetDot().Gety() + P_SIZE);
 	decoi[3] = RotateDot(player.GetDir(), decoi[3], player.GetDot());
 
 	/*if (Getplayer().GetRadius() < 0) */
-	DrawModiGraph(decoi[0].Get_x(),decoi[0].Get_y(), decoi[1].Get_x(), decoi[1].Get_y(), 
-		decoi[2].Get_x(), decoi[2].Get_y(), decoi[3].Get_x(), decoi[3].Get_y(), Pimage, true);
+	DrawModiGraph(decoi[0].Getx(),decoi[0].Gety(), decoi[1].Getx(), decoi[1].Gety(), 
+		decoi[2].Getx(), decoi[2].Gety(), decoi[3].Getx(), decoi[3].Gety(), Pimage, true);
 	/*else DrawModiGraph(RotatePoint_x(Get_Dir(), P_x - Get_Size(), P_y - Get_Size(), P_x, P_y), RotatePoint_y(Get_Dir(), P_x - Get_Size(), P_y - Get_Size(), P_x, P_y),
 		RotatePoint_x(Get_Dir(), P_x + Get_Size(), P_y - Get_Size(), P_x, P_y), RotatePoint_y(Get_Dir(), P_x + Get_Size(), P_y - Get_Size(), P_x, P_y),
 		RotatePoint_x(Get_Dir(), P_x + Get_Size(), P_y + Get_Size(), P_x, P_y), RotatePoint_y(Get_Dir(), P_x + Get_Size(), P_y + Get_Size(), P_x, P_y),
@@ -111,4 +112,7 @@ int Player::SetPimage(int a) {
 }
 double Player::GetSpeed() {
 	return  Speed;
+}
+Circle Player::Getplayer() {
+	return player;
 }

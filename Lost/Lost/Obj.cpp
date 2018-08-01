@@ -16,11 +16,11 @@ int Dot::Sety(int a) {
 	return 0;
 }
 
-int Dot::Get_x() {
+int Dot::Getx() {
 	return x;
 }
 
-int Dot::Get_y() {
+int Dot::Gety() {
 	return y;
 }
 
@@ -32,8 +32,8 @@ int Square::Set(Dot a, Dot b) {
 	return 0;
 }
 int Square::Set(Dot a, int w, int h) {
-	LU.Set(a.Get_x() - w / 2, a.Get_y() - h / 2);
-	RD.Set(a.Get_x() + w / 2, a.Get_y() + h / 2);
+	LU.Set(a.Getx() - w / 2, a.Gety() - h / 2);
+	RD.Set(a.Getx() + w / 2, a.Gety() + h / 2);
 	return 0;
 }
 int Square::Set(int a, int b, int c, int d) {
@@ -42,16 +42,16 @@ int Square::Set(int a, int b, int c, int d) {
 	return 0;
 }
 
-int Square::Get_up() {
-	return LU.Get_y();
+int Square::Getup() {
+	return LU.Gety();
 }
-int Square::Get_left() {
-	return LU.Get_x();
+int Square::Getleft() {
+	return LU.Getx();
 }
-Dot Square::Get_LU() {
+Dot Square::GetLU() {
 	return LU;
 }
-Dot Square::Get_RD() {
+Dot Square::GetRD() {
 	return RD;
 }
 
@@ -69,26 +69,20 @@ int Circle::Set(Dot a, double b, double c) {
 	dir = c;
 	return 0;
 }
-int Circle::Move(int dx, int dy) {
-	center.Setx(center.Get_x() + dx);
-	center.Sety(center.Get_y() + dy);
+int Circle::Move(double dx, double dy) {
+	center.Setx(center.Getx() + dx);
+	center.Sety(center.Gety() + dy);
 
-	//if (dx > 0) dir = atan(dy / dx) /*+ PI*/;
-	//else if (dx == 0 && dy >= 0)
-	//	dir = 1 / 2 * PI;
-	//else if (dx == 0 && dy <= 0)
-	//	dir = 3 / 2 * PI;
-	//else if (dx < 0) 
-	//	dir = atan(dy / dx);
-
-	if (dx < 0) dir = atan(dy / dx) + PI;
-	else if (dx == 0 && dy >= 0)
+	if (dx < 0) dir = atan(-dy / dx) + PI;
+	else if (dx == 0 && -dy >= 0)
 		dir = 3 / 2 * PI;
-	else if (dx == 0 && dy <= 0)
+	else if (dx == 0 && -dy <= 0)
 		dir = PI / 2;
-	else if (dx > 0) dir = atan(dy / dx);
+	else if (dx > 0) dir = atan(-dy / dx);
 
 	while (dir < 0) dir += 2 * PI;
+
+	return 0;
 
 	return 0;
 }
@@ -96,10 +90,10 @@ Dot Circle::GetDot() {
 	return center;
 }
 int Circle::Getx() {
-	return center.Get_x();
+	return center.Getx();
 }
 int Circle::Gety() {
-	return center.Get_y();
+	return center.Gety();
 }
 double Circle::GetDir() {
 	return dir;

@@ -20,7 +20,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetDrawScreen(DX_SCREEN_BACK);
 
 	XINPUT_STATE input;
-
 	int Key[10] = { 0 };
 
 	int flag = 0;
@@ -42,10 +41,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	int up = 0;
 	while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen()) {
 
-		//GetJoypadXInputState(DX_INPUT_PAD1, &input);
-		//InputUpdata(input, Key);
-		InputUpdata(Key);
-		//PrintInput(Key);
+		GetJoypadXInputState(DX_INPUT_PAD1, &input);
+		InputUpdata(input, Key);
+		//InputUpdata(Key);
+		PrintInput(Key);
 
 		UpdataBack(count);
 		DrawBack();
