@@ -43,11 +43,8 @@ int Player::Updata(int Key[], int flag) {
 	//if (!(THUMB_X == 0 && THUMB_Y == 0))	//問題なければ進む
 	//	player.Move(THUMB_X * GetSpeed() / 100.0, THUMB_Y * GetSpeed() / 100.0);
 
-	if (Wall.IsHitPlayer(player,GetNowFloorSoftHandle())) {//slack参考
-		DrawFormatString(0, 100, RED, "壁！！！！！！");
-		player.Back(THUMB_X * GetSpeed() / 100.0, THUMB_Y * GetSpeed() / 100.0);
-		return 0;
-	}
+	
+
 	//if (!lArm) {//左手がなければ
 	//	if (IsHitColorCtoAll(player, DOOR, GetNowFloorSoftHandle())) {//ドアならback
 	//		player.Move(-THUMB_X * GetSpeed(), -THUMB_Y * GetSpeed());
@@ -66,7 +63,9 @@ int Player::Updata(int Key[], int flag) {
 	//if (IsHitColorDot(player.GetDot(), FLOOR2, GetNowFloorSoftHandle())) {//現在地を仕込む
 	//	SetFloor2();
 	//}
-	
+
+	if (Wall.IsHitPlayer(player, GetNowFloorSoftHandle()))	//壁判定(移動含む) 当たれば他の判定はしない
+		return 0;
 
 	
 	return 0;

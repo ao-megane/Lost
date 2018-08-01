@@ -27,13 +27,22 @@ bool Color::IsHitPlayer(Circle x, int Handle) {
 				if (r == colordecoi[0] && g == colordecoi[1] && b == colordecoi[2]) {
 					isHitflag = true;
 					DrawPixel(i, j, RED);
+					break;
 				}
 			}
 		}
+		if (isHitflag) break;
 	}
-	if (isHitflag) return true;
-	else return false;
-	return false;
+	if (isHitflag) {//circle‚Ì’†S‚Æ“–‚½‚Á‚½“_(i,j)‚Åƒ¦‚Æ‚Á‚Äsin‚·‚é
+
+		return true;
+	}
+	else {
+		return false;
+	}
+
+
+	return 0;
 }
 bool Color::IsHitCircle(Circle x,int Handle) {
 	if (Handle == 0)
