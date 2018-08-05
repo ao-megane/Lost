@@ -71,7 +71,12 @@ int WinnerUpdata(int count);
 
 //bool IsHitColorDot(Dot x, int colorHandle, int imageHandle);
 
+double CalcDir(Dot center, Dot a);
+double CalcDir(Dot center);
+
 Dot RotateDot(double thita, Dot x, Dot c);
+
+Dot RotateDot(double thita, Dot x);//å¥ì_íÜêS
 
 void FpsTimeFanction();
 

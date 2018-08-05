@@ -1,15 +1,40 @@
 #ifndef OBJH
 #define OBJH
 
-class Dot{//int型の点
+class intDot {//int型の点
+public:/*
+	   Dot();
+	   ~Dot();*/
+	int Setx(int x);
+	int Sety(int y);
+	int Set(int x, int y);			//左上、右下
+	int Getx();
+	int Gety();
+
+	void operator = (intDot d) {		//Dotの代入
+		x = d.Getx();
+		y = d.Gety();
+	};
+	intDot operator - (intDot d) {		//Dotの平行移動
+		intDot a;
+		a.x -= d.Getx();
+		a.y -= d.Gety();
+		return a;
+	};
+private:
+	int x;
+	int y;
+};
+
+class Dot{//double型の点
 public:/*
 	Dot();
 	~Dot();*/
-	int Setx(int x);
-	int Sety(int y);
-	int Set(int x,int y);			//左上、右下
-	int Getx();
-	int Gety();
+	double Setx(double x);
+	double Sety(double y);
+	double Set(double x,double y);			//左上、右下
+	double Getx();
+	double Gety();
 	
 	void operator = (Dot d) {		//Dotの代入
 		x = d.Getx();
@@ -20,10 +45,17 @@ public:/*
 		a.x -= d.Getx();
 		a.y -= d.Gety();
 		return a;
-	};		
+	};
+	Dot operator + (Dot d) {		//Dotの平行移動
+		Dot b;
+		b.x = Getx() + d.Getx();
+		b.y = Gety() + d.Gety();
+		return b;
+	};
+
 private:
-	int x;
-	int y;
+	double x;
+	double y;
 };
 
 class Square{//int四つ
@@ -60,6 +92,7 @@ class Circle {//方向付き円
 public:
 	int Set(int x, int y, double range, double dir);
 	int Set(Dot a, double range, double dir);
+	int SetDir(double thita);
 	int Move(double dx, double dy);
 	int Back(double dx, double dy);
 	Dot GetDot();

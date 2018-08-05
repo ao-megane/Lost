@@ -45,7 +45,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		GetJoypadXInputState(DX_INPUT_PAD1, &input);
 		InputUpdata(input, Key);
 		//InputUpdata(Key);
-		PrintInput(Key);
 
 		UpdataBack(count);
 		DrawBack();
@@ -171,6 +170,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		count++;
 		if (CheckHitKey(KEY_INPUT_DELETE)) break;
+
+		PrintInput(Key);
 		//FpsTimeFanction();
 		ScreenFlip();
 	}

@@ -2,27 +2,53 @@
 #include"Value.h"
 #include<math.h>
 
-int Dot::Set(int a, int b) {
+int intDot::Set(int a, int b) {
 	x = a;
 	y = b;
 	return 0;
 }
-int Dot::Setx(int a) {
+int intDot::Setx(int a) {
 	x = a;
 	return 0;
 }
-int Dot::Sety(int a) {
+int intDot::Sety(int a) {
 	y = a;
 	return 0;
 }
 
-int Dot::Getx() {
+int intDot::Getx() {
 	return x;
 }
 
-int Dot::Gety() {
+int intDot::Gety() {
 	return y;
 }
+
+/***************************************************************/
+double Dot::Set(double a, double b) {
+	x = a;
+	y = b;
+	return 0;
+}
+double Dot::Setx(double a) {
+	x = a;
+	return 0;
+}
+double Dot::Sety(double a) {
+	y = a;
+	return 0;
+}
+
+double Dot::Getx() {
+	return x;
+}
+
+double Dot::Gety() {
+	return y;
+}
+
+
+
 
 /***************************************************************/
 
@@ -69,7 +95,12 @@ int Circle::Set(Dot a, double b, double c) {
 	dir = c;
 	return 0;
 }
+int Circle::SetDir(double a){
+	dir = a;
+	return 0;
+}
 int Circle::Move(double dx, double dy) {
+	if (dx == 0 && dy == 0) return 0;
 	center.Setx(center.Getx() + dx);
 	center.Sety(center.Gety() + dy);
 
@@ -81,8 +112,6 @@ int Circle::Move(double dx, double dy) {
 	else if (dx > 0) dir = atan(-dy / dx);
 
 	while (dir < 0) dir += 2 * PI;
-
-	return 0;
 
 	return 0;
 }

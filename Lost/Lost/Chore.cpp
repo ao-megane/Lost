@@ -379,10 +379,44 @@ int DrawLoseBord(int count) {
 //		return false;
 //}
 
+double dir;
+double CalcDir(Dot c, Dot a) {
+
+	if (a.Getx() - c.Getx() < 0) dir = atan(-(a.Gety() - c.Gety()) / (a.Getx() - c.Getx())) + PI;
+	else if (a.Getx() - c.Getx() == 0 && (a.Gety() - c.Gety()) >= 0)
+		dir = 1 / 2 * PI;
+	else if (a.Getx() - c.Getx() == 0 && (a.Gety() - c.Gety()) <= 0)
+		dir = 3 / 2 * PI;
+	else if (a.Getx() - c.Getx() > 0) dir = atan(-(a.Gety() - c.Gety()) / (a.Getx() - c.Getx()));
+
+	while (dir < 0) dir += 2 * PI;
+
+	return dir;
+}
+double CalcDir(Dot a) {
+	if (a.Getx() < 0) dir = atan(-(a.Gety()) / (a.Getx())) + PI;
+	else if (a.Getx()  == 0 && (a.Gety() ) >= 0)
+		dir = 1 / 2 * PI;
+	else if (a.Getx() == 0 && (a.Gety() ) <= 0)
+		dir = 3 / 2 * PI;
+	else if (a.Getx()> 0) dir = atan(-(a.Gety() ) / (a.Getx() ));
+
+	while (dir < 0) dir += 2 * PI;
+
+	return dir;
+}
+
 Dot RotateDot(double thita, Dot x, Dot c) {
 	Dot ans;
 	ans.Setx((x.Getx() - c.Getx())*cos(-thita) - (x.Gety() - c.Gety())*sin(-thita) + c.Getx());
 	ans.Sety((x.Getx() - c.Getx())*sin(-thita) + (x.Gety() - c.Gety())*cos(-thita) + c.Gety());
+	return ans;
+}
+
+Dot RotateDot(double thita, Dot x) {
+	Dot ans;
+	ans.Setx((x.Getx())*cos(-thita) - (x.Gety())*sin(-thita));
+	ans.Sety((x.Getx())*sin(-thita) + (x.Gety())*cos(-thita));
 	return ans;
 }
 
