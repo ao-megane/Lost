@@ -7,7 +7,7 @@ public:/*
 	Color();
 	~Color();*/
 	int Initialize(int r, int g, int b);
-	int GetColorori();
+	int GetColorOri();
 	bool IsHitPlayer(Circle* x, int softimageHandle,Dot moveDot);
 	bool IsHitCircle(Circle x, int softimageHandle);
 	bool IsHitDot(Dot x, int softimageHandle);

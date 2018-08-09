@@ -65,7 +65,7 @@ const double SON_WIDTH = 1 * SON_RANGE;
 const double SON_HEIGHT = 1 * SON_RANGE;
 
 const int DAUGHTER_RANGE = 300;	//’·—
-//ª”»’èŒn «•`‰æŒn
+//ª”»’èŒn «•`‰æŒnHU
 const double DAUGHTER_WIDTH = 1 * DAUGHTER_RANGE;
 const double DAUGHTER_HEIGHT = 1 * DAUGHTER_RANGE;
 

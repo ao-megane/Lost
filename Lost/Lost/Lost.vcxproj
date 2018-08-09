@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="Chore.cpp" />
     <ClCompile Include="Color.cpp" />
+    <ClCompile Include="EnemyMng.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Obj.cpp" />

@@ -1,6 +1,8 @@
 #ifndef OBJH
 #define OBJH
 
+#include<math.h>
+
 class intDot {//intŒ^‚Ì“_
 public:/*
 	   Dot();
@@ -101,6 +103,13 @@ public:
 	double GetDir();
 	double GetRadius();
 	//int Updata();
+	bool operator & (Circle a) {
+		if (sqrt((center.Getx() - a.GetDot().Getx())*(center.Getx() - a.GetDot().Getx()) + (center.Gety() - a.GetDot().Gety())*(center.Gety() - a.GetDot().Gety()))
+			<= radius + a.GetRadius())
+			return true;
+		else
+			return false;
+	}
 
 private:
 	double radius;

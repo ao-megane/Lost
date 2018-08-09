@@ -77,7 +77,7 @@ int Player::Updata(int Key[], int flag) {
 
 	//player.Move(THUMB_X * GetSpeed() / 100.0, THUMB_Y * GetSpeed() / 100.0);
 	Wall.IsHitPlayer(&player, GetNowFloorSoftHandle(), GetMove());	//•Ç”»’è(ˆÚ“®ŠÜ‚Þ) “–‚½‚ê‚Î‘¼‚Ì”»’è‚Í‚µ‚È‚¢
-	DrawFormatString(0, 200, RED, "player:(%d,%d)", player.Getx(), player.Gety());
+	//DrawFormatString(0, 200, RED, "player:(%d,%d)", player.Getx(), player.Gety());
 
 	//DrawFormatString(0, 220, RED, "%f", player.GetDir()*180/PI);
 	//DrawFormatString(0, 260, RED, "%f", CalcDir(player.GetDot(), player.GetDot() + move)*180/PI);

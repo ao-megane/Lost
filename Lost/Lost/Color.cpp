@@ -11,7 +11,7 @@ int Color::Initialize(int a,int ba,int c) {
 	b = c;
 	return 0;
 }
-int Color::GetColorori() {
+int Color::GetColorOri() {
 	return GetColor(r, g, b);
 }
 int colordecoi[3];	//r,g,b
@@ -22,7 +22,8 @@ Dot touchDot;
 Dot resultDot;
 bool Color::IsHitPlayer(Circle* x, int Handle,Dot moveDot) {
 	isHitflag = false;
-	thita1 = CalcDir(moveDot);
+	if(moveDot.Getx() != 0 && moveDot.Gety() != 0)
+		thita1 = CalcDir(moveDot);
 	if (Handle == 0)
 		return false;
 
@@ -52,7 +53,7 @@ bool Color::IsHitPlayer(Circle* x, int Handle,Dot moveDot) {
 		}
 	
 
-	/*if(!isHitflag)	//ˆê”Ô‚¤‚Ü‚­‚¢‚Á‚Ä‚é
+	/*if(!isHitflag)	//‚¤‚Ü‚­‚¢‚Á‚Ä‚é
 	for (double i = x->Getx() - x->GetRadius()- JUDGE_MARGIN * P_FULL_SPEED; i < x->Getx() + x->GetRadius() + JUDGE_MARGIN*P_FULL_SPEED; i++) {
 		for (double j = x->Gety() - x->GetRadius() - JUDGE_MARGIN * P_FULL_SPEED; j < x->Gety() + x->GetRadius() + JUDGE_MARGIN * P_FULL_SPEED; j++) {
 			if (((i - x->Getx())*(i - x->Getx()) + (j - x->Gety())*(j - x->Gety())) <= (x->GetRadius() + JUDGE_MARGIN * P_FULL_SPEED)*(x->GetRadius() + JUDGE_MARGIN*P_FULL_SPEED) &&
@@ -70,7 +71,8 @@ bool Color::IsHitPlayer(Circle* x, int Handle,Dot moveDot) {
 		if (isHitflag) break;
 	}*/
 
-	thita2 = CalcDir(moveDot);
+	if (moveDot.Getx() != 0 && moveDot.Gety() != 0)
+		thita2 = CalcDir(moveDot);
 	if (isHitflag) {//circle‚Ì’†S‚Æ“–‚½‚Á‚½“_(i,j)‚Åƒ¦‚Æ‚Á‚Äsin‚·‚é
 		//DrawFormatString(0, 120, RED, "thtia1:%d", CalcDir(x->GetDot(), touchDot) * 180 / PI);
 		thita1 = CalcDir(x->GetDot(), touchDot);
