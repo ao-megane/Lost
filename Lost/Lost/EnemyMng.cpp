@@ -57,13 +57,12 @@ int Husband::Set() {
 	return 0;
 }
 
-int Husband::Updata(Circle player,int floor) {
+int Husband::Updata(Circle player) {
 	/* ここが大変，がんばれ
 	
 	*/
-	if(floor == 1)
-		if (player&enemy) 
-			return 1;
+	if (player&enemy) 
+		return 1;
 	return 0;
 }
 
@@ -93,13 +92,12 @@ int Madam::Set() {
 	return 0;
 }
 
-int Madam::Updata(Circle player, int floor) {
+int Madam::Updata(Circle player) {
 	/* ここが大変，がんばれ
 
 	*/
-	if (floor == 1)
-		if (player&enemy)
-			return 1;
+	if (player&enemy)
+		return 1;
 	return 0;
 }
 
@@ -129,13 +127,12 @@ int Son::Set() {
 	return 0;
 }
 
-int Son::Updata(Circle player, int floor) {
+int Son::Updata(Circle player) {
 	/* ここが大変，がんばれ
 
 	*/
-	if (floor == 1)
-		if (player&enemy)
-			return 1;
+	if (player&enemy)
+		return 1;
 	return 0;
 }
 
@@ -165,17 +162,59 @@ int Daughter::Set() {
 	return 0;
 }
 
-int Daughter::Updata(Circle player, int floor) {
+int Daughter::Updata(Circle player) {
 	/* ここが大変，がんばれ
 
 	*/
-	if (floor == 1)
-		if (player&enemy)
-			return 1;
+	if (player&enemy)
+		return 1;
 	return 0;
 }
 
+Husband husband;
+Madam madam;
+Son son;
+Daughter daughter;
+
 int EnemyMngInitialize() {
-	
+	husband.Initialize();
+	madam.Initialize();
+	son.Initialize();
+	daughter.Initialize();
 	return 0;
+}
+
+int EnemyMngSet() {
+	husband.Set();
+	madam.Set();
+	son.Set();
+	daughter.Set();
+	return 0;
+}
+
+int EnemyMngUpdata(Circle player,int floor) {
+	if (floor == 2) {
+		if (son.Updata(player))
+			return 1;
+		if (daughter.Updata(player))
+			return 2;
+	}
+	else if (floor == 1) {
+		if (husband.Updata(player))
+			return 3;
+		if (madam.Updata(player))
+			return 4;
+	}
+	return 0;
+}
+
+int EnemyMngDraw(int floor) {
+	if (floor == 2) {
+		son.Draw();
+		daughter.Draw();
+	}
+	else if (floor == 1) {
+		husband.Draw();
+		madam.Draw();
+	}
 }
