@@ -20,7 +20,8 @@ double thita1;
 double thita2;
 Dot touchDot;
 Dot resultDot;
-bool Color::IsHitPlayer(Circle* x, int Handle,Dot moveDot) {
+
+bool Color::IsHitMoving(Circle x, int Handle,Dot moveDot) {
 	isHitflag = false;
 	if(moveDot.Getx() != 0 && moveDot.Gety() != 0)
 		thita1 = CalcDir(moveDot);
@@ -28,10 +29,10 @@ bool Color::IsHitPlayer(Circle* x, int Handle,Dot moveDot) {
 		return false;
 
 	if (!isHitflag)	//一番うまくいってる
-		for (double i = x->GetRadius(); i > 0; i--) {
-			double j = +sqrt(x->GetRadius()*x->GetRadius() - i * i);
+		for (double i = x.GetRadius(); i > 0; i--) {
+			double j = +sqrt(x.GetRadius()*x.GetRadius() - i * i);
 			resultDot.Set(i, j);
-			resultDot = RotateDot(thita1, resultDot) + x->GetDot();
+			resultDot = RotateDot(thita1, resultDot) + x.GetDot();
 			GetPixelSoftImage(Handle, resultDot.Getx(), resultDot.Gety(), &colordecoi[0], &colordecoi[1], &colordecoi[2], 0);
 			if (r == colordecoi[0] && g == colordecoi[1] && b == colordecoi[2]) {
 				touchDot = resultDot;
@@ -42,7 +43,7 @@ bool Color::IsHitPlayer(Circle* x, int Handle,Dot moveDot) {
 
 			j *= -1;
 			resultDot.Set(i, j);
-			resultDot = RotateDot(-thita1, resultDot) + x->GetDot();
+			resultDot = RotateDot(-thita1, resultDot) + x.GetDot();
 			GetPixelSoftImage(Handle, resultDot.Getx(), resultDot.Gety(), &colordecoi[0], &colordecoi[1], &colordecoi[2], 0);
 			if (r == colordecoi[0] && g == colordecoi[1] && b == colordecoi[2]) {
 				touchDot = resultDot;
@@ -51,6 +52,8 @@ bool Color::IsHitPlayer(Circle* x, int Handle,Dot moveDot) {
 				break;
 			}
 		}
+	if (isHitflag) return true;
+	else return false;
 	
 
 	/*if(!isHitflag)	//うまくいってる
@@ -71,37 +74,33 @@ bool Color::IsHitPlayer(Circle* x, int Handle,Dot moveDot) {
 		if (isHitflag) break;
 	}*/
 
+	
+}
+
+int PlayerMoveInColor(Circle* x,Dot moveDot) {
 	if (moveDot.Getx() != 0 && moveDot.Gety() != 0)
 		thita2 = CalcDir(moveDot);
-	if (isHitflag) {//circleの中心と当たった点(i,j)でΘとってsinする
-		//DrawFormatString(0, 120, RED, "thtia1:%d", CalcDir(x->GetDot(), touchDot) * 180 / PI);
-		thita1 = CalcDir(x->GetDot(), touchDot);
-		DrawFormatString(0, 260, RED, "touchDotthita:%f", thita1*180.0 / PI);
-		if (RotateDot(-thita1, moveDot).Getx() > 0) {	//壁に向かっていれば
-			resultDot.Set(0, RotateDot(-thita1, moveDot).Gety());
-			DrawFormatString(0, 240, RED, "premove:(%f,%f)", resultDot.Getx(), resultDot.Gety());
+	//circleの中心と当たった点(i,j)でΘとってsinする
+	//DrawFormatString(0, 120, RED, "thtia1:%d", CalcDir(x->GetDot(), touchDot) * 180 / PI);
+	thita1 = CalcDir(x->GetDot(), touchDot);
+	DrawFormatString(0, 260, RED, "touchDotthita:%f", thita1*180.0 / PI);
+	if (RotateDot(-thita1, moveDot).Getx() > 0) {	//壁に向かっていれば
+		resultDot.Set(0, RotateDot(-thita1, moveDot).Gety());
+		DrawFormatString(0, 240, RED, "premove:(%f,%f)", resultDot.Getx(), resultDot.Gety());
 
-			resultDot = RotateDot(thita1, resultDot);
-			DrawFormatString(0, 220, RED, "move:(%f,%f)", resultDot.Getx(), resultDot.Gety());
+		resultDot = RotateDot(thita1, resultDot);
+		DrawFormatString(0, 220, RED, "move:(%f,%f)", resultDot.Getx(), resultDot.Gety());
 
-			x->Move(resultDot.Getx(), resultDot.Gety());
-			x->SetDir(thita2);
-		}
-		else {
-			x->Move(moveDot.Getx(), moveDot.Gety());
-			x->SetDir(thita2);
-		}
-		return true;
+		x->Move(resultDot.Getx(), resultDot.Gety());
+		x->SetDir(thita2);
 	}
 	else {
 		x->Move(moveDot.Getx(), moveDot.Gety());
 		x->SetDir(thita2);
-		return false;
 	}
-
-
 	return 0;
 }
+
 bool Color::IsHitCircle(Circle x,int Handle) {
 	if (Handle == 0)
 		return false;

@@ -11,7 +11,14 @@ int Floor1Draw();
 
 int Floor2Draw();
 
-int GetNowFloorSoftHandle();
+int GetFloor1SoftHandle();
+
+int GetLowstepSoftHandle();
+
+int GetHighstepSoftHandle();
+
+int GetFloor2SoftHandle();
+
 
 int PlayMove();
 
@@ -34,18 +41,18 @@ int DrawPause();
 //void DrawChore();
 
 int SetBack();
+//
+//int SetFloor1();
+//
+//int SetStep1();
+//
+//int SetStep2();
+//
+//int SetFloor2();
+//
+//int UpdataBack();
 
-int SetFloor1();
-
-int SetStep1();
-
-int SetStep2();
-
-int SetFloor2();
-
-int UpdataBack(int count);
-
-int DrawBack();
+int DrawBack(int floor,Dot player);
 
 int EndBack();
 

@@ -6,23 +6,36 @@
 #include"Color.h"
 
 int normalImage;
+Dot center;
 Color Wall;
-
+Color Door;
+Color Floor1;
+Color Floor2;
+Color Lowstep;
+Color Highstep;
 
 int Player::Initialize() {
 	normalImage = LoadGraph("images/player/normal.png");
-	Wall.Initialize(0, 0, 0);
+	Wall.Initialize(255, 0, 0);
+	Door.Initialize(0, 255, 0);
+	Floor1.Initialize(0, 0, 255);
+	Floor2.Initialize(255, 255, 0);
+	Lowstep.Initialize(255, 0, 255);
+	Highstep.Initialize(0, 255, 255);
 	SetPimage(normalImage);
 	move.Set(0, 0);
+	SetFloor(1);
+	center.Set(DISP_WIDTH / 2.0, DISP_HEIGHT / 2.0);
 	return 0;
 }
 
 int Player::Set() {
 	player.Set(P_REBORN_X, P_REBORN_Y, P_SIZE, 0);
+	SetFloor(1);
 	rEye = true;
 	lEye = true;
 	rArm = true;
-	lArm = true;
+	lArm = false;
 	rEar = true;
 	lEar = true;
 	rLeg = true;
@@ -44,43 +57,57 @@ int Player::UpdataMove(double a, double b) {
 	return 0;
 }
 
+int Player::GetFloor() {
+	return floor;
+}
+int Player::SetFloor(int a) {
+	floor = a;
+	return 0;
+}
+
 int Player::Updata(int Key[], int flag) {
 
 	DrawFormatString(0, 60, RED, "%d", WALL);
-	DrawFormatString(0, 80, RED, "%d", GetPixelPalCodeSoftImage(GetNowFloorSoftHandle(), player.GetDot().Getx(), player.GetDot().Gety()));
+	//DrawFormatString(0, 80, RED, "%d", GetPixelPalCodeSoftImage(GetNowFloorSoftHandle(), player.GetDot().Getx(), player.GetDot().Gety()));
 
 	UpdataMove(THUMB_X * GetSpeed() / 100.0, THUMB_Y * GetSpeed() / 100.0);
 
-	//if (!(THUMB_X == 0 && THUMB_Y == 0))	//ñ‚ëËÇ»ÇØÇÍÇŒêiÇﬁ
-	//	player.Move(THUMB_X * GetSpeed() / 100.0, THUMB_Y * GetSpeed() / 100.0);
+	if (floor == 4) {
+		if (!Wall.IsHitMoving(player, GetFloor2SoftHandle(), GetMove())) {//ï«îªíË(à⁄ìÆä‹Çﬁ) ìñÇΩÇÍÇŒëºÇÃîªíËÇÕÇµÇ»Ç¢
+			PlayerMoveInColor(&player, GetMove());
+			return 0;
+		}
+		else if (!lArm) {//ç∂éËÇ™Ç»ÇØÇÍÇŒ
+			if(!Door.IsHitMoving(player, GetFloor2SoftHandle(), GetMove()))
+				PlayerMoveInColor(&player, GetMove());
+			return 0;
+		}
+	}
+	else if (floor == 1) {
+		if (!Wall.IsHitMoving(player, GetFloor1SoftHandle(), GetMove())) {//ï«îªíË(à⁄ìÆä‹Çﬁ) ìñÇΩÇÍÇŒëºÇÃîªíËÇÕÇµÇ»Ç¢
+			PlayerMoveInColor(&player, GetMove());
+			return 0;
+		}
+		else if (!lArm) {//ç∂éËÇ™Ç»ÇØÇÍÇŒ
+			if(!Door.IsHitMoving(player, GetFloor1SoftHandle(), GetMove()))
+				PlayerMoveInColor(&player, GetMove());
+			return 0;
+		}
+	}
 
-	
-
-	//if (!lArm) {//ç∂éËÇ™Ç»ÇØÇÍÇŒ
-	//	if (IsHitColorCtoAll(player, DOOR, GetNowFloorSoftHandle())) {//ÉhÉAÇ»ÇÁback
-	//		player.Move(-THUMB_X * GetSpeed(), -THUMB_Y * GetSpeed());
-	//	}
+	//if (Floor1.IsHitCircle(player, GetFloor1SoftHandle())) {
+	//	SetFloor(1);
+	//}
+	//if (Lowstep.IsHitCircle(player, GetLowstepSoftHandle())) {
+	//	SetFloor(2);
+	//}
+	//if (Highstep.IsHitCircle(player, GetHighstepSoftHandle())) {
+	//	SetFloor(3);
+	//}
+	//if (Floor2.IsHitCircle(player, GetFloor2SoftHandle())) {
+	//	SetFloor(4);
 	//}
 
-	//if (IsHitColorDot(player.GetDot(), FLOOR1, GetNowFloorSoftHandle())) {//åªç›ínÇédçûÇﬁ
-	//	//SetFloor1();
-	//}
-	//if (IsHitColorDot(player.GetDot(), STEP1, GetNowFloorSoftHandle())) {//åªç›ínÇédçûÇﬁ
-	//	SetStep1();
-	//}
-	//if (IsHitColorDot(player.GetDot(), STEP2, GetNowFloorSoftHandle())) {//åªç›ínÇédçûÇﬁ
-	//	SetStep2();
-	//}
-	//if (IsHitColorDot(player.GetDot(), FLOOR2, GetNowFloorSoftHandle())) {//åªç›ínÇédçûÇﬁ
-	//	SetFloor2();
-	//}
-
-	//player.Move(THUMB_X * GetSpeed() / 100.0, THUMB_Y * GetSpeed() / 100.0);
-	Wall.IsHitPlayer(&player, GetNowFloorSoftHandle(), GetMove());	//ï«îªíË(à⁄ìÆä‹Çﬁ) ìñÇΩÇÍÇŒëºÇÃîªíËÇÕÇµÇ»Ç¢
-	//DrawFormatString(0, 200, RED, "player:(%d,%d)", player.Getx(), player.Gety());
-
-	//DrawFormatString(0, 220, RED, "%f", player.GetDir()*180/PI);
-	//DrawFormatString(0, 260, RED, "%f", CalcDir(player.GetDot(), player.GetDot() + move)*180/PI);
 	return 0;
 }
 
@@ -95,29 +122,32 @@ int Player::Draw() {//Ç±Ç±Ç‡ëÂïœÅAì¡Ç…É}ÉXÉNèàóù Å©Å@É}ÉXÉNÇÕâÊëúÇÃè„èëÇ´Ç≈çsÇ≠Å
 	if (lEye) {
 
 	}
-	decoi[0].Setx(player.GetDot().Getx() - P_SIZE);
-	decoi[0].Sety(player.GetDot().Gety() - P_SIZE);
-	decoi[0] = RotateDot(player.GetDir(), decoi[0], player.GetDot());
+	decoi[0].Setx(DISP_WIDTH / 2.0 - P_SIZE);
+	decoi[0].Sety(DISP_HEIGHT / 2.0 - P_SIZE);
+	decoi[0] = RotateDot(player.GetDir(), decoi[0], center);
 
-	decoi[1].Setx(player.GetDot().Getx() + P_SIZE);
-	decoi[1].Sety(player.GetDot().Gety() - P_SIZE);
-	decoi[1] = RotateDot(player.GetDir(), decoi[1], player.GetDot());
+	decoi[1].Setx(DISP_WIDTH / 2.0 + P_SIZE);
+	decoi[1].Sety(DISP_HEIGHT / 2.0 - P_SIZE);
+	decoi[1] = RotateDot(player.GetDir(), decoi[1], center);
 
-	decoi[2].Setx(player.GetDot().Getx() + P_SIZE);
-	decoi[2].Sety(player.GetDot().Gety() + P_SIZE);
-	decoi[2] = RotateDot(player.GetDir(), decoi[2], player.GetDot());
+	decoi[2].Setx(DISP_WIDTH / 2.0 + P_SIZE);
+	decoi[2].Sety(DISP_HEIGHT / 2.0 + P_SIZE);
+	decoi[2] = RotateDot(player.GetDir(), decoi[2], center);
 
-	decoi[3].Setx(player.GetDot().Getx() - P_SIZE);
-	decoi[3].Sety(player.GetDot().Gety() + P_SIZE);
-	decoi[3] = RotateDot(player.GetDir(), decoi[3], player.GetDot());
+	decoi[3].Setx(DISP_WIDTH / 2.0 - P_SIZE);
+	decoi[3].Sety(DISP_HEIGHT / 2.0 + P_SIZE);
+	decoi[3] = RotateDot(player.GetDir(), decoi[3], center);
 
 	/*if (Getplayer().GetRadius() < 0) */
 	DrawModiGraph(decoi[0].Getx(),decoi[0].Gety(), decoi[1].Getx(), decoi[1].Gety(), 
 		decoi[2].Getx(), decoi[2].Gety(), decoi[3].Getx(), decoi[3].Gety(), Pimage, true);
-	/*else DrawModiGraph(RotatePoint_x(Get_Dir(), P_x - Get_Size(), P_y - Get_Size(), P_x, P_y), RotatePoint_y(Get_Dir(), P_x - Get_Size(), P_y - Get_Size(), P_x, P_y),
-		RotatePoint_x(Get_Dir(), P_x + Get_Size(), P_y - Get_Size(), P_x, P_y), RotatePoint_y(Get_Dir(), P_x + Get_Size(), P_y - Get_Size(), P_x, P_y),
-		RotatePoint_x(Get_Dir(), P_x + Get_Size(), P_y + Get_Size(), P_x, P_y), RotatePoint_y(Get_Dir(), P_x + Get_Size(), P_y + Get_Size(), P_x, P_y),
-		RotatePoint_x(Get_Dir(), P_x - Get_Size(), P_y + Get_Size(), P_x, P_y), RotatePoint_y(Get_Dir(), P_x - Get_Size(), P_y + Get_Size(), P_x, P_y), P_image, true);*/
+
+	/*DrawModiGraph(
+		DISP_WIDTH / 2.0 - player.GetRadius(), DISP_HEIGHT / 2.0 - player.GetRadius(),
+		DISP_WIDTH / 2.0 + player.GetRadius(), DISP_HEIGHT / 2.0 - player.GetRadius(),
+		DISP_WIDTH / 2.0 + player.GetRadius(), DISP_HEIGHT / 2.0 + player.GetRadius(),
+		DISP_WIDTH / 2.0 - player.GetRadius(), DISP_HEIGHT / 2.0 + player.GetRadius(),
+		Pimage, true);*/
 	return 0;
 }
 int Player::UIDraw(int count) {

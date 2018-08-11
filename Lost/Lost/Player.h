@@ -17,6 +17,7 @@ private:
 	bool rLeg;
 	bool lLeg;
 	double Speed;
+	int floor;
 	int Pimage;
 public:
 	//Player();
@@ -26,6 +27,8 @@ public:
 	int Reborn();
 	int SetPimage(int imageHandle);
 	int UpdataMove(double x,double y);
+	int GetFloor();	//1.2.3.4.
+	int SetFloor(int a);
 	double GetSpeed();
 	Circle Getplayer();
 	Dot GetMove();

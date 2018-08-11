@@ -217,4 +217,5 @@ int EnemyMngDraw(int floor) {
 		husband.Draw();
 		madam.Draw();
 	}
+	return 0;
 }

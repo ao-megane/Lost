@@ -10,8 +10,12 @@
 #include<stdio.h>
 
 int Floor1;
+int Lowstep;
+int Highstep;
 int Floor2;
 int Floor1data;
+int Lowstepdata;
+int Highstepdata;
 int Floor2data;
 
 int Clear;
@@ -42,12 +46,12 @@ int Score;
 int nishiki;
 int SystemInitialize() {
 	Clear = LoadGraph("images/System/Clear1.png");
-	//Floor1 = LoadGraph("images/maps/floor1-data.png");
-	Floor1 = LoadGraph("images/maps/test.png");
-	Floor1data = LoadSoftImage("images/maps/test.png");
-	//Floor2 = LoadGraph("images/maps/floor2-data.png");
-	Floor2 = LoadGraph("images/maps/test.png");
-	Floor2data = LoadSoftImage("images/maps/test.png");
+
+	Floor1 = LoadGraph("images/maps/floor1-data.png");
+	Floor1data = LoadSoftImage("images/maps/floor1-data.png");
+	Floor2 = LoadGraph("images/maps/floor2-data.png");
+	Floor2data = LoadSoftImage("images/maps/floor2-data.png");
+
 	Prologue[0] = LoadGraph("images/system/prologue/1.png");
 	Prologue[1] = LoadGraph("images/system/prologue/2.png");
 	Prologue[2] = LoadGraph("images/system/prologue/3.png");
@@ -184,13 +188,8 @@ void DrawChore() {
 	//DrawFormatStringFToHandle(DISP_WIDTH - 500, 10, BROWN, nishiki, "SCORE : %5d", Score);
 }
 
-bool floor1;//今の階を表すフラグ
-bool step1;
-bool step2;
-bool floor2;
-
 int SetBack() {
-	if (floor1) {
+	/*if (floor1) {
 		DrawFormatString(0, 0, RED, "FLOOR1");
 	}
 	else if (step1) {
@@ -201,11 +200,11 @@ int SetBack() {
 	}
 	else if (floor2) {
 		DrawFormatString(0, 0, RED, "floor2");
-	}
+	}*/
 	return 0;
 }
 
-int SetFloor1() {
+/*int SetFloor1() {
 	floor1 = true;
 	step1 = false;
 	step2 = false;
@@ -232,31 +231,65 @@ int SetFloor2() {
 	step2 = false;
 	floor2 = true;
 	return 0;
-}
+}*/
 
-int GetNowFloorSoftHandle() {
+int GetFloor1SoftHandle() {
 	return Floor1data;
-	if (floor1) {
-		return Floor1;
-	}
-	else if (step1) {
-		return 0;
-	}
-	else if (step2) {
-		return 0;
-	}
-	else if (floor2) {
-		return Floor2;
-	}
+}
+int GetLowstepSoftHandle() {
+	return Lowstepdata;
+}
+int GetHighstepSoftHandle() {
+	return Highstepdata;
+}
+int GetFloor2SoftHandle() {
+	return Floor2data;
 }
 
 int UpdataBack(int count) {//count使わなくてもできる(?)
 	return 0;
 }
 
-int DrawBack() {
-	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Floor1, true);
-	DrawFormatString(0, 20, RED, "Draw BackGround");
+int DrawBack(int floor,Dot player) {
+	DrawModiGraph(
+		DISP_WIDTH / 2.0 - player.Getx(), DISP_HEIGHT / 2.0 - player.Gety(),
+		DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety(),
+		DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
+		DISP_WIDTH / 2.0 - player.Getx(), DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
+		Floor1, true);
+	//if (floor == 1) {
+	//	DrawModiGraph(
+	//		DISP_WIDTH / 2.0 - player.Getx(), DISP_HEIGHT / 2.0 - player.Gety(),
+	//		DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety(),
+	//		DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
+	//		DISP_WIDTH / 2.0 - player.Getx(), DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
+	//		Floor1, true);
+	//	//DrawFormatString(0, 20, RED, "Draw BackGround");
+	//}
+	//else if (floor == 2) {
+	//	DrawModiGraph(
+	//		DISP_WIDTH / 2.0 - player.Getx(), DISP_HEIGHT / 2.0 - player.Gety(),
+	//		DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety(),
+	//		DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
+	//		DISP_WIDTH / 2.0 - player.Getx(), DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
+	//		Floor1, true);
+	//}
+	//else if (floor == 3) {
+	//	DrawModiGraph(
+	//		DISP_WIDTH / 2.0 - player.Getx(), DISP_HEIGHT / 2.0 - player.Gety(),
+	//		DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety(),
+	//		DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
+	//		DISP_WIDTH / 2.0 - player.Getx(), DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
+	//		Floor2, true);
+	//}
+	//else if (floor == 4) {
+	//	DrawModiGraph(
+	//		DISP_WIDTH / 2.0 - player.Getx(), DISP_HEIGHT / 2.0 - player.Gety(),
+	//		DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety(),
+	//		DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
+	//		DISP_WIDTH / 2.0 - player.Getx(), DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
+	//		Floor2, true);
+	//}
 	return 0;
 }
 
@@ -379,6 +412,8 @@ int DrawLoseBord(int count) {
 //		return false;
 //}
 
+
+/*-------------------------------------------------------------*/
 double dir;
 double CalcDir(Dot c, Dot a) {
 

@@ -31,6 +31,9 @@ const int ThumbTrig = 16383; //thumb‚Ì–³‹‚·‚é”ÍˆÍ `32767
 const int DISP_WIDTH = 2160;	//‰æ–Ê‚Ì‘å‚«‚³(Surfacepro3)
 const int DISP_HEIGHT = 1440;
 
+const int MAP_WIDTH = 10800;
+const int MAP_HEIGHT = 7200;
+
 //const int DOOR = GetColor(0, 255, 0);
 const int DOOR = GetColor(255, 0, 0);
 const int WALL = GetColor(0, 0, 0);
@@ -44,7 +47,7 @@ const double JUDGE_MARGIN = 1.0;	//ƒvƒŒƒCƒ„[‚Æ•Ç‚Ì’Ç“Ë‚É‚Â‚¢‚ÄC–„‚ß‚Ü‚ê‚È‚¢‚
 const int P_SIZE = 50;	//ƒvƒŒƒCƒ„[‚Ì”¼Œa
 const int P_REBORN_X = 250;
 const int P_REBORN_Y = 1000;
-const double P_FULL_SPEED = 15;
+const double P_FULL_SPEED = 30;
 //ª”»’èŒn «•`‰æŒn
 const double P_WIDTH = 1 * P_SIZE;
 const double P_HEIGHT = 1 * P_SIZE;

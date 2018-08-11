@@ -46,8 +46,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		InputUpdata(input, Key);
 		//InputUpdata(Key);
 
-		UpdataBack(count);
-		DrawBack();
+		//UpdataBack();
+		DrawBack(player.GetFloor(),player.Getplayer().GetDot());
 
 		switch (flag) {
 		case 0://OP
@@ -171,7 +171,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		count++;
 		if (CheckHitKey(KEY_INPUT_DELETE)) break;
 
-		PrintInput(Key);
+		//PrintInput(Key);
 		//FpsTimeFanction();
 		ScreenFlip();
 	}
