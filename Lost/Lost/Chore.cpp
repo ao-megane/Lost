@@ -428,17 +428,31 @@ double CalcDir(Dot c, Dot a) {
 
 	return dir;
 }
-double CalcDir(Dot a) {
-	if (a.Getx() < 0) dir = atan(-(a.Gety()) / (a.Getx())) + PI;
-	else if (a.Getx()  == 0 && (a.Gety() ) >= 0)
-		dir = 1 / 2 * PI;
-	else if (a.Getx() == 0 && (a.Gety() ) <= 0)
-		dir = 3 / 2 * PI;
-	else if (a.Getx()> 0) dir = atan(-(a.Gety() ) / (a.Getx() ));
+double CalcDir(Dot a) {//–³“ü—Í‚ÍŒvŽZ‚µ‚È‚¢
 
-	while (dir < 0) dir += 2 * PI;
+	if (a.Getx() == 0 && a.Gety() > 0) {
+		return  3.0 / 2.0 * PI;
+	}
+	else if (a.Getx() == 0 && a.Gety() < 0) {
+		return 1.0 / 2.0* PI;
+	}
+	else if (a.Gety() == 0 && a.Getx() > 0) {
+		return 0;
+	}
+	else if (a.Gety() == 0 && a.Getx() < 0) {
+		return PI;
+	}
+	else if (a.Getx() < 0) {
+		return atan(-a.Gety() / a.Getx()) + PI;
+	}
+	else if (a.Getx() > 0) {
+		dir = atan(-a.Gety() / a.Getx());
+		while (dir < 0) dir += 2 * PI;
+		return dir;
+	}
 
-	return dir;
+	/*while (dir < 0) dir += 2 * PI;
+	return dir;*/
 }
 
 Dot RotateDot(double thita, Dot x, Dot c) {

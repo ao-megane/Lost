@@ -21,7 +21,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetDrawScreen(DX_SCREEN_BACK);
 
 	XINPUT_STATE input;
-	int Key[10] = { 0 };
+	int Key[20] = { 0 };
 
 	int flag = 0;
 	int selectFlag = 0;	//0:play,1:manual,2:credit

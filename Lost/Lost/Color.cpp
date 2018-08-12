@@ -75,17 +75,13 @@ bool Color::IsHitMoving(Circle x, int Handle) {
 	}*/
 }
 
-int PlayerMoveInColor(Circle* x,Dot moveDot) {
+int PlayerMoveInColor(Circle* x,Dot moveDot) {	//‚Ô‚Â‚©‚Á‚½‚Æ‚«—p‚ÌˆÚ“®ŠÖ”
 	//circle‚Ì’†S‚Æ“–‚½‚Á‚½“_(i,j)‚Åƒ¦‚Æ‚Á‚Äsin‚·‚é
-	//DrawFormatString(0, 120, RED, "thtia1:%d", CalcDir(x->GetDot(), touchDot) * 180 / PI);
 	thita1 = CalcDir(x->GetDot(), touchDot);
-	//DrawFormatString(0, 260, RED, "touchDotthita:%f", thita1*180.0 / PI);
 	if (RotateDot(-thita1, moveDot).Getx() > 0) {	//•Ç‚ÉŒü‚©‚Á‚Ä‚¢‚ê‚Î
 		resultDot.Set(0, RotateDot(-thita1, moveDot).Gety());
-		//DrawFormatString(0, 240, RED, "premove:(%f,%f)", resultDot.Getx(), resultDot.Gety());
 
 		resultDot = RotateDot(thita1, resultDot);
-		//DrawFormatString(0, 220, RED, "move:(%f,%f)", resultDot.Getx(), resultDot.Gety());
 
 		x->Move(resultDot);
 	}

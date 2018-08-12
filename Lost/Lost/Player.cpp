@@ -85,7 +85,7 @@ int Player::Updata(int Key[], int flag) {
 
 	UpdataMove(THUMB_X * GetSpeed() / 100.0, THUMB_Y * GetSpeed() / 100.0);
 
-	if (GetMove().Getx() != 0 && GetMove().Gety() != 0)
+	if (!(GetMove().Getx() == 0 && GetMove().Gety() == 0))
 		player.SetDir(CalcDir(GetMove()));
 
 	if (floor == 4) {
@@ -135,6 +135,7 @@ Dot decoi[4];
 int Player::Draw() {//ここも大変、特にマスク処理 ←　マスクは画像の上書きで行く，とりあえず全体表示をしっかり
 
 	DrawFormatString(300, 0, RED, "PLAYER DRAW");
+	DrawFormatString(300, 20, RED, "dir:%f", player.GetDir() * 180 / PI);
 	//if (!lArm) DrawFormatString(300, 20, RED, "Lost!");
 
 	if (rEye) {
