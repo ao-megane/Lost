@@ -100,6 +100,11 @@ int Circle::SetDir(double a){
 	return 0;
 }
 int Circle::Move(double dx, double dy) {
+	center.Setx(center.Getx() + dx);
+	center.Sety(center.Gety() + dy);
+	return 0;
+}
+int Circle::MoveandTurn(double dx, double dy) {
 	if (dx == 0 && dy == 0) return 0;
 	center.Setx(center.Getx() + dx);
 	center.Sety(center.Gety() + dy);
@@ -110,6 +115,27 @@ int Circle::Move(double dx, double dy) {
 	else if (dx == 0 && -dy <= 0)
 		dir = 3 / 2 * PI;
 	else if (dx > 0) dir = atan(-dy / dx);
+
+	while (dir < 0) dir += 2 * PI;
+
+	return 0;
+}
+int Circle::Move(Dot a) {
+	center.Setx(center.Getx() + a.Getx());
+	center.Sety(center.Gety() + a.Gety());
+	return 0;
+}
+int Circle::MoveandTurn(Dot a) {
+	if (a.Getx() == 0 && a.Gety() == 0) return 0;
+	center.Setx(center.Getx() + a.Getx());
+	center.Sety(center.Gety() + a.Gety());
+
+	if (a.Getx() < 0) dir = atan(-a.Gety() / a.Getx()) + PI;
+	else if (a.Getx() == 0 && -a.Gety() >= 0)
+		dir = 1 / 2 * PI;
+	else if (a.Getx() == 0 && -a.Gety() <= 0)
+		dir = 3 / 2 * PI;
+	else if (a.Getx() > 0) dir = atan(-a.Gety() / a.Getx());
 
 	while (dir < 0) dir += 2 * PI;
 

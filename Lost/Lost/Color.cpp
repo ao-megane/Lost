@@ -21,37 +21,37 @@ double thita2;
 Dot touchDot;
 Dot resultDot;
 
-bool Color::IsHitMoving(Circle x, int Handle,Dot moveDot) {
+bool Color::IsHitMoving(Circle x, int Handle) {
 	isHitflag = false;
-	if(moveDot.Getx() != 0 && moveDot.Gety() != 0)
-		thita1 = CalcDir(moveDot);
+	/*if(moveDot.Getx() != 0 && moveDot.Gety() != 0)
+		thita1 = CalcDir(moveDot);*/
 	if (Handle == 0)
 		return false;
 
-	if (!isHitflag)	//ˆê”Ô‚¤‚Ü‚­‚¢‚Á‚Ä‚é
-		for (double i = x.GetRadius(); i > 0; i--) {
-			double j = +sqrt(x.GetRadius()*x.GetRadius() - i * i);
-			resultDot.Set(i, j);
-			resultDot = RotateDot(thita1, resultDot) + x.GetDot();
-			GetPixelSoftImage(Handle, resultDot.Getx(), resultDot.Gety(), &colordecoi[0], &colordecoi[1], &colordecoi[2], 0);
-			if (r == colordecoi[0] && g == colordecoi[1] && b == colordecoi[2]) {
-				touchDot = resultDot;
-				//DrawCircle(i, j, 20, RED, 1);
-				isHitflag = true;
-				break;
-			}
-
-			j *= -1;
-			resultDot.Set(i, j);
-			resultDot = RotateDot(-thita1, resultDot) + x.GetDot();
-			GetPixelSoftImage(Handle, resultDot.Getx(), resultDot.Gety(), &colordecoi[0], &colordecoi[1], &colordecoi[2], 0);
-			if (r == colordecoi[0] && g == colordecoi[1] && b == colordecoi[2]) {
-				touchDot = resultDot;
-				//DrawCircle(i, j, 20, RED, 1);
-				isHitflag = true;
-				break;
-			}
+	for (double i = x.GetRadius(); i > 0; i--) {//ˆê”Ô‚¤‚Ü‚­‚¢‚Á‚Ä‚é
+		double j = +sqrt(x.GetRadius()*x.GetRadius() - i * i);
+		resultDot.Set(i, j);
+		resultDot = RotateDot(x.GetDir(), resultDot) + x.GetDot();
+		GetPixelSoftImage(Handle, resultDot.Getx(), resultDot.Gety(), &colordecoi[0], &colordecoi[1], &colordecoi[2], 0);
+		if (r == colordecoi[0] && g == colordecoi[1] && b == colordecoi[2]) {	//‚Ô‚Â‚©‚ê‚Î
+			touchDot = resultDot;
+			//DrawCircle(touchDot.Getx(), touchDot.Gety(), 20, RED, 1);
+			isHitflag = true;
+			break;
 		}
+
+		j *= -1;
+		resultDot.Set(i, j);
+		resultDot = RotateDot(x.GetDir(), resultDot) + x.GetDot();
+		GetPixelSoftImage(Handle, resultDot.Getx(), resultDot.Gety(), &colordecoi[0], &colordecoi[1], &colordecoi[2], 0);
+		if (r == colordecoi[0] && g == colordecoi[1] && b == colordecoi[2]) {	//‚Ô‚Â‚©‚ê‚Î
+			touchDot = resultDot;
+			//DrawCircle(touchDot.Getx(), touchDot.Gety(), 20, RED, 1);
+			isHitflag = true;
+			break;
+		}
+	}
+
 	if (isHitflag) return true;
 	else return false;
 	
@@ -73,30 +73,24 @@ bool Color::IsHitMoving(Circle x, int Handle,Dot moveDot) {
 		}
 		if (isHitflag) break;
 	}*/
-
-	
 }
 
 int PlayerMoveInColor(Circle* x,Dot moveDot) {
-	if (moveDot.Getx() != 0 && moveDot.Gety() != 0)
-		thita2 = CalcDir(moveDot);
 	//circle‚Ì’†S‚Æ“–‚½‚Á‚½“_(i,j)‚Åƒ¦‚Æ‚Á‚Äsin‚·‚é
 	//DrawFormatString(0, 120, RED, "thtia1:%d", CalcDir(x->GetDot(), touchDot) * 180 / PI);
 	thita1 = CalcDir(x->GetDot(), touchDot);
-	DrawFormatString(0, 260, RED, "touchDotthita:%f", thita1*180.0 / PI);
+	//DrawFormatString(0, 260, RED, "touchDotthita:%f", thita1*180.0 / PI);
 	if (RotateDot(-thita1, moveDot).Getx() > 0) {	//•Ç‚ÉŒü‚©‚Á‚Ä‚¢‚ê‚Î
 		resultDot.Set(0, RotateDot(-thita1, moveDot).Gety());
-		DrawFormatString(0, 240, RED, "premove:(%f,%f)", resultDot.Getx(), resultDot.Gety());
+		//DrawFormatString(0, 240, RED, "premove:(%f,%f)", resultDot.Getx(), resultDot.Gety());
 
 		resultDot = RotateDot(thita1, resultDot);
-		DrawFormatString(0, 220, RED, "move:(%f,%f)", resultDot.Getx(), resultDot.Gety());
+		//DrawFormatString(0, 220, RED, "move:(%f,%f)", resultDot.Getx(), resultDot.Gety());
 
-		x->Move(resultDot.Getx(), resultDot.Gety());
-		x->SetDir(thita2);
+		x->Move(resultDot);
 	}
 	else {
-		x->Move(moveDot.Getx(), moveDot.Gety());
-		x->SetDir(thita2);
+		x->Move(moveDot);
 	}
 	return 0;
 }

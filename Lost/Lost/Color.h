@@ -8,7 +8,7 @@ public:/*
 	~Color();*/
 	int Initialize(int r, int g, int b);
 	int GetColorOri();
-	bool IsHitMoving(Circle x, int softimageHandle,Dot moveDot);
+	bool IsHitMoving(Circle x, int softimageHandle);
 	bool IsHitCircle(Circle x, int softimageHandle);
 	bool IsHitDot(Dot x, int softimageHandle);
 

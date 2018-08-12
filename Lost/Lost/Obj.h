@@ -95,7 +95,10 @@ public:
 	int Set(int x, int y, double range, double dir);
 	int Set(Dot a, double range, double dir);
 	int SetDir(double thita);
+	int MoveandTurn(double dx, double dy);
 	int Move(double dx, double dy);
+	int MoveandTurn(Dot a);
+	int Move(Dot a);
 	int Back(double dx, double dy);
 	Dot GetDot();
 	int Getx();

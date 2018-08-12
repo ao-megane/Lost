@@ -32,7 +32,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	player.Initialize();
 	//EnemyMngInitialize();
 	SystemInitialize();
-	InputFile("kanuma2017.txt");
+	//InputFile("kanuma2017.txt");
 
 	SetBack();
 	PlayBGM();
@@ -171,12 +171,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		count++;
 		if (CheckHitKey(KEY_INPUT_DELETE)) break;
 
-		//PrintInput(Key);
+		PrintInput(Key);
 		//FpsTimeFanction();
 		ScreenFlip();
 	}
 
-	UpdataFile("kanuma2017.txt", 0, 0);
+	//UpdataFile("kanuma2017.txt", 0, 0);
 	DxLib_End();
 
 	return 0;

@@ -6,6 +6,7 @@
 #include"Color.h"
 
 int normalImage;
+int larmImage;
 Dot center;
 Color Wall;
 Color Door;
@@ -16,6 +17,7 @@ Color Highstep;
 
 int Player::Initialize() {
 	normalImage = LoadGraph("images/player/normal.png");
+	larmImage = LoadGraph("images/player/larm.png");
 	Wall.Initialize(255, 0, 0);
 	Door.Initialize(0, 255, 0);
 	Floor1.Initialize(0, 0, 255);
@@ -24,18 +26,18 @@ int Player::Initialize() {
 	Highstep.Initialize(0, 255, 255);
 	SetPimage(normalImage);
 	move.Set(0, 0);
-	SetFloor(1);
+	SetFloor(4);
 	center.Set(DISP_WIDTH / 2.0, DISP_HEIGHT / 2.0);
 	return 0;
 }
 
 int Player::Set() {
 	player.Set(P_REBORN_X, P_REBORN_Y, P_SIZE, 0);
-	SetFloor(1);
+	SetFloor(4);
 	rEye = true;
 	lEye = true;
 	rArm = true;
-	lArm = false;
+	lArm = true;
 	rEar = true;
 	lEar = true;
 	rLeg = true;
@@ -67,33 +69,51 @@ int Player::SetFloor(int a) {
 
 int Player::Updata(int Key[], int flag) {
 
-	DrawFormatString(0, 60, RED, "%d", WALL);
+	if (Y == 1) {
+		if (lArm)
+			lArm = false;
+		else
+			lArm = true;
+	}
+	if (!lArm)
+		Pimage = larmImage;
+	else
+		Pimage = normalImage;
+
+	//DrawFormatString(0, 60, RED, "%d", WALL);
 	//DrawFormatString(0, 80, RED, "%d", GetPixelPalCodeSoftImage(GetNowFloorSoftHandle(), player.GetDot().Getx(), player.GetDot().Gety()));
 
 	UpdataMove(THUMB_X * GetSpeed() / 100.0, THUMB_Y * GetSpeed() / 100.0);
 
+	if (GetMove().Getx() != 0 && GetMove().Gety() != 0)
+		player.SetDir(CalcDir(GetMove()));
+
 	if (floor == 4) {
-		if (!Wall.IsHitMoving(player, GetFloor2SoftHandle(), GetMove())) {//壁判定(移動含む) 当たれば他の判定はしない
+		if (!lArm) {
+			if (Door.IsHitMoving(player, GetFloor2SoftHandle())) {	//ドアにぶつかれば
+				PlayerMoveInColor(&player, GetMove());
+				return 0;
+			}
+		}
+		if (Wall.IsHitMoving(player, GetFloor2SoftHandle())) {	//壁にぶつかれば
 			PlayerMoveInColor(&player, GetMove());
 			return 0;
 		}
-		else if (!lArm) {//左手がなければ
-			if(!Door.IsHitMoving(player, GetFloor2SoftHandle(), GetMove()))
-				PlayerMoveInColor(&player, GetMove());
-			return 0;
-		}
+		player.Move(GetMove());
 	}
-	else if (floor == 1) {
-		if (!Wall.IsHitMoving(player, GetFloor1SoftHandle(), GetMove())) {//壁判定(移動含む) 当たれば他の判定はしない
-			PlayerMoveInColor(&player, GetMove());
-			return 0;
-		}
-		else if (!lArm) {//左手がなければ
-			if(!Door.IsHitMoving(player, GetFloor1SoftHandle(), GetMove()))
-				PlayerMoveInColor(&player, GetMove());
-			return 0;
-		}
-	}
+
+	//if (floor == 4) {
+	//	if (Wall.IsHitMoving(player, GetFloor2SoftHandle())) {//壁判定
+	//		if (!lArm) {//左手がなければドア判定
+	//			if (Door.IsHitMoving(player, GetFloor2SoftHandle())) {	//壁にもドアにもぶつからなければ
+	//				player.Move(GetMove());
+	//				return 0;
+	//			}
+	//		}
+	//	}
+	//	PlayerMoveInColor(&player, GetMove());
+	//}
+	
 
 	//if (Floor1.IsHitCircle(player, GetFloor1SoftHandle())) {
 	//	SetFloor(1);
@@ -115,6 +135,7 @@ Dot decoi[4];
 int Player::Draw() {//ここも大変、特にマスク処理 ←　マスクは画像の上書きで行く，とりあえず全体表示をしっかり
 
 	DrawFormatString(300, 0, RED, "PLAYER DRAW");
+	//if (!lArm) DrawFormatString(300, 20, RED, "Lost!");
 
 	if (rEye) {
 
