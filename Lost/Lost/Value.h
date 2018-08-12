@@ -31,8 +31,10 @@ const int ThumbTrig = 16383; //thumbの無視する範囲 ～32767
 const int DISP_WIDTH = 2160;	//画面の大きさ(Surfacepro3)
 const int DISP_HEIGHT = 1440;
 
-const int MAP_WIDTH = 10800;
-const int MAP_HEIGHT = 7200;
+const int MAP_WIDTH = 10800 * 0.5;
+const int MAP_HEIGHT = 7200 * 0.5;
+
+const int MASK_WIDTH = 2600;
 
 //const int DOOR = GetColor(0, 255, 0);
 const int DOOR = GetColor(255, 0, 0);
@@ -44,10 +46,11 @@ const int FLOOR2 = GetColor(0, 0, 255);
 
 const double JUDGE_MARGIN = 1.0;	//プレイヤーと壁の追突について，埋め込まれないために
 
-const int P_SIZE = 50;	//プレイヤーの半径
+const int P_SIZE = 60;	//プレイヤーの半径
 const int P_REBORN_X = 250;
 const int P_REBORN_Y = 1000;
 const double P_FULL_SPEED = 30;
+const double P_HALF_SPEED = 15;
 //↑判定系 ↓描画系
 const double P_WIDTH = 1 * P_SIZE;
 const double P_HEIGHT = 1 * P_SIZE;

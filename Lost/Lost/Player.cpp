@@ -7,6 +7,7 @@
 
 int normalImage;
 int larmImage;
+int maskImage;
 Dot center;
 Color Wall;
 Color Door;
@@ -18,6 +19,7 @@ Color Highstep;
 int Player::Initialize() {
 	normalImage = LoadGraph("images/player/normal.png");
 	larmImage = LoadGraph("images/player/larm.png");
+	maskImage = LoadGraph("images/player/mask.png");
 	Wall.Initialize(255, 0, 0);
 	Door.Initialize(0, 255, 0);
 	Floor1.Initialize(0, 0, 255);
@@ -68,6 +70,12 @@ int Player::SetFloor(int a) {
 }
 
 int Player::Updata(int Key[], int flag) {
+	if (LEFT > 0) {
+		SetSpeed(P_FULL_SPEED);
+	}
+	else {
+		SetSpeed(P_HALF_SPEED);
+	}
 
 	if (Y == 1) {
 		if (lArm)
@@ -88,7 +96,7 @@ int Player::Updata(int Key[], int flag) {
 	if (!(GetMove().Getx() == 0 && GetMove().Gety() == 0))
 		player.SetDir(CalcDir(GetMove()));
 
-	if (floor == 4) {
+	if (floor == 4) {	//2äKÇ…Ç¢ÇÈÇ∆Ç´
 		if (!lArm) {
 			if (Door.IsHitMoving(player, GetFloor2SoftHandle())) {	//ÉhÉAÇ…Ç‘Ç¬Ç©ÇÍÇŒ
 				PlayerMoveInColor(&player, GetMove());
@@ -99,7 +107,54 @@ int Player::Updata(int Key[], int flag) {
 			PlayerMoveInColor(&player, GetMove());
 			return 0;
 		}
-		player.Move(GetMove());
+		if (Highstep.IsHitCircle(player, GetFloor2SoftHandle())) {	//2äKÇÃäKíiÇ…Ç¢ÇÈÇ∆Ç´
+			SetFloor(3);
+			return 0;
+		}
+	}
+	else if (floor == 3) {
+		//if (Wall.IsHitMoving(player, GetFloor2SoftHandle()) || Wall.IsHitMoving(player, GetFloor1SoftHandle())) {	//ï«Ç…Ç‘Ç¬Ç©ÇÍÇŒ
+		//	PlayerMoveInColor(&player, GetMove());
+		//	return 0;
+		//}
+		if (Floor2.IsHitCircle(player, GetFloor2SoftHandle())) {
+			SetFloor(4);
+			return 0;
+		}
+		if (Lowstep.IsHitCircle(player, GetFloor1SoftHandle())) {
+			SetFloor(2);
+			return 0;
+		}
+	}
+	else if (floor == 2) {
+		//if (Wall.IsHitMoving(player, GetFloor2SoftHandle()) || Wall.IsHitMoving(player, GetFloor1SoftHandle())) {	//ï«Ç…Ç‘Ç¬Ç©ÇÍÇŒ
+		//	PlayerMoveInColor(&player, GetMove());
+		//	return 0;
+		//}
+		if (Floor1.IsHitCircle(player, GetFloor1SoftHandle())) {
+			SetFloor(1);
+			return 0;
+		}
+		if (Highstep.IsHitCircle(player, GetFloor2SoftHandle())) {
+			SetFloor(3);
+			return 0;
+		}
+	}
+	else if (floor == 1) {	//1äKÇ…Ç¢ÇÈÇ∆Ç´
+		if (!lArm) {
+			if (Door.IsHitMoving(player, GetFloor1SoftHandle())) {	//ÉhÉAÇ…Ç‘Ç¬Ç©ÇÍÇŒ
+				PlayerMoveInColor(&player, GetMove());
+				return 0;
+			}
+		}
+		if (Wall.IsHitMoving(player, GetFloor1SoftHandle())) {	//ï«Ç…Ç‘Ç¬Ç©ÇÍÇŒ
+			PlayerMoveInColor(&player, GetMove());
+			return 0;
+		}
+		if (Lowstep.IsHitCircle(player, GetFloor1SoftHandle())) {	//2äKÇÃäKíiÇ…Ç¢ÇÈÇ∆Ç´
+			SetFloor(2);
+			return 0;
+		}
 	}
 
 	//if (floor == 4) {
@@ -113,20 +168,25 @@ int Player::Updata(int Key[], int flag) {
 	//	}
 	//	PlayerMoveInColor(&player, GetMove());
 	//}
-	
 
-	//if (Floor1.IsHitCircle(player, GetFloor1SoftHandle())) {
-	//	SetFloor(1);
-	//}
-	//if (Lowstep.IsHitCircle(player, GetLowstepSoftHandle())) {
-	//	SetFloor(2);
-	//}
-	//if (Highstep.IsHitCircle(player, GetHighstepSoftHandle())) {
-	//	SetFloor(3);
-	//}
-	//if (Floor2.IsHitCircle(player, GetFloor2SoftHandle())) {
-	//	SetFloor(4);
-	//}
+	player.Move(GetMove());
+
+	if (floor == 4) {
+
+	}
+
+	/*if (Floor1.IsHitCircle(player, GetFloor1SoftHandle())) {
+		SetFloor(1);
+	}
+	if (Lowstep.IsHitCircle(player, GetLowstepSoftHandle())) {
+		SetFloor(2);
+	}
+	if (Highstep.IsHitCircle(player, GetHighstepSoftHandle())) {
+		SetFloor(3);
+	}
+	if (Floor2.IsHitCircle(player, GetFloor2SoftHandle())) {
+		SetFloor(4);
+	}*/
 
 	return 0;
 }
@@ -135,7 +195,8 @@ Dot decoi[4];
 int Player::Draw() {//Ç±Ç±Ç‡ëÂïœÅAì¡Ç…É}ÉXÉNèàóù Å©Å@É}ÉXÉNÇÕâÊëúÇÃè„èëÇ´Ç≈çsÇ≠ÅCÇ∆ÇËÇ†Ç¶Ç∏ëSëÃï\é¶ÇÇµÇ¡Ç©ÇË
 
 	DrawFormatString(300, 0, RED, "PLAYER DRAW");
-	DrawFormatString(300, 20, RED, "dir:%f", player.GetDir() * 180 / PI);
+	//DrawFormatString(300, 20, RED, "dir:%f", player.GetDir() * 180 / PI);
+	DrawFormatString(300, 20, RED, "floor:%d", GetFloor());
 	//if (!lArm) DrawFormatString(300, 20, RED, "Lost!");
 
 	if (rEye) {
@@ -160,16 +221,28 @@ int Player::Draw() {//Ç±Ç±Ç‡ëÂïœÅAì¡Ç…É}ÉXÉNèàóù Å©Å@É}ÉXÉNÇÕâÊëúÇÃè„èëÇ´Ç≈çsÇ≠Å
 	decoi[3].Sety(DISP_HEIGHT / 2.0 + P_SIZE);
 	decoi[3] = RotateDot(player.GetDir(), decoi[3], center);
 
-	/*if (Getplayer().GetRadius() < 0) */
 	DrawModiGraph(decoi[0].Getx(),decoi[0].Gety(), decoi[1].Getx(), decoi[1].Gety(), 
 		decoi[2].Getx(), decoi[2].Gety(), decoi[3].Getx(), decoi[3].Gety(), Pimage, true);
 
-	/*DrawModiGraph(
-		DISP_WIDTH / 2.0 - player.GetRadius(), DISP_HEIGHT / 2.0 - player.GetRadius(),
-		DISP_WIDTH / 2.0 + player.GetRadius(), DISP_HEIGHT / 2.0 - player.GetRadius(),
-		DISP_WIDTH / 2.0 + player.GetRadius(), DISP_HEIGHT / 2.0 + player.GetRadius(),
-		DISP_WIDTH / 2.0 - player.GetRadius(), DISP_HEIGHT / 2.0 + player.GetRadius(),
-		Pimage, true);*/
+	decoi[0].Setx(center.Getx() - MASK_WIDTH / 2.0);
+	decoi[0].Sety(center.Gety() - MASK_WIDTH / 2.0);
+	decoi[0] = RotateDot(player.GetDir(), decoi[0], center);
+
+	decoi[1].Setx(center.Getx() + MASK_WIDTH / 2.0);
+	decoi[1].Sety(center.Gety() - MASK_WIDTH / 2.0);
+	decoi[1] = RotateDot(player.GetDir(), decoi[1], center);
+
+	decoi[2].Setx(center.Getx() + MASK_WIDTH / 2.0);
+	decoi[2].Sety(center.Gety() + MASK_WIDTH / 2.0);
+	decoi[2] = RotateDot(player.GetDir(), decoi[2], center);
+
+	decoi[3].Setx(center.Getx() - MASK_WIDTH / 2.0);
+	decoi[3].Sety(center.Gety() + MASK_WIDTH / 2.0);
+	decoi[3] = RotateDot(player.GetDir(), decoi[3], center);
+
+	DrawModiGraph(decoi[0].Getx(), decoi[0].Gety(), decoi[1].Getx(), decoi[1].Gety(),
+		decoi[2].Getx(), decoi[2].Gety(), decoi[3].Getx(), decoi[3].Gety(), maskImage, true);
+
 	return 0;
 }
 int Player::UIDraw(int count) {
@@ -191,6 +264,11 @@ int Player::SetPimage(int a) {
 }
 double Player::GetSpeed() {
 	return  Speed;
+}
+
+int Player::SetSpeed(double a) {
+	Speed = a;
+	return 0;
 }
 Circle Player::Getplayer() {
 	return player;

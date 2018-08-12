@@ -273,6 +273,7 @@ int DrawBack(int floor,Dot player) {
 			DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
 			DISP_WIDTH / 2.0 - player.Getx(), DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
 			Floor1, true);
+		/*---—vŒŸ“¢---*/
 	}
 	else if (floor == 3) {
 		DrawModiGraph(
@@ -281,6 +282,7 @@ int DrawBack(int floor,Dot player) {
 			DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
 			DISP_WIDTH / 2.0 - player.Getx(), DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
 			Floor2, true);
+		/*---—vŒŸ“¢---*/
 	}
 	else if (floor == 4) {
 		DrawModiGraph(
@@ -429,7 +431,6 @@ double CalcDir(Dot c, Dot a) {
 	return dir;
 }
 double CalcDir(Dot a) {//–³“ü—Í‚ÍŒvŽZ‚µ‚È‚¢
-
 	if (a.Getx() == 0 && a.Gety() > 0) {
 		return  3.0 / 2.0 * PI;
 	}
@@ -450,9 +451,28 @@ double CalcDir(Dot a) {//–³“ü—Í‚ÍŒvŽZ‚µ‚È‚¢
 		while (dir < 0) dir += 2 * PI;
 		return dir;
 	}
-
-	/*while (dir < 0) dir += 2 * PI;
-	return dir;*/
+}
+double CalcDir(double x, double y) {
+	if (x == 0 && y > 0) {
+		return  3.0 / 2.0 * PI;
+	}
+	else if (x == 0 && y < 0) {
+		return 1.0 / 2.0* PI;
+	}
+	else if (y == 0 && x > 0) {
+		return 0;
+	}
+	else if (y == 0 && x < 0) {
+		return PI;
+	}
+	else if (x < 0) {
+		return atan(-y / x) + PI;
+	}
+	else if (x > 0) {
+		dir = atan(-y / x);
+		while (dir < 0) dir += 2 * PI;
+		return dir;
+	}
 }
 
 Dot RotateDot(double thita, Dot x, Dot c) {

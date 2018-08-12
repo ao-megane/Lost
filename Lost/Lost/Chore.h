@@ -80,6 +80,7 @@ int WinnerUpdata(int count);
 
 double CalcDir(Dot center, Dot a);
 double CalcDir(Dot center);
+double CalcDir(double x,double y);
 
 Dot RotateDot(double thita, Dot x, Dot c);
 

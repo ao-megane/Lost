@@ -1,5 +1,6 @@
 #include"DxLib.h"
 #include"Value.h"
+#include"Chore.h"
 //#include"math.h"
 
 //#pragma(push)
@@ -12,6 +13,7 @@ void InputInitialize(int key[]) {
 		key[i] = 0;
 }
 
+double idir;
 void InputUpdata(XINPUT_STATE input, int Key[]) {
 
 	if (GetJoypadXInputState(DX_INPUT_PAD1, &input) == 0) {
@@ -30,8 +32,13 @@ void InputUpdata(XINPUT_STATE input, int Key[]) {
 			THUMB_X = 0;
 		}
 		else {
-			THUMB_Y = (-1) * input.ThumbLY / 32767.0 * 100;
-			THUMB_X = input.ThumbLX / 32767.0 * 100;
+			/*THUMB_Y = (-1) * input.ThumbLY / 32767.0 * 100;
+			THUMB_X = input.ThumbLX / 32767.0 * 100;*/
+			THUMB_Y = (1) * input.ThumbLY;
+			THUMB_X = input.ThumbLX;
+			idir = CalcDir(THUMB_X, THUMB_Y);
+			THUMB_X = 100.0 * cos(idir);
+			THUMB_Y = 100.0 * sin(idir);
 		}
 	}
 
