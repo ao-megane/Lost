@@ -7,9 +7,9 @@
 
 int SystemInitialize();
 
-int Floor1Draw();
+//int Floor1Draw();
 
-int Floor2Draw();
+//int Floor2Draw();
 
 int GetFloor1SoftHandle();
 
@@ -68,7 +68,7 @@ int LoserUpdata(int count);
 
 int DrawLoseBord(int count);
 
-int DrawWinBord(int count);
+int DrawClearBord(int count);
 
 int SetWinner(int levelFlag,int count,int* score);
 
@@ -85,6 +85,8 @@ double CalcDir(double x,double y);
 Dot RotateDot(double thita, Dot x, Dot c);
 
 Dot RotateDot(double thita, Dot x);//å¥ì_íÜêS
+
+int DrawLineByDot(Dot a, Dot b, int colorHandle);
 
 int SetRand();
 int GetRand();

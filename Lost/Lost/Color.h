@@ -1,5 +1,6 @@
 #ifndef COLOR_H
 #define COLOR_H
+#include"Obj.h"
 
 class Color
 {
@@ -19,6 +20,20 @@ private:
 };
 
 int PlayerMoveInColor(Circle* x,Dot moveDot);
+
+int ColorMngInitialize();
+
+Color GetWall();
+
+Color GetDoor();
+
+Color GetFloor1();
+
+Color GetFloor2();
+
+Color GetLowstep();
+
+Color GetHighstep();
 
 //Color::Color()
 //{

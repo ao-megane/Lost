@@ -9,11 +9,12 @@ public:
 	/*Enemy();
 	~Enemy();*/
 	//int Updata(int count);	//キャラごとに作る
-	int Draw();			//描画
+	int Draw(Dot player);			//描画
 	//int End();
 
 protected:
 	Circle enemy;		//方向付き円，描画と当たり判定
+	Square serch;		//探索範囲(四角)
 	int Floor;			//1or2階にいる．描画用か
 	int image[8];			//アニメーション用
 	int Eimage;
@@ -60,7 +61,7 @@ int EnemyMngInitialize();			//画像ハンドル周り
 int EnemyMngSet();	//ステージ、時間ごとに配置
 int EnemyMngUpdata(Circle player,int floor);		//変数でどこをもがれるか返す
 //int EnemyMngJudge(Player* player,int count,int* score,int levelFlag);	//判定、state、HP等の更新
-int EnemyMngDraw(int floor);
+int EnemyMngDraw(Dot player,int floor);
 
 
 #endif // !ENEMYMNG_H

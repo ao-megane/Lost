@@ -49,7 +49,7 @@ int SetKeyPosi() {
 		}
 	}
 	else {
-		keyfloor = 2;
+		keyfloor = 4;
 		switch (GetRand() % 7)
 		{
 		case 0:
@@ -84,35 +84,22 @@ int GetKeyFloor() {
 	return keyfloor;
 }
 
-Circle GetKeyPosi() {
+Circle GetKeyCircle() {
 	return key;
 }
 
 int KeyDraw(Dot player,int floor) {
-	if (floor == 1) {
-		if (keyfloor == 1) {
-			DrawModiGraph(
-				key.Getx() - key.GetRadius() + DISP_WIDTH / 2.0 - player.Getx(), key.Gety() - key.GetRadius() + DISP_HEIGHT / 2.0 - player.Gety(),
-				key.Getx() + key.GetRadius() + DISP_WIDTH / 2.0 - player.Getx(), key.Gety() - key.GetRadius() + DISP_HEIGHT / 2.0 - player.Gety(),
-				key.Getx() + key.GetRadius() + DISP_WIDTH / 2.0 - player.Getx(), key.Gety() + key.GetRadius() + DISP_HEIGHT / 2.0 - player.Gety(),
-				key.Getx() - key.GetRadius() + DISP_WIDTH / 2.0 - player.Getx(), key.Gety() + key.GetRadius() + DISP_HEIGHT / 2.0 - player.Gety(),
-				keyImage, 1);
-			DrawCircle(key.Getx() - player.Getx(), key.Gety() - player.Gety(), key.GetRadius(), RED, 1, 0);
-		}
-	}
-	else if (floor == 4) {
-		if (keyfloor == 2) {
-			DrawModiGraph(
-				key.Getx() - key.GetRadius() + DISP_WIDTH / 2.0 - player.Getx(), key.Gety() - key.GetRadius() + DISP_HEIGHT / 2.0 - player.Gety(),
-				key.Getx() + key.GetRadius() + DISP_WIDTH / 2.0 - player.Getx(), key.Gety() - key.GetRadius() + DISP_HEIGHT / 2.0 - player.Gety(),
-				key.Getx() + key.GetRadius() + DISP_WIDTH / 2.0 - player.Getx(), key.Gety() + key.GetRadius() + DISP_HEIGHT / 2.0 - player.Gety(),
-				key.Getx() - key.GetRadius() + DISP_WIDTH / 2.0 - player.Getx(), key.Gety() + key.GetRadius() + DISP_HEIGHT / 2.0 - player.Gety(),
-				keyImage, 1);
-			DrawCircle(key.Getx() - player.Getx(), key.Gety() - player.Gety(), key.GetRadius(), RED, 1, 0);
-		}
+	if (floor == keyfloor) {
+		DrawModiGraph(
+			key.Getx() - key.GetRadius() + DISP_WIDTH / 2.0 - player.Getx(), key.Gety() - key.GetRadius() + DISP_HEIGHT / 2.0 - player.Gety(),
+			key.Getx() + key.GetRadius() + DISP_WIDTH / 2.0 - player.Getx(), key.Gety() - key.GetRadius() + DISP_HEIGHT / 2.0 - player.Gety(),
+			key.Getx() + key.GetRadius() + DISP_WIDTH / 2.0 - player.Getx(), key.Gety() + key.GetRadius() + DISP_HEIGHT / 2.0 - player.Gety(),
+			key.Getx() - key.GetRadius() + DISP_WIDTH / 2.0 - player.Getx(), key.Gety() + key.GetRadius() + DISP_HEIGHT / 2.0 - player.Gety(),
+			keyImage, 1);
+		//DrawCircle(key.Getx() - player.Getx(), key.Gety() - player.Gety(), key.GetRadius(), RED, 1, 0);
 	}
 
-	DrawFormatString(200, 20, RED, "floor:%d,x:%d,y:%d", keyfloor, key.Getx(), key.Gety());
+	//DrawFormatString(200, 20, RED, "floor:%d,x:%d,y:%d", keyfloor, key.Getx(), key.Gety());
 
 	return 0;
 }

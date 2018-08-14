@@ -1,6 +1,5 @@
 #ifndef OBJH
 #define OBJH
-
 #include<math.h>
 
 class intDot {//int型の点
@@ -60,15 +59,17 @@ private:
 	double y;
 };
 
-class Square{//int四つ
+class Square{//doubleDot2つ＋方向 中心は左の真ん中
 public:
+	int Set(Dot a, Dot b, double c);
 	int Set(Dot a, Dot b);
-	int Set(Dot a, int w, int h);
-	int Set(int a, int b, int c, int d);
+	int Set(Dot a, int w, int h, double dir);
+	int Set(int a, int b, int c, int d, double thita);
 	int Getup();
 	int Getleft();
 	Dot GetLU();
 	Dot GetRD();
+	int Draw(int colorHandle);
 	void operator - (Dot a) {		//Squareのdot平行移動
 		Set(LU - a, RD - a);
 	};
@@ -83,11 +84,12 @@ public:
 			return false;
 		else
 			return true;
-	};	
+	};
 
 private:
 	Dot LU;
 	Dot RD;
+	double dir;	//0~2PI
 };
 
 class Circle {//方向付き円

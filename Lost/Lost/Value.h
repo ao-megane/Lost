@@ -1,6 +1,7 @@
 #ifndef VALUE_H
 #define VALUE_H
 #include"dxlib.h"
+#include"Color.h"
 
 #define PI 3.1415926535
 
@@ -47,34 +48,45 @@ const int FLOOR2 = GetColor(0, 0, 255);
 const double JUDGE_MARGIN = 1.0;	//プレイヤーと壁の追突について，埋め込まれないために
 
 const int P_SIZE = 60;	//プレイヤーの半径
-const int P_REBORN_X = 250;
-const int P_REBORN_Y = 1000;
+const int P_REBORN_X = 145;
+const int P_REBORN_Y = 1937;
 const double P_FULL_SPEED = 30;
 const double P_HALF_SPEED = 15;
 const int P_CLOCK = 20;//足音用みたいになってるがもっと使い道はありそう
-//↑判定系 ↓描画系
-const double P_WIDTH = 1 * P_SIZE;
-const double P_HEIGHT = 1 * P_SIZE;
 
-const int HUSBAND_RANGE = 300;	//主人の大きさ
-//↑判定系 ↓描画系
-const double HUSBAND_WIDTH = 1 * HUSBAND_RANGE;
-const double HUSBAND_HEIGHT = 1 * HUSBAND_RANGE;
+/*--------主人--------*/
+const int HUSBAND_RANGE = 60;
+const int HUSBAND_FULL_SPEED = 35;
+const int HUSBAND_HALF_SPEED = 20;
+const int HUSBAND_SERCH_WIDTH = 440;
+const int HUSBAND_SERCH_HEIGHT = 90;
+/*--------------------*/
 
-const int MADAM_RANGE = 200;	//夫人の大きさ
-//↑判定系 ↓描画系
-const double MADAM_WIDTH = 1 * MADAM_RANGE;
-const double MADAM_HEIGHT = 1 * MADAM_RANGE;
+/*--------夫人--------*/
+const int MADAM_RANGE = 60;
+const int MADAM_FULL_SPEED = 35;
+const int MADAM_HALF_SPEED = 20;
+const int MADAM_SERCH_WIDTH = 440;
+const int MADAM_SERCH_HEIGHT = 90;
+/*--------------------*/
 
-const int SON_RANGE = 200;	//長男
-//↑判定系 ↓描画系
-const double SON_WIDTH = 1 * SON_RANGE;
-const double SON_HEIGHT = 1 * SON_RANGE;
 
-const int DAUGHTER_RANGE = 300;	//長女
-//↑判定系 ↓描画系HU
-const double DAUGHTER_WIDTH = 1 * DAUGHTER_RANGE;
-const double DAUGHTER_HEIGHT = 1 * DAUGHTER_RANGE;
+/*--------長男--------*/
+const int SON_RANGE = 60;
+const int SON_FULL_SPEED = 35;
+const int SON_HALF_SPEED = 20;
+const int SON_SERCH_WIDTH = 1100;
+const int SON_SERCH_HEIGHT = 150;
+/*--------------------*/
+
+
+/*--------長女--------*/
+const int DAUGHTER_RANGE = 60;
+const int DAUGHTER_FULL_SPEED = 35;
+const int DAUGHTER_HALF_SPEED = 20;
+const int DAUGHTER_SERCH_WIDTH = 440;
+const int DAUGHTER_SERCH_HEIGHT = 90;
+/*--------------------*/
 
 const int HARD_COUNT = 5500;
 

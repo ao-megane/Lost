@@ -113,3 +113,38 @@ bool Color::IsHitDot(Dot x,int Handle) {
 		return false;
 }
 
+Color Wall;
+Color Door;
+Color Floor1;
+Color Floor2;
+Color Lowstep;
+Color Highstep;
+
+int ColorMngInitialize() {
+	Wall.Initialize(255, 0, 0);
+	Door.Initialize(0, 255, 0);
+	Floor1.Initialize(0, 0, 255);
+	Floor2.Initialize(255, 255, 0);
+	Lowstep.Initialize(255, 0, 255);
+	Highstep.Initialize(0, 255, 255);
+	return 0;
+}
+
+Color GetWall() {
+	return Wall;
+}
+Color GetDoor() {
+	return Door;
+}
+Color GetFloor1() {
+	return Floor1;
+}
+Color GetFloor2() {
+	return Floor2;
+}
+Color GetLowstep() {
+	return Lowstep;
+}
+Color GetHighstep() {
+	return Highstep;
+}

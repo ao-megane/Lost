@@ -1,19 +1,17 @@
 #include"Chore.h"
 #include"DxLib.h"
 #include"Value.h"
-#include"Obj.h"
 #include<fstream>
-#include<string>
 #include<iostream>
 #include<sstream>
 #include<list>
 #include<stdio.h>
 #include<time.h>
 
-int Floor1;
-int Lowstep;
-int Highstep;
-int Floor2;
+int Floor1Image;
+int LowstepImage;
+int HighstepImage;
+int Floor2Image;
 int Floor1data;
 int Lowstepdata;
 int Highstepdata;
@@ -48,9 +46,9 @@ int nishiki;
 int SystemInitialize() {
 	Clear = LoadGraph("images/System/Clear1.png");
 
-	Floor1 = LoadGraph("images/maps/floor1-data.png");
+	Floor1Image = LoadGraph("images/maps/floor1-data.png");
 	Floor1data = LoadSoftImage("images/maps/floor1-data.png");
-	Floor2 = LoadGraph("images/maps/floor2-data.png");
+	Floor2Image = LoadGraph("images/maps/floor2-data.png");
 	Floor2data = LoadSoftImage("images/maps/floor2-data.png");
 
 	Prologue[0] = LoadGraph("images/system/prologue/1.png");
@@ -60,6 +58,8 @@ int SystemInitialize() {
 	Prologue[4] = LoadGraph("images/system/prologue/5.png");
 	Prologue[5] = LoadGraph("images/system/prologue/6.png");
 
+	Choice = LoadSoundMem("sounds/system/1.wav");
+	Move = LoadSoundMem("sounds/system/2.wav");
 
 	if (AddFontResourceEx("Font/nishiki-teki.ttf", FR_PRIVATE, NULL) == 0) {
 		//printfDx("AddFontResourceEx失敗\n");
@@ -264,7 +264,7 @@ int DrawBack(int floor,Dot player) {
 			DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety(),
 			DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
 			DISP_WIDTH / 2.0 - player.Getx(), DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
-			Floor1, true);
+			Floor1Image, true);
 		//DrawFormatString(0, 20, RED, "Draw BackGround");
 	}
 	else if (floor == 2) {
@@ -273,7 +273,7 @@ int DrawBack(int floor,Dot player) {
 			DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety(),
 			DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
 			DISP_WIDTH / 2.0 - player.Getx(), DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
-			Floor1, true);
+			Floor1Image, true);
 		/*---要検討---*/
 	}
 	else if (floor == 3) {
@@ -282,7 +282,7 @@ int DrawBack(int floor,Dot player) {
 			DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety(),
 			DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
 			DISP_WIDTH / 2.0 - player.Getx(), DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
-			Floor2, true);
+			Floor2Image, true);
 		/*---要検討---*/
 	}
 	else if (floor == 4) {
@@ -291,7 +291,7 @@ int DrawBack(int floor,Dot player) {
 			DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety(),
 			DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
 			DISP_WIDTH / 2.0 - player.Getx(), DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
-			Floor2, true);
+			Floor2Image, true);
 	}
 	return 0;
 }
@@ -352,7 +352,7 @@ int SetLoser(int levelFlag, int count) {
 }
 int Keeper2;
 int WinnerUpdata(int count) {
-	DrawModiGraph(
+	/*DrawModiGraph(
 		DISP_WIDTH - (count - Keeper) * 4, 300,
 		DISP_WIDTH + 700 - (count - Keeper) * 4, 300,
 		DISP_WIDTH + 700 - (count - Keeper) * 4, 700 + 300,
@@ -364,21 +364,23 @@ int WinnerUpdata(int count) {
 		return 1;
 	}
 	else if (flag == 2) {
-		DrawWinBord(count);
+		DrawClearBord(count);
 		return 1;
 	}
-	else return 0;
+	else return 0;*/
+	return 0;
 }
 int LoserUpdata(int count) {
 	DrawLoseBord(count);
 	return 1;
 }
-int DrawWinBord(int count) {
-	if ((count - Keeper2) <= 90) {
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (count - Keeper2) / 60.0 * 255.0);		//ブレンドモードを設定
-		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Clear, true);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//ブレンドモードをオフ
-	}
+int DrawClearBord(int count) {
+	//if ((count - Keeper2) <= 90) {
+	//	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (count - Keeper2) / 60.0 * 255.0);		//ブレンドモードを設定
+	//	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Clear, true);
+	//	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//ブレンドモードをオフ
+	//}
+	DrawFormatString(1000, 1000, RED, "CLEAR!!");
 	return 0;
 }
 int DrawLoseBord(int count) {
@@ -497,6 +499,11 @@ int SetRand() {
 
 int GetRand() {
 	return rand();
+}
+
+int DrawLineByDot(Dot a,Dot b,int handle) {
+	DrawLine(a.Getx(), a.Gety(), b.Getx(), b.Gety(), handle, 0);
+	return 0;
 }
 
 /*----------------------------------------------------------------------------------------------*/

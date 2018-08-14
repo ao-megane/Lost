@@ -10,12 +10,6 @@ int larmImage;
 int maskImage;
 int PWalk[8];
 Dot center;
-Color Wall;
-Color Door;
-Color Floor1;
-Color Floor2;
-Color Lowstep;
-Color Highstep;
 
 int Player::Initialize() {	//•¡”ƒvƒŒƒCƒ„[‚È‚ç‚à‚Á‚Æ’š”J‚É‚â‚é‚±‚Æ
 	normalImage = LoadGraph("images/player/normal.png");
@@ -31,12 +25,6 @@ int Player::Initialize() {	//•¡”ƒvƒŒƒCƒ„[‚È‚ç‚à‚Á‚Æ’š”J‚É‚â‚é‚±‚Æ
 	PWalk[6] = LoadSoundMem("sounds/player/7.wav");
 	PWalk[7] = LoadSoundMem("sounds/player/8.wav");
 
-	Wall.Initialize(255, 0, 0);
-	Door.Initialize(0, 255, 0);
-	Floor1.Initialize(0, 0, 255);
-	Floor2.Initialize(255, 255, 0);
-	Lowstep.Initialize(255, 0, 255);
-	Highstep.Initialize(0, 255, 255);
 	SetPimage(normalImage);
 	move.Set(0, 0);
 	SetFloor(4);
@@ -56,6 +44,7 @@ int Player::Set() {
 	lEar = true;
 	rLeg = true;
 	lLeg = true;
+	havekey = false;
 	Speed = P_FULL_SPEED;
 	move.Set(0, 0);
 	return 0;
@@ -123,16 +112,16 @@ int Player::Updata(int Key[], int flag) {
 
 	if (floor == 4) {	//2ŠK‚É‚¢‚é‚Æ‚«
 		if (!lArm) {
-			if (Door.IsHitMoving(player, GetFloor2SoftHandle())) {	//ƒhƒA‚É‚Ô‚Â‚©‚ê‚Î
+			if (GetDoor().IsHitMoving(player, GetFloor2SoftHandle())) {	//ƒhƒA‚É‚Ô‚Â‚©‚ê‚Î
 				PlayerMoveInColor(&player, GetMove());
 				return 0;
 			}
 		}
-		if (Wall.IsHitMoving(player, GetFloor2SoftHandle())) {	//•Ç‚É‚Ô‚Â‚©‚ê‚Î
+		if (GetWall().IsHitMoving(player, GetFloor2SoftHandle())) {	//•Ç‚É‚Ô‚Â‚©‚ê‚Î
 			PlayerMoveInColor(&player, GetMove());
 			return 0;
 		}
-		if (Highstep.IsHitCircle(player, GetFloor2SoftHandle())) {	//2ŠK‚ÌŠK’i‚É‚¢‚é‚Æ‚«
+		if (GetHighstep().IsHitCircle(player, GetFloor2SoftHandle())) {	//2ŠK‚ÌŠK’i‚É‚¢‚é‚Æ‚«
 			SetFloor(3);
 			return 0;
 		}
@@ -142,11 +131,11 @@ int Player::Updata(int Key[], int flag) {
 		//	PlayerMoveInColor(&player, GetMove());
 		//	return 0;
 		//}
-		if (Floor2.IsHitCircle(player, GetFloor2SoftHandle())) {
+		if (GetFloor2().IsHitCircle(player, GetFloor2SoftHandle())) {
 			SetFloor(4);
 			return 0;
 		}
-		if (Lowstep.IsHitCircle(player, GetFloor1SoftHandle())) {
+		if (GetLowstep().IsHitCircle(player, GetFloor1SoftHandle())) {
 			SetFloor(2);
 			return 0;
 		}
@@ -156,27 +145,27 @@ int Player::Updata(int Key[], int flag) {
 		//	PlayerMoveInColor(&player, GetMove());
 		//	return 0;
 		//}
-		if (Floor1.IsHitCircle(player, GetFloor1SoftHandle())) {
+		if (GetFloor1().IsHitCircle(player, GetFloor1SoftHandle())) {
 			SetFloor(1);
 			return 0;
 		}
-		if (Highstep.IsHitCircle(player, GetFloor2SoftHandle())) {
+		if (GetHighstep().IsHitCircle(player, GetFloor2SoftHandle())) {
 			SetFloor(3);
 			return 0;
 		}
 	}
 	else if (floor == 1) {	//1ŠK‚É‚¢‚é‚Æ‚«
 		if (!lArm) {
-			if (Door.IsHitMoving(player, GetFloor1SoftHandle())) {	//ƒhƒA‚É‚Ô‚Â‚©‚ê‚Î
+			if (GetDoor().IsHitMoving(player, GetFloor1SoftHandle())) {	//ƒhƒA‚É‚Ô‚Â‚©‚ê‚Î
 				PlayerMoveInColor(&player, GetMove());
 				return 0;
 			}
 		}
-		if (Wall.IsHitMoving(player, GetFloor1SoftHandle())) {	//•Ç‚É‚Ô‚Â‚©‚ê‚Î
+		if (GetWall().IsHitMoving(player, GetFloor1SoftHandle())) {	//•Ç‚É‚Ô‚Â‚©‚ê‚Î
 			PlayerMoveInColor(&player, GetMove());
 			return 0;
 		}
-		if (Lowstep.IsHitCircle(player, GetFloor1SoftHandle())) {	//2ŠK‚ÌŠK’i‚É‚¢‚é‚Æ‚«
+		if (GetLowstep().IsHitCircle(player, GetFloor1SoftHandle())) {	//2ŠK‚ÌŠK’i‚É‚¢‚é‚Æ‚«
 			SetFloor(2);
 			return 0;
 		}
@@ -218,6 +207,17 @@ int Player::Draw() {//‚±‚±‚à‘å•ÏA“Á‚Éƒ}ƒXƒNˆ— ©@ƒ}ƒXƒN‚Í‰æ‘œ‚Ìã‘‚«‚Ås‚­
 	DrawModiGraph(decoi[0].Getx(),decoi[0].Gety(), decoi[1].Getx(), decoi[1].Gety(), 
 		decoi[2].Getx(), decoi[2].Gety(), decoi[3].Getx(), decoi[3].Gety(), Pimage, true);
 
+	
+
+	DrawFormatString(300, 0, RED, "PLAYER DRAW");
+	//DrawFormatString(300, 20, RED, "dir:%f", player.GetDir() * 180 / PI);
+	//DrawFormatString(300, 20, RED, "floor:%d", GetFloor());
+	//DrawFormatString(300, 20, RED, "bodyclock:%d", bodyClock);
+	DrawFormatString(400, 20, RED, "(%d,%d)", player.Getx(), player.Gety());
+
+	return 0;
+}
+int Player::DrawMask(){
 	decoi[0].Setx(center.Getx() - MASK_WIDTH / 2.0);
 	decoi[0].Sety(center.Gety() - MASK_WIDTH / 2.0);
 	decoi[0] = RotateDot(player.GetDir(), decoi[0], center);
@@ -236,12 +236,6 @@ int Player::Draw() {//‚±‚±‚à‘å•ÏA“Á‚Éƒ}ƒXƒNˆ— ©@ƒ}ƒXƒN‚Í‰æ‘œ‚Ìã‘‚«‚Ås‚­
 
 	DrawModiGraph(decoi[0].Getx(), decoi[0].Gety(), decoi[1].Getx(), decoi[1].Gety(),
 		decoi[2].Getx(), decoi[2].Gety(), decoi[3].Getx(), decoi[3].Gety(), maskImage, true);
-
-	DrawFormatString(300, 0, RED, "PLAYER DRAW");
-	//DrawFormatString(300, 20, RED, "dir:%f", player.GetDir() * 180 / PI);
-	//DrawFormatString(300, 20, RED, "floor:%d", GetFloor());
-	//DrawFormatString(300, 20, RED, "bodyclock:%d", bodyClock);
-	DrawFormatString(400, 20, RED, "(%d,%d)", player.Getx(), player.Gety());
 
 	return 0;
 }
@@ -270,7 +264,7 @@ int Player::SetSpeed(double a) {
 	Speed = a;
 	return 0;
 }
-Circle Player::Getplayer() {
+Circle Player::GetCircle() {
 	return player;
 }
 Dot Player::GetMove() {
@@ -279,6 +273,14 @@ Dot Player::GetMove() {
 Dot Player::GetDot() {
 	return player.GetDot();
 }
+int Player::keyGet() {
+	havekey = true;
+	return 0;
+}
+bool Player::GetKeyflag() {
+	return havekey;
+}
+
 
 int pram;
 int PlayPWalk() {

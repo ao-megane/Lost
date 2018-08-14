@@ -8,7 +8,7 @@ int SetKeyPosi();
 
 int GetKeyFloor();
 
-Circle GetKeyPosi();
+Circle GetKeyCircle();
 
 int KeyDraw(Dot player,int floor);
 

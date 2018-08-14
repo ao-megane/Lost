@@ -16,6 +16,7 @@ private:
 	bool lEar;
 	bool rLeg;
 	bool lLeg;
+	bool havekey;
 	double Speed;
 	int floor;
 	int bodyClock;	//アニメ用クロック，音にも使う
@@ -33,10 +34,13 @@ public:
 	double GetSpeed();
 	Dot GetDot();
 	int SetSpeed(double a);
-	Circle Getplayer();
+	Circle GetCircle();
 	Dot GetMove();
 	int Updata(int Key[],int flag);
+	int keyGet();
+	bool GetKeyflag();
 	int Draw();
+	int DrawMask();
 	int UIDraw(int count);
 };
 

@@ -2,9 +2,10 @@
 #include"Input.h"
 #include"Player.h"
 #include"EnemyMng.h"
-#include"Chore.h"
 #include"Value.h"
+#include"Chore.h"
 #include"Key.h"
+#include"Color.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 
@@ -27,14 +28,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	int flag = 0;
 	int selectFlag = 0;	//0:play,1:manual,2:credit
 	int count = 0;
-	int keep_count = 0;
+	int keepCount = 0;
 	Player player;
+	Color Rock;
 	InputInitialize(Key);
 	player.Initialize();
 	KeyInitialize();
 	SetRand();
-	//EnemyMngInitialize();
+	Rock.Initialize(0, 0, 0);
+	EnemyMngInitialize();
 	SystemInitialize();
+	ColorMngInitialize();
 	//InputFile("kanuma2017.txt");
 
 	SetBack();
@@ -50,7 +54,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//InputUpdata(Key);
 
 		//UpdataBack();
-		DrawBack(player.GetFloor(),player.Getplayer().GetDot());
+		DrawBack(player.GetFloor(),player.GetCircle().GetDot());
 
 		switch (flag) {
 		case 0://OP
@@ -105,21 +109,47 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			count = 0;
 			player.Set();
 			SetKeyPosi();
-			//EnemyMngInitialize(1);
+			EnemyMngSet();
 			flag = 2;
 			break;
 		case 2://playing
 			//EnemyMngSet(count);
 			player.Updata(Key,0);
-			//EnemyMngUpdata(count);
+			if (player.GetFloor() == GetKeyFloor()) {
+				if (player.GetCircle() & GetKeyCircle()) {
+					player.keyGet();
+				}
+			}
+			if (player.GetKeyflag() && player.GetFloor() == 1 && Rock.IsHitCircle(player.GetCircle(), GetFloor1SoftHandle())) {
+				flag = 4;
+				keepCount = count;
+			}
+			switch (EnemyMngUpdata(player.GetCircle(), player.GetFloor())) {//husband,madam,son,daughter‚Ì‡
+			case 0:
+				break;
+			case 1:
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			default:
+				break;
+			}
 
 			//EnemyMngJudge(&player, &girl, count, ScorePass(), levelFlag);
 			
 			if (PAUSE == 1) flag = 7;
 
 			player.Draw();
-			KeyDraw(player.GetDot(), player.GetFloor());
-			//EnemyMngDraw();
+			if (!player.GetKeyflag()) {
+				KeyDraw(player.GetDot(), player.GetFloor());
+			}
+
+			EnemyMngDraw(player.GetDot(), player.GetFloor());
+
+			player.DrawMask();
+
 			player.UIDraw(count);
 			
 			//DrawLine(0, GROUND_HEIGHT, DISP_WIDTH, GROUND_HEIGHT, RED, FALSE);
@@ -139,6 +169,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 					flag = 0;*/
 			break;
 		case 4://gameclear
+			
 			/*player.Updata(count, Key);
 			girl.Updata(count, player.PriJump);
 			girl.Draw();
@@ -147,7 +178,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				if (B == 1)
 					flag = 0;
 			DrawChore(count, girl.GetHP(), levelFlag);
-			break;*/
+			*/
+			DrawClearBord(count);
+			if (count - keepCount > 40) flag = 0;
+			break;
 		case 5://ƒ}ƒjƒ…ƒAƒ‹
 			   /*if (B == 1)
 			   PlayChoice;*/

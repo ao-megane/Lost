@@ -1,5 +1,6 @@
 #include"Obj.h"
 #include"Value.h"
+#include"Chore.h"
 #include<math.h>
 
 int intDot::Set(int a, int b) {
@@ -52,19 +53,52 @@ double Dot::Gety() {
 
 /***************************************************************/
 
-int Square::Set(Dot a, Dot b) {
+int Square::Set(Dot a, Dot b,double c) {
+	LU = a;
+	RD = b;
+	dir = c;
+	return 0;
+}
+int Square::Set(Dot a,Dot b) {
 	LU = a;
 	RD = b;
 	return 0;
 }
-int Square::Set(Dot a, int w, int h) {
+int Square::Set(Dot a, int w, int h,double c) {
 	LU.Set(a.Getx() - w / 2, a.Gety() - h / 2);
 	RD.Set(a.Getx() + w / 2, a.Gety() + h / 2);
+	dir = c;
 	return 0;
 }
-int Square::Set(int a, int b, int c, int d) {
+int Square::Set(int a, int b, int c, int d,double thita) {
 	LU.Set(a, b);
 	RD.Set(c, d);
+	dir = thita;
+	return 0;
+}
+Dot decoi_obj[4];
+Dot center_obj;
+int Square::Draw(int handle) {
+	center_obj.Set(LU.Getx(), RD.Gety() / 2);
+	decoi_obj[0] = LU;
+	decoi_obj[0] = RotateDot(dir, decoi_obj[0], center_obj);
+
+	decoi_obj[1].Setx(RD.Getx());
+	decoi_obj[1].Sety(LU.Gety());
+	decoi_obj[1] = RotateDot(dir, decoi_obj[1], center_obj);
+
+	decoi_obj[2] = RD;
+	decoi_obj[2] = RotateDot(dir, decoi_obj[2], center_obj);
+
+	decoi_obj[3].Setx(LU.Getx());
+	decoi_obj[3].Sety(RD.Gety());
+	decoi_obj[3] = RotateDot(dir, decoi_obj[3], center_obj);
+
+	DrawLineByDot(decoi_obj[0], decoi_obj[1], handle);
+	DrawLineByDot(decoi_obj[1], decoi_obj[2], handle);
+	DrawLineByDot(decoi_obj[2], decoi_obj[3], handle);
+	DrawLineByDot(decoi_obj[3], decoi_obj[0], handle);
+
 	return 0;
 }
 
