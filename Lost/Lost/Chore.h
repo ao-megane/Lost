@@ -86,6 +86,8 @@ Dot RotateDot(double thita, Dot x, Dot c);
 
 Dot RotateDot(double thita, Dot x);//å¥ì_íÜêS
 
+int GetRand();
+
 void FpsTimeFanction();
 
 #endif // !CHORE_H

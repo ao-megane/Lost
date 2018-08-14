@@ -8,6 +8,7 @@
 #include<sstream>
 #include<list>
 #include<stdio.h>
+#include<time.h>
 
 int Floor1;
 int Lowstep;
@@ -487,6 +488,11 @@ Dot RotateDot(double thita, Dot x) {
 	ans.Setx((x.Getx())*cos(-thita) - (x.Gety())*sin(-thita));
 	ans.Sety((x.Getx())*sin(-thita) + (x.Gety())*cos(-thita));
 	return ans;
+}
+
+int GetRand() {
+	//srand((unsigned int)time(NULL));
+	return rand();
 }
 
 /*----------------------------------------------------------------------------------------------*/

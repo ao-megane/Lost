@@ -18,6 +18,7 @@ private:
 	bool lLeg;
 	double Speed;
 	int floor;
+	int bodyClock;	//アニメ用クロック，音にも使う
 	int Pimage;
 public:
 	//Player();
@@ -38,6 +39,7 @@ public:
 	int UIDraw(int count);
 };
 
+int PlayPWalk();
 
 
 #endif // !PLAYER

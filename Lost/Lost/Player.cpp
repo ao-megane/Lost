@@ -8,6 +8,7 @@
 int normalImage;
 int larmImage;
 int maskImage;
+int PWalk[8];
 Dot center;
 Color Wall;
 Color Door;
@@ -16,10 +17,20 @@ Color Floor2;
 Color Lowstep;
 Color Highstep;
 
-int Player::Initialize() {
+int Player::Initialize() {	//ï°êîÉvÉåÉCÉÑÅ[Ç»ÇÁÇ‡Ç¡Ç∆íöîJÇ…Ç‚ÇÈÇ±Ç∆
 	normalImage = LoadGraph("images/player/normal.png");
 	larmImage = LoadGraph("images/player/larm.png");
 	maskImage = LoadGraph("images/player/mask.png");
+
+	PWalk[0] = LoadSoundMem("sounds/player/1.wav");
+	PWalk[1] = LoadSoundMem("sounds/player/2.wav");
+	PWalk[2] = LoadSoundMem("sounds/player/3.wav");
+	PWalk[3] = LoadSoundMem("sounds/player/4.wav");
+	PWalk[4] = LoadSoundMem("sounds/player/5.wav");
+	PWalk[5] = LoadSoundMem("sounds/player/6.wav");
+	PWalk[6] = LoadSoundMem("sounds/player/7.wav");
+	PWalk[7] = LoadSoundMem("sounds/player/8.wav");
+
 	Wall.Initialize(255, 0, 0);
 	Door.Initialize(0, 255, 0);
 	Floor1.Initialize(0, 0, 255);
@@ -36,6 +47,7 @@ int Player::Initialize() {
 int Player::Set() {
 	player.Set(P_REBORN_X, P_REBORN_Y, P_SIZE, 0);
 	SetFloor(4);
+	bodyClock = 0;
 	rEye = true;
 	lEye = true;
 	rArm = true;
@@ -93,8 +105,21 @@ int Player::Updata(int Key[], int flag) {
 
 	UpdataMove(THUMB_X * GetSpeed() / 100.0, THUMB_Y * GetSpeed() / 100.0);
 
-	if (!(GetMove().Getx() == 0 && GetMove().Gety() == 0))
+	if (!(GetMove().Getx() == 0 && GetMove().Gety() == 0)){ //à⁄ìÆÇµÇƒÇÍÇŒ
 		player.SetDir(CalcDir(GetMove()));
+		bodyClock++;
+		if (bodyClock >= P_CLOCK) bodyClock = 0;
+		if (LEFT > 0) {
+			if (bodyClock == 0 || bodyClock == P_CLOCK/2) {
+				PlayPWalk();
+			}
+		}
+		else {
+			if (bodyClock == 0) {
+				PlayPWalk();
+			}
+		}
+	}
 
 	if (floor == 4) {	//2äKÇ…Ç¢ÇÈÇ∆Ç´
 		if (!lArm) {
@@ -157,36 +182,7 @@ int Player::Updata(int Key[], int flag) {
 		}
 	}
 
-	//if (floor == 4) {
-	//	if (Wall.IsHitMoving(player, GetFloor2SoftHandle())) {//ï«îªíË
-	//		if (!lArm) {//ç∂éËÇ™Ç»ÇØÇÍÇŒÉhÉAîªíË
-	//			if (Door.IsHitMoving(player, GetFloor2SoftHandle())) {	//ï«Ç…Ç‡ÉhÉAÇ…Ç‡Ç‘Ç¬Ç©ÇÁÇ»ÇØÇÍÇŒ
-	//				player.Move(GetMove());
-	//				return 0;
-	//			}
-	//		}
-	//	}
-	//	PlayerMoveInColor(&player, GetMove());
-	//}
-
 	player.Move(GetMove());
-
-	if (floor == 4) {
-
-	}
-
-	/*if (Floor1.IsHitCircle(player, GetFloor1SoftHandle())) {
-		SetFloor(1);
-	}
-	if (Lowstep.IsHitCircle(player, GetLowstepSoftHandle())) {
-		SetFloor(2);
-	}
-	if (Highstep.IsHitCircle(player, GetHighstepSoftHandle())) {
-		SetFloor(3);
-	}
-	if (Floor2.IsHitCircle(player, GetFloor2SoftHandle())) {
-		SetFloor(4);
-	}*/
 
 	return 0;
 }
@@ -196,7 +192,8 @@ int Player::Draw() {//Ç±Ç±Ç‡ëÂïœÅAì¡Ç…É}ÉXÉNèàóù Å©Å@É}ÉXÉNÇÕâÊëúÇÃè„èëÇ´Ç≈çsÇ≠Å
 
 	DrawFormatString(300, 0, RED, "PLAYER DRAW");
 	//DrawFormatString(300, 20, RED, "dir:%f", player.GetDir() * 180 / PI);
-	DrawFormatString(300, 20, RED, "floor:%d", GetFloor());
+	//DrawFormatString(300, 20, RED, "floor:%d", GetFloor());
+	DrawFormatString(300, 20, RED, "bodyclock:%d", bodyClock);
 	//if (!lArm) DrawFormatString(300, 20, RED, "Lost!");
 
 	if (rEye) {
@@ -275,4 +272,12 @@ Circle Player::Getplayer() {
 }
 Dot Player::GetMove() {
 	return move;
+}
+
+int pram;
+int PlayPWalk() {
+	pram = GetRand();
+	PlaySoundMem(PWalk[pram%8], DX_PLAYTYPE_BACK);
+	DrawFormatString(0, 40, RED, "Sound!");
+	return 0;
 }

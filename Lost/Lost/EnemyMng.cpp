@@ -2,8 +2,6 @@
 #include"Value.h"
 #include"Chore.h"
 #include"Obj.h"
-#include <stdio.h>
-#include <time.h>
 
 Dot decoi_e[4];
 int Enemy::Draw(){
@@ -45,8 +43,7 @@ int Husband::Initialize() {
 }
 
 int Husband::Set() {
-	srand((unsigned int)time(NULL));
-	switch (rand() % 6) {
+	switch (GetRand() % 6) {
 	case 0:
 		enemy.Set(0, 0, HUSBAND_RANGE, 0);	//具体的な値はマップ依存，csvもあり
 		break;
@@ -80,8 +77,7 @@ int Madam::Initialize() {
 }
 
 int Madam::Set() {
-	srand((unsigned int)time(NULL));
-	switch (rand() % 6) {
+	switch (GetRand() % 6) {
 	case 0:
 		enemy.Set(0, 0, HUSBAND_RANGE, 0);	//具体的な値はマップ依存，csvもあり
 		break;
@@ -115,8 +111,7 @@ int Son::Initialize() {
 }
 
 int Son::Set() {
-	srand((unsigned int)time(NULL));
-	switch (rand() % 6) {
+	switch (GetRand() % 6) {
 	case 0:
 		enemy.Set(0, 0, HUSBAND_RANGE, 0);	//具体的な値はマップ依存，csvもあり
 		break;
@@ -150,8 +145,7 @@ int Daughter::Initialize() {
 }
 
 int Daughter::Set() {
-	srand((unsigned int)time(NULL));
-	switch (rand() % 6) {
+	switch (GetRand() % 6) {
 	case 0:
 		enemy.Set(0, 0, HUSBAND_RANGE, 0);	//具体的な値はマップ依存，csvもあり
 		break;

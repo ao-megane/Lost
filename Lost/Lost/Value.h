@@ -51,6 +51,7 @@ const int P_REBORN_X = 250;
 const int P_REBORN_Y = 1000;
 const double P_FULL_SPEED = 30;
 const double P_HALF_SPEED = 15;
+const int P_CLOCK = 20;//‘«‰¹—p‚İ‚½‚¢‚É‚È‚Á‚Ä‚é‚ª‚à‚Á‚Æg‚¢“¹‚Í‚ ‚è‚»‚¤
 //ª”»’èŒn «•`‰æŒn
 const double P_WIDTH = 1 * P_SIZE;
 const double P_HEIGHT = 1 * P_SIZE;
