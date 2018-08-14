@@ -54,7 +54,6 @@ bool Color::IsHitMoving(Circle x, int Handle) {
 
 	if (isHitflag) return true;
 	else return false;
-	
 
 	/*if(!isHitflag)	//‚¤‚Ü‚­‚¢‚Á‚Ä‚é
 	for (double i = x->Getx() - x->GetRadius()- JUDGE_MARGIN * P_FULL_SPEED; i < x->Getx() + x->GetRadius() + JUDGE_MARGIN*P_FULL_SPEED; i++) {

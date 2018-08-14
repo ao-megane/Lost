@@ -10,13 +10,18 @@ public:
 	~Enemy();*/
 	//int Updata(int count);	//キャラごとに作る
 	int Draw(Dot player);			//描画
+	Dot GetMove();
+	int UpdataMove(Dot Destination);
 	//int End();
 
 protected:
 	Circle enemy;		//方向付き円，描画と当たり判定
 	Square serch;		//探索範囲(四角)
-	int Floor;			//1or2階にいる．描画用か
-	int image[8];			//アニメーション用
+	Dot move;			//進行方向的な
+	bool ischase;		//プレイヤーを追っているか
+	int Floor;			//1or2階にいる．描画用か,mngで管理すればいらない
+	double Speed;			//なうのスピード
+	int image[8];		//アニメーション用
 	int Eimage;
 };
 
@@ -44,6 +49,7 @@ public:
 	int Initialize();
 	int Set(); //出現時(リスポーン時)処理,位置変えるだけ
 	int Updata(Circle player);	//変数で当たったか返す感じ
+	bool Getischase();
 private:
 };
 

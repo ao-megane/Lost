@@ -1,7 +1,16 @@
 #ifndef CHORE_H
 #define CHORE_H
 #include"Obj.h"
+#include"DxLib.h"
+#include"Value.h"
+#include<fstream>
+#include<iostream>
+#include<sstream>
+#include<list>
+#include<stdio.h>
+#include<time.h>
 #include<string>
+#include<math.h>
 
 //イベント画像、背景画像、UI、等など
 

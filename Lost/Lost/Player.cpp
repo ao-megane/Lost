@@ -213,7 +213,7 @@ int Player::Draw() {//‚±‚±‚à‘å•ÏA“Á‚Éƒ}ƒXƒNˆ— ©@ƒ}ƒXƒN‚Í‰æ‘œ‚Ìã‘‚«‚Ås‚­
 	//DrawFormatString(300, 20, RED, "dir:%f", player.GetDir() * 180 / PI);
 	//DrawFormatString(300, 20, RED, "floor:%d", GetFloor());
 	//DrawFormatString(300, 20, RED, "bodyclock:%d", bodyClock);
-	DrawFormatString(400, 20, RED, "(%d,%d)", player.Getx(), player.Gety());
+	//DrawFormatString(400, 20, RED, "(%d,%d)", player.Getx(), player.Gety());
 
 	return 0;
 }
@@ -240,7 +240,7 @@ int Player::DrawMask(){
 	return 0;
 }
 int Player::UIDraw(int count) {
-	DrawFormatString(0, 20, RED, "Draw UI");
+	//DrawFormatString(0, 20, RED, "Draw UI");
 	//if (count < NORMAL_COUNT) {
 	//	DrawModiGraph(
 	//		UI_MARGIN_WIDTH, UI_MARGIN_HEIGHT,
@@ -286,6 +286,6 @@ int pram;
 int PlayPWalk() {
 	pram = GetRand();
 	PlaySoundMem(PWalk[pram%8], DX_PLAYTYPE_BACK);
-	DrawFormatString(0, 40, RED, "Sound!");
+	//DrawFormatString(0, 40, RED, "Sound!");
 	return 0;
 }

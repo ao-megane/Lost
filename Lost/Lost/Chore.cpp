@@ -1,12 +1,4 @@
 #include"Chore.h"
-#include"DxLib.h"
-#include"Value.h"
-#include<fstream>
-#include<iostream>
-#include<sstream>
-#include<list>
-#include<stdio.h>
-#include<time.h>
 
 int Floor1Image;
 int LowstepImage;
