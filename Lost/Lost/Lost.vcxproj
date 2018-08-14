@@ -131,6 +131,7 @@
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="EnemyMng.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Key.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Obj.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -140,6 +141,7 @@
     <ClInclude Include="Color.h" />
     <ClInclude Include="EnemyMng.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="Key.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Value.h" />

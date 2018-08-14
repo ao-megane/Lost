@@ -76,8 +76,34 @@ const int DAUGHTER_RANGE = 300;	//í∑èó
 const double DAUGHTER_WIDTH = 1 * DAUGHTER_RANGE;
 const double DAUGHTER_HEIGHT = 1 * DAUGHTER_RANGE;
 
-const int NORMAL_COUNT = 5500;
 const int HARD_COUNT = 5500;
+
+/*---------åÆ---------*/
+
+const int KEYPOSI_1[9 * 2] = {
+	109,1841,
+	101,3593,
+	1805,3593,
+	1461,425,
+	1669,417,
+	3245,421,
+	3937,429,
+	3773,2833,
+	3773,3585
+};
+const int KEYPOSI_2[7 * 2] = {
+	1180,3600,
+	2025,3590,
+	5257,3597,
+	1541,957,
+	2473,921,
+	3985,933,
+	5377,1481
+};
+const int KEY_SIZE = 60;
+
+/*-----------------------*/
+
 
 const int UI_HEIGHT = 400;
 const int UI_WIDTH = 300;

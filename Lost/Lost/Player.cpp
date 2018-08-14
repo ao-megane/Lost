@@ -190,10 +190,7 @@ int Player::Updata(int Key[], int flag) {
 Dot decoi[4];
 int Player::Draw() {//‚±‚±‚à‘å•ÏA“Á‚Éƒ}ƒXƒNˆ— ©@ƒ}ƒXƒN‚Í‰æ‘œ‚Ìã‘‚«‚Ås‚­C‚Æ‚è‚ ‚¦‚¸‘S‘Ì•\¦‚ğ‚µ‚Á‚©‚è
 
-	DrawFormatString(300, 0, RED, "PLAYER DRAW");
-	//DrawFormatString(300, 20, RED, "dir:%f", player.GetDir() * 180 / PI);
-	//DrawFormatString(300, 20, RED, "floor:%d", GetFloor());
-	DrawFormatString(300, 20, RED, "bodyclock:%d", bodyClock);
+	
 	//if (!lArm) DrawFormatString(300, 20, RED, "Lost!");
 
 	if (rEye) {
@@ -240,6 +237,12 @@ int Player::Draw() {//‚±‚±‚à‘å•ÏA“Á‚Éƒ}ƒXƒNˆ— ©@ƒ}ƒXƒN‚Í‰æ‘œ‚Ìã‘‚«‚Ås‚­
 	DrawModiGraph(decoi[0].Getx(), decoi[0].Gety(), decoi[1].Getx(), decoi[1].Gety(),
 		decoi[2].Getx(), decoi[2].Gety(), decoi[3].Getx(), decoi[3].Gety(), maskImage, true);
 
+	DrawFormatString(300, 0, RED, "PLAYER DRAW");
+	//DrawFormatString(300, 20, RED, "dir:%f", player.GetDir() * 180 / PI);
+	//DrawFormatString(300, 20, RED, "floor:%d", GetFloor());
+	//DrawFormatString(300, 20, RED, "bodyclock:%d", bodyClock);
+	DrawFormatString(400, 20, RED, "(%d,%d)", player.Getx(), player.Gety());
+
 	return 0;
 }
 int Player::UIDraw(int count) {
@@ -272,6 +275,9 @@ Circle Player::Getplayer() {
 }
 Dot Player::GetMove() {
 	return move;
+}
+Dot Player::GetDot() {
+	return player.GetDot();
 }
 
 int pram;

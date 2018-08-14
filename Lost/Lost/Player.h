@@ -31,6 +31,7 @@ public:
 	int GetFloor();	//1.2.3.4.
 	int SetFloor(int a);
 	double GetSpeed();
+	Dot GetDot();
 	int SetSpeed(double a);
 	Circle Getplayer();
 	Dot GetMove();

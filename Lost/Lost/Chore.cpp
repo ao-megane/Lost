@@ -490,8 +490,12 @@ Dot RotateDot(double thita, Dot x) {
 	return ans;
 }
 
+int SetRand() {
+	srand((unsigned int)time(NULL));
+	return 0;
+}
+
 int GetRand() {
-	//srand((unsigned int)time(NULL));
 	return rand();
 }
 

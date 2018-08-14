@@ -4,6 +4,7 @@
 #include"EnemyMng.h"
 #include"Chore.h"
 #include"Value.h"
+#include"Key.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 
@@ -30,6 +31,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Player player;
 	InputInitialize(Key);
 	player.Initialize();
+	KeyInitialize();
+	SetRand();
 	//EnemyMngInitialize();
 	SystemInitialize();
 	//InputFile("kanuma2017.txt");
@@ -101,6 +104,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		case 1://Loading
 			count = 0;
 			player.Set();
+			SetKeyPosi();
 			//EnemyMngInitialize(1);
 			flag = 2;
 			break;
@@ -114,6 +118,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			if (PAUSE == 1) flag = 7;
 
 			player.Draw();
+			KeyDraw(player.GetDot(), player.GetFloor());
 			//EnemyMngDraw();
 			player.UIDraw(count);
 			
