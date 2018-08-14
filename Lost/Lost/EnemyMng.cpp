@@ -32,14 +32,14 @@ int Enemy::Draw(Dot player){
 		Eimage, true);
 	//DrawCircle(enemy.Getx() + DISP_WIDTH / 2.0 - player.Getx(), enemy.Gety() + DISP_HEIGHT / 2.0 - player.Gety(), enemy.GetRadius(), BLUE, 1, 0);
 
-	serch.Draw(BLUE);
+	serch.Draw(BLUE,enemy.GetRadius());
 
 	return 0;
 }
 double dir_e;
 int Enemy::UpdataMove(Dot a) {
 	dir_e = CalcDir(enemy.GetDot(), a);
-	move.Set(Speed*cos(dir_e), Speed*sin(dir_e));
+	move.Set(Speed*cos(dir_e), -Speed*sin(dir_e));
 	return 0;
 }
 Dot Enemy::GetMove() {
@@ -159,46 +159,52 @@ int Son::Set() {
 Dot dest_ene;
 int Son::Updata(Circle player) {
 	//ここが大変，がんばれ
-	
-	UpdataMove(player.GetDot());
-	enemy.Move(move);
+
+	if (player&enemy) {
+		return 1;
+	}
 
 	/*------移動---------*/
-	//if (ischase) {
-	//	UpdataMove(player.GetDot());
-	//	
-	//}
+	if (ischase) {
+		UpdataMove(player.GetDot());
+	}
 	//else {
 	//	//UpdataMove(??);
 	//}
-
-	/*-------壁ら-------*/
-	//if (GetDoor().IsHitMoving(enemy, GetFloor2SoftHandle())) {	//ドアにぶつかれば
-	//	PlayerMoveInColor(&enemy, GetMove());
-	//	return 0;
-	//}
-	//if (GetWall().IsHitMoving(enemy, GetFloor2SoftHandle())) {	//壁にぶつかれば
-	//	PlayerMoveInColor(&enemy, GetMove());
-	//	return 0;
-	//}
-	//if (GetHighstep().IsHitCircle(enemy, GetFloor2SoftHandle())) {	//2階の階段にいるとき
-	//	PlayerMoveInColor(&enemy, GetMove());
-	//	return 0;
-	//}
+	if (!(GetMove().Getx() == 0 && GetMove().Gety() == 0)) { //移動してれば
+		enemy.SetDir(CalcDir(move.Getx(),move.Gety()));
+	}
 
 	/*------索敵更新-------*/
-	decoi_e[0].Set(enemy.Getx() + enemy.GetRadius() + DISP_WIDTH / 2.0 - player.Getx(),
+	decoi_e[0].Set(
+		enemy.Getx() + enemy.GetRadius() + DISP_WIDTH / 2.0 - player.Getx(),
 		enemy.Gety() - SON_SERCH_HEIGHT / 2.0 + DISP_HEIGHT / 2.0 - player.Gety());
-	decoi_e[1].Set(enemy.Getx() + enemy.GetRadius() + DISP_WIDTH / 2.0 - player.Getx() + SON_SERCH_WIDTH,
+	decoi_e[1].Set(
+		enemy.Getx() + enemy.GetRadius() + DISP_WIDTH / 2.0 - player.Getx() + SON_SERCH_WIDTH,
 		enemy.Gety() + SON_SERCH_HEIGHT / 2.0 + DISP_HEIGHT / 2.0 - player.Gety());
 	serch.Set(decoi_e[0], decoi_e[1], enemy.GetDir());
+
+	/*-------壁ら-------*/
+	if (GetDoor().IsHitMoving(enemy, GetFloor2SoftHandle())) {	//ドアにぶつかれば
+		PlayerMoveInColor(&enemy, GetMove());
+		return 0;
+	}
+	if (GetWall().IsHitMoving(enemy, GetFloor2SoftHandle())) {	//壁にぶつかれば
+		PlayerMoveInColor(&enemy, GetMove());
+		return 0;
+	}
+	if (GetHighstep().IsHitCircle(enemy, GetFloor2SoftHandle())) {	//2階の階段にいるとき
+		PlayerMoveInColor(&enemy, GetMove());
+		return 0;
+	}
 	
-	//if(serch&player)
-		//ischase = true;
+	/*if(serch&player)
+		ischase = true;*/
 	//if(見失う処理)
 
-	if (player&enemy)
-		return 1;
+	enemy.Move(GetMove());
+
+	
 	return 0;
 }
 

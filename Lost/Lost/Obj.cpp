@@ -78,8 +78,8 @@ int Square::Set(int a, int b, int c, int d,double thita) {
 }
 Dot decoi_obj[4];
 Dot center_obj;
-int Square::Draw(int handle) {
-	center_obj.Set(LU.Getx(), RD.Gety() / 2);
+int Square::Draw(int handle,double circleradius) {
+	center_obj.Set(LU.Getx() - circleradius, (RD.Gety() - LU.Gety()) / 2 + LU.Gety());
 	decoi_obj[0] = LU;
 	decoi_obj[0] = RotateDot(dir, decoi_obj[0], center_obj);
 

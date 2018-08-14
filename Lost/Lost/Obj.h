@@ -69,7 +69,7 @@ public:
 	int Getleft();
 	Dot GetLU();
 	Dot GetRD();
-	int Draw(int colorHandle);
+	int Draw(int colorHandle,double circleradius);
 	void operator - (Dot a) {		//Square‚Ìdot•½sˆÚ“®
 		Set(LU - a, RD - a);
 	};
