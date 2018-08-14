@@ -31,8 +31,8 @@ const int ThumbTrig = 16383; //thumb‚Ì–³‹‚·‚é”ÍˆÍ `32767
 const int DISP_WIDTH = 2160;	//‰æ–Ê‚Ì‘å‚«‚³(Surfacepro3)
 const int DISP_HEIGHT = 1440;
 
-const int MAP_WIDTH = 10800 * 0.5;
-const int MAP_HEIGHT = 7200 * 0.5;
+const int MAP_WIDTH = 5500;
+const int MAP_HEIGHT = 3700;
 
 const int MASK_WIDTH = 2600;
 
