@@ -470,6 +470,10 @@ double CalcDir(double x, double y) {
 	}
 }
 
+double CalcDistance(Dot a, Dot b) {
+	return sqrt((a.Getx() - b.Getx()*(a.Getx() - b.Getx()) + (a.Gety() - b.Gety())*(a.Gety() - b.Gety())));
+}
+
 Dot RotateDot(double thita, Dot x, Dot c) {
 	Dot ans;
 	ans.Setx((x.Getx() - c.Getx())*cos(-thita) - (x.Gety() - c.Gety())*sin(-thita) + c.Getx());

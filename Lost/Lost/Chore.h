@@ -91,6 +91,8 @@ double CalcDir(Dot center, Dot a);
 double CalcDir(Dot center);
 double CalcDir(double x,double y);
 
+double CalcDistance(Dot a, Dot b);
+
 Dot RotateDot(double thita, Dot x, Dot c);
 
 Dot RotateDot(double thita, Dot x);//å¥ì_íÜêS

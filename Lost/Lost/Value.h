@@ -37,14 +37,6 @@ const int MAP_HEIGHT = 3700;
 
 const int MASK_WIDTH = 2600;
 
-//const int DOOR = GetColor(0, 255, 0);
-const int DOOR = GetColor(255, 0, 0);
-const int WALL = GetColor(0, 0, 0);
-const int STEP1 = GetColor(255, 0, 0);
-const int STEP2 = GetColor(0, 0, 255);
-const int FLOOR1 = GetColor(0, 0, 255);
-const int FLOOR2 = GetColor(0, 0, 255);
-
 const double JUDGE_MARGIN = 1.0;	//プレイヤーと壁の追突について，埋め込まれないために
 
 const int P_SIZE = 60;	//プレイヤーの半径
@@ -60,7 +52,6 @@ const int HUSBAND_FULL_SPEED = 35;
 const int HUSBAND_HALF_SPEED = 20;
 const int HUSBAND_SERCH_WIDTH = 440;
 const int HUSBAND_SERCH_HEIGHT = 90;
-/*--------------------*/
 
 /*--------夫人--------*/
 const int MADAM_RANGE = 60;
@@ -68,7 +59,59 @@ const int MADAM_FULL_SPEED = 35;
 const int MADAM_HALF_SPEED = 20;
 const int MADAM_SERCH_WIDTH = 440;
 const int MADAM_SERCH_HEIGHT = 90;
-/*--------------------*/
+
+/*------１階の敵用静点-----*/
+const int ENEPOSI_1[27 * 2] = {
+	300,2200,//1
+	300,3000,//2
+	300,3500,//3
+	1600,3500,//4
+	1600,3000,//5
+	1600,2205,//6
+	1100,1300,//7
+	1100,600,//8
+	2100,650,//9
+	2200,1300,//10
+	2200,2250,//11
+	2200,2650,//12
+	3450,2650,//13
+	3450,2050,//14
+	3530,1300,//15
+	2760,1300,//16
+	2760,650,//17
+	3530,650,//18
+	4320,650,//19
+	4320,1300,//20
+	3900,2850,//21
+	3900,1900,//22
+	5100,1900,//23
+	5100,2650,//24
+	3900,2650,//25
+	5100,3400,//26
+	3900,3400//27
+};
+const int ENEPOSI_2[20 * 2] = {
+	1100,2000,//1
+	1100,440,//2
+	1100,2550,//3
+	330,2550,//4
+	1560,2550,//5
+	1873,2000,//6
+	1873,1100,//7
+	2750,2550,//8
+	2750,2000,//9
+	2750,1100,//10
+	3600,1100,//11
+	3600,2550,//12
+	3600,3400,//13
+	2800,3400,//14
+	4800,3400,//15
+	4350,2550,//16
+	4350,1745,//17
+	5100,1745,//18
+	4350,430,//19
+	330,3330,//20
+};
 
 
 /*--------長男--------*/
@@ -77,7 +120,6 @@ const double SON_FULL_SPEED = 35.0;
 const double SON_HALF_SPEED = 20.0;
 const int SON_SERCH_WIDTH = 1100;
 const int SON_SERCH_HEIGHT = 150;
-/*--------------------*/
 
 
 /*--------長女--------*/
@@ -86,7 +128,6 @@ const int DAUGHTER_FULL_SPEED = 35;
 const int DAUGHTER_HALF_SPEED = 20;
 const int DAUGHTER_SERCH_WIDTH = 440;
 const int DAUGHTER_SERCH_HEIGHT = 90;
-/*--------------------*/
 
 const int HARD_COUNT = 5500;
 

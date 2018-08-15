@@ -18,9 +18,11 @@ protected:
 	Circle enemy;		//方向付き円，描画と当たり判定
 	Square serch;		//探索範囲(四角)
 	Dot move;			//進行方向的な
+	//Dot dest;			//目的地的な 保持する必要はない，moveに渡す
 	bool ischase;		//プレイヤーを追っているか
 	int Floor;			//1or2階にいる．描画用か,mngで管理すればいらない
-	double Speed;			//なうのスピード
+	int posiNum;		//野球の塁と同じカウント
+	double Speed;		//なうのスピード
 	int image[8];		//アニメーション用
 	int Eimage;
 };
