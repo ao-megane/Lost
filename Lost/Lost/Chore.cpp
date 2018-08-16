@@ -38,7 +38,7 @@ int nishiki;
 int SystemInitialize() {
 	Clear = LoadGraph("images/System/Clear1.png");
 
-	Floor1Image = LoadGraph("images/maps/floor1-data.png");
+	Floor1Image = LoadGraph("images/maps/floor1.png");
 	Floor1data = LoadSoftImage("images/maps/floor1-data.png");
 	Floor2Image = LoadGraph("images/maps/floor2-data.png");
 	Floor2data = LoadSoftImage("images/maps/floor2-data.png");
@@ -416,9 +416,9 @@ double CalcDir(Dot c, Dot a) {
 
 	if (a.Getx() - c.Getx() < 0) dir = atan(-(a.Gety() - c.Gety()) / (a.Getx() - c.Getx())) + PI;
 	else if (a.Getx() - c.Getx() == 0 && (a.Gety() - c.Gety()) >= 0)
-		dir = 1 / 2 * PI;
+		dir = 1.0 / 2.0 * PI;
 	else if (a.Getx() - c.Getx() == 0 && (a.Gety() - c.Gety()) <= 0)
-		dir = 3 / 2 * PI;
+		dir = 3.0 / 2.0 * PI;
 	else if (a.Getx() - c.Getx() > 0) dir = atan(-(a.Gety() - c.Gety()) / (a.Getx() - c.Getx()));
 
 	while (dir < 0) dir += 2 * PI;
@@ -471,7 +471,9 @@ double CalcDir(double x, double y) {
 }
 
 double CalcDistance(Dot a, Dot b) {
-	return sqrt((a.Getx() - b.Getx()*(a.Getx() - b.Getx()) + (a.Gety() - b.Gety())*(a.Gety() - b.Gety())));
+	return sqrt(
+		(a.Getx() - b.Getx())*(a.Getx() - b.Getx()) + (a.Gety() - b.Gety())*(a.Gety() - b.Gety())
+			);
 }
 
 Dot RotateDot(double thita, Dot x, Dot c) {

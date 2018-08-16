@@ -12,4 +12,8 @@ Circle GetKeyCircle();
 
 int KeyDraw(Dot player,int floor);
 
+int PlayKeyPickup();
+
+int PlayKeyUnlock();
+
 #endif // !KEY_H

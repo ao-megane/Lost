@@ -41,7 +41,9 @@ int Enemy::Draw(Dot player){
 double dir_e;
 int Enemy::UpdataMove(Dot a) {
 	dir_e = CalcDir(enemy.GetDot(), a);
+	//dir_e = CalcDir(enemy.GetDot().Getx() - a.Getx(), enemy.GetDot().Gety() - a.Gety());
 	move.Set(Speed*cos(dir_e), -Speed*sin(dir_e));
+	//printfDx("dir:%f,enedot(%f,%f),nextdot(%f,%f)\n", dir_e * 180.0 / PI ,enemy.GetDot().Getx(),enemy.GetDot().Gety(),a.Getx(),a.Gety());
 	return 0;
 }
 Dot Enemy::GetMove() {
@@ -72,7 +74,7 @@ int Husband::Set() {
 		break;
 	}
 	move.Set(0, 0);
-	ischase = false;
+	stateflag = 0;
 	Speed = HUSBAND_HALF_SPEED;
 	return 0;
 }
@@ -110,7 +112,7 @@ int Madam::Set() {
 		break;
 	}
 	move.Set(0, 0);
-	ischase = false;
+	stateflag = 0;
 	Speed = MADAM_HALF_SPEED;
 	return 0;
 }
@@ -142,8 +144,10 @@ int kakashi_e;
 int Son::Set() {
 	kakashi_e = GetRand() % 20;
 	enemy.Set(ENEPOSI_2[2 * kakashi_e], ENEPOSI_2[2 * kakashi_e + 1], SON_RANGE, 0);
+	nextNum = kakashi_e;
+	printfDx("%d", nextNum);
 	move.Set(0, 0);
-	ischase = false;
+	stateflag = 0;
 	Speed = SON_HALF_SPEED;
 	return 0;
 }
@@ -151,142 +155,236 @@ int Son::Set() {
 Dot dest_ene;
 int Son::Updata(Circle player) {
 	//ここが大変，がんばれ
-	for (int i = 0; i < 19; i++) {
-		if (CalcDistance(enemy.GetDot(),DEST2[i]) < 5) {//どっかの塁に乗ったら
-			kakashi_e = GetRand() % 100;
-			switch (i+1)
-			{
-			case 1:
-				if (kakashi_e < 30)
-					dest_ene = DEST2[6 - 1];
-				else if (kakashi_e < 30 + 35)
-					dest_ene = DEST2[3 - 1];
-				else if (kakashi_e < 100)
-					dest_ene = DEST2[2 - 1];
-				break;
-			case 2:
-				if (kakashi_e < 49)
-					dest_ene = DEST2[1 - 1];
-				else if (kakashi_e < 100)
-					dest_ene = DEST2[19 - 1];
-				break;
-			case 3:
-				if (kakashi_e < 33)
-					dest_ene = DEST2[1 - 1];
-				else if (kakashi_e < 33 + 33)
-					dest_ene = DEST2[4 - 1];
-				else if (kakashi_e < 100)
-					dest_ene = DEST2[5 - 1];
-				break;
-			case 4:
-				if (kakashi_e < 30)
-					dest_ene = DEST2[20 - 1];
-				else if (kakashi_e < 100)
-					dest_ene = DEST2[3 - 1];
-				break;
-			case 5:
-				if (kakashi_e < 50)
-					dest_ene = DEST2[3 - 1];
-				else if (kakashi_e < 100)
-					dest_ene = DEST2[8 - 1];
-				break;
-			case 6:
-				if (kakashi_e < 30)
-					dest_ene = DEST2[7 - 1];
-				else if (kakashi_e < 100)
-					dest_ene = DEST2[1 - 1];
-				break;
-			case 7:
-				if (kakashi_e < 100)
-					dest_ene = DEST2[6 - 1];
-				break;
-			case 8:
-				if (kakashi_e < 30)
-					dest_ene = DEST2[9 - 1];
-				else if (kakashi_e < 30 + 35)
-					dest_ene = DEST2[5 - 1];
-				else if (kakashi_e < 100)
-					dest_ene = DEST2[12 - 1];
-				break;
-			case 9:
-				if (kakashi_e < 30)
-					dest_ene = DEST2[10 - 1];
-				else if (kakashi_e < 100)
-					dest_ene = DEST2[8 - 1];
-				break;
-			case 10:
-				if (kakashi_e < 30)
-					dest_ene = DEST2[11 - 1];
-				else if (kakashi_e < 100)
-					dest_ene = DEST2[9 - 1];
-				break;
-			case 11:
-				if (kakashi_e < 100)
-					dest_ene = DEST2[10 - 1];
-				break;
-			case 12:
-				if (kakashi_e < 33)
-					dest_ene = DEST2[8 - 1];
-				else if (kakashi_e < 33 + 33)
-					dest_ene = DEST2[16 - 1];
-				else if (kakashi_e < 100)
-					dest_ene = DEST2[13 - 1];
-				break;
-			case 13:
-				if (kakashi_e < 30)
-					dest_ene = DEST2[14 - 1];
-				else if (kakashi_e < 30 + 30)
-					dest_ene = DEST2[15 - 1];
-				else if (kakashi_e < 100)
-					dest_ene = DEST2[12 - 1];
-				break;
-			case 14:
-				if (kakashi_e < 100)
-					dest_ene = DEST2[13 - 1];
-				break;
-			case 15:
-				if (kakashi_e < 100)
-					dest_ene = DEST2[13 - 1];
-				break;
-			case 16:
-				if (kakashi_e < 50)
-					dest_ene = DEST2[12 - 1];
-				else if (kakashi_e < 100)
-					dest_ene = DEST2[17 - 1];
-				break;
-			case 17:
-				if (kakashi_e < 30)
-					dest_ene = DEST2[18 - 1];
-				else if (kakashi_e < 30 + 35)
-					dest_ene = DEST2[16 - 1];
-				else if (kakashi_e < 100)
-					dest_ene = DEST2[19 - 1];
-				break;
-			case 18:
-				if (kakashi_e < 100)
-					dest_ene = DEST2[18 - 1];
-				break;
-			case 19:
-				if (kakashi_e < 50)
-					dest_ene = DEST2[17 - 1];
-				else if (kakashi_e < 100)
-					dest_ene = DEST2[2 - 1];
-				break;
-			case 20:
-				if (kakashi_e < 100)
-					dest_ene = DEST2[4 - 1];
-				break;
-			default:
-				break;
+	if (stateflag == 0) {	//塁上
+		kakashi_e = GetRand() % 100;
+		switch (nextNum + 1)	//ここだけ1base
+		{
+		case 1:
+			if (kakashi_e < 30) {
+				dest_ene = DEST2[6 - 1];
+				nextNum = 6 - 1;
 			}
+			else if (kakashi_e < 30 + 35) {
+				dest_ene = DEST2[3 - 1];
+				nextNum = 3 - 1;
+			}
+			else if (kakashi_e < 100) {
+				dest_ene = DEST2[2 - 1];
+				nextNum = 2 - 1;
+			}
+			break;
+		case 2:
+			if (kakashi_e < 49) {
+				dest_ene = DEST2[1 - 1];
+				nextNum = 1 - 1;
+			}
+			else if (kakashi_e < 100) {
+				dest_ene = DEST2[19 - 1];
+				nextNum = 19 - 1;
+			}
+			break;
+		case 3:
+			if (kakashi_e < 33){
+				dest_ene = DEST2[1 - 1];
+				nextNum = 1 - 1;
+			}
+			else if (kakashi_e < 33 + 33){
+				dest_ene = DEST2[4 - 1];
+				nextNum = 4 - 1;
+			}
+			else if (kakashi_e < 100){
+				dest_ene = DEST2[5 - 1];
+				nextNum = 5 - 1;
+			}
+			break;
+		case 4:
+			if (kakashi_e < 30){
+				dest_ene = DEST2[20 - 1];
+				nextNum = 20 - 1;
+			}
+			else if (kakashi_e < 100){
+				dest_ene = DEST2[3 - 1];
+				nextNum = 3 - 1;
+			}
+			break;
+		case 5:
+			if (kakashi_e < 50){
+				dest_ene = DEST2[3 - 1];
+				nextNum = 3 - 1;
+			}
+			else if (kakashi_e < 100){
+				dest_ene = DEST2[8 - 1];
+				nextNum = 8 - 1;
+			}
+			break;
+		case 6:
+			if (kakashi_e < 30){
+				dest_ene = DEST2[7 - 1];
+				nextNum = 7 - 1;
+			}
+			else if (kakashi_e < 100){
+				dest_ene = DEST2[1 - 1];
+				nextNum = 1 - 1;
+			}
+			break;
+		case 7:
+			if (kakashi_e < 100){
+				dest_ene = DEST2[6 - 1];
+				nextNum = 6 - 1;
+			}
+			break;
+		case 8:
+			if (kakashi_e < 30){
+				dest_ene = DEST2[9 - 1];
+				nextNum = 9 - 1;
+			}
+			else if (kakashi_e < 30 + 35){
+				dest_ene = DEST2[5 - 1];
+				nextNum = 5 - 1;
+			}
+			else if (kakashi_e < 100){
+				dest_ene = DEST2[12 - 1];
+				nextNum = 12 - 1;
+			}
+			break;
+		case 9:
+			if (kakashi_e < 30){
+				dest_ene = DEST2[10 - 1];
+				nextNum = 10 - 1;
+			}
+			else if (kakashi_e < 100){
+				dest_ene = DEST2[8 - 1];
+				nextNum = 8 - 1;
+			}
+			break;
+		case 10:
+			if (kakashi_e < 30){
+				dest_ene = DEST2[11 - 1];
+				nextNum = 11 - 1;
+			}
+			else if (kakashi_e < 100){
+				dest_ene = DEST2[9 - 1];
+				nextNum = 9 - 1;
+			}
+			break;
+		case 11:
+			if (kakashi_e < 100){
+				dest_ene = DEST2[10 - 1];
+				nextNum = 10 - 1;
+			}
+			break;
+		case 12:
+			if (kakashi_e < 33){
+				dest_ene = DEST2[8 - 1];
+				nextNum = 8 - 1;
+			}
+			else if (kakashi_e < 33 + 33){
+				dest_ene = DEST2[16 - 1];
+				nextNum = 16 - 1;
+			}
+			else if (kakashi_e < 100){
+				dest_ene = DEST2[13 - 1];
+				nextNum = 13 - 1;
+			}
+			break;
+		case 13:
+			if (kakashi_e < 30){
+				dest_ene = DEST2[14 - 1];
+				nextNum = 14 - 1;
+			}
+			else if (kakashi_e < 30 + 30){
+				dest_ene = DEST2[15 - 1];
+				nextNum = 15 - 1;
+			}
+			else if (kakashi_e < 100){
+				dest_ene = DEST2[12 - 1];
+				nextNum = 12 - 1;
+			}
+			break;
+		case 14:
+			if (kakashi_e < 100){
+				dest_ene = DEST2[13 - 1];
+				nextNum = 13 - 1;
+			}
+			break;
+		case 15:
+			if (kakashi_e < 100){
+				dest_ene = DEST2[13 - 1];
+				nextNum = 13 - 1;
+			}
+			break;
+		case 16:
+			if (kakashi_e < 50){
+				dest_ene = DEST2[12 - 1];
+				nextNum = 12 - 1;
+			}
+			else if (kakashi_e < 100){
+				dest_ene = DEST2[17 - 1];
+				nextNum = 17 - 1;
+			}
+			break;
+		case 17:
+			if (kakashi_e < 30){
+				dest_ene = DEST2[18 - 1];
+				nextNum = 18 - 1;
+			}
+			else if (kakashi_e < 30 + 35){
+				dest_ene = DEST2[16 - 1];
+				nextNum = 16 - 1;
+			}
+			else if (kakashi_e < 100){
+				dest_ene = DEST2[19 - 1];
+				nextNum = 19 - 1;
+			}
+			break;
+		case 18:
+			if (kakashi_e < 100){
+				dest_ene = DEST2[18 - 1];
+				nextNum = 18 - 1;
+			}
+			break;
+		case 19:
+			if (kakashi_e < 50){
+				dest_ene = DEST2[17 - 1];
+				nextNum = 17 - 1;
+			}
+			else if (kakashi_e < 100){
+				dest_ene = DEST2[2 - 1];
+				nextNum = 2 - 1;
+			}
+			break;
+		case 20:
+			if (kakashi_e < 100){
+				dest_ene = DEST2[4 - 1];
+				nextNum = 4 - 1;
+			}
+			break;
+		default:
+			break;
 		}
 		UpdataMove(dest_ene);
-		printfDx("%d\n", i + 1);
-		break;
+		dest = dest_ene;
+		stateflag = 1;
 	}
-
-	if (ischase) {
-		//dest_ene = player.GetDot();
+	else if (stateflag == 1) {//走塁,暇
+		Speed = SON_HALF_SPEED;
+		//enemy.MoveandTurn(dest);
+		if (CalcDistance(enemy.GetDot(), DEST2[nextNum]) < 100) {
+			printfDx("到着！！！！！！！！！！！！！\n");
+			stateflag = 0;
+		}
+	}
+	else if (stateflag == 2) {//プレイヤーを目視
+		Speed = SON_FULL_SPEED;
+		//if(遮蔽がなければ)
+		UpdataMove(player.GetDot());
+		//if(遮蔽があれば)
+		//stateflag = 3
+	}
+	else if (stateflag == 3) {//プレイヤー探す
+		Speed = SON_FULL_SPEED;
+		//ここ大変，近い点を探して行って，そこから角度込みで近い点をdestにする
+		//dest = 
 	}
 
 	/*if (player&enemy) {
@@ -294,16 +392,9 @@ int Son::Updata(Circle player) {
 	}*/
 
 	/*------移動---------*/
-	
-	/*if (ischase) {
-		UpdataMove(player.GetDot());
-	}
-	else {
-		UpdataMove(dest_ene);
-	}*/
-	if (!(GetMove().Getx() == 0 && GetMove().Gety() == 0)) { //移動してれば
-		enemy.SetDir(CalcDir(move.Getx(),move.Gety()));
-	}
+	//if (!(GetMove().Getx() == 0 && GetMove().Gety() == 0)) { //移動してれば
+	//	enemy.SetDir(CalcDir(move.Getx(),move.Gety()));
+	//}
 
 	/*------索敵更新-------*/
 	decoi_e[0].Set(
@@ -333,11 +424,21 @@ int Son::Updata(Circle player) {
 	//if(見失う処理)
 	//	ischase = false;
 
-	enemy.Move(GetMove());
-
+	enemy.MoveandTurn(GetMove());
 	
 	return 0;
 }
+
+Dot Son::GetDest(){
+	return dest;
+}
+int Son::GetState() {
+	return stateflag;
+}
+int Son::GetNextNum() {
+	return nextNum;
+}
+
 
 int Daughter::Initialize() {
 	image[0] = LoadGraph("images/enemy/daughter/1.png");
@@ -363,7 +464,7 @@ int Daughter::Set() {
 		break;
 	}
 	move.Set(0, 0);
-	ischase = false;
+	stateflag = 0;
 	Speed = DAUGHTER_HALF_SPEED;
 	return 0;
 }
@@ -423,7 +524,10 @@ int EnemyMngUpdata(Circle player,int floor) {
 int EnemyMngDraw(Dot player,int floor) {
 	if (floor == 4) {
 		son.Draw(player);
-		DrawFormatString(300, 20, RED, "move:(%5f,%5f)",son.GetMove().Getx(),son.GetMove().Gety());
+		DrawFormatString(300, 20, RED, "dest:(%5f,%5f)",son.GetDest().Getx(),son.GetDest().Gety());
+		DrawFormatString(300, 40, RED, "move:(%5f,%5f)", son.GetMove().Getx(), son.GetMove().Gety());
+		DrawFormatString(300, 60, RED, "stateflag:%d", son.GetState());
+		DrawFormatString(300, 80, RED, "nextNum:%d", son.GetNextNum());
 		for (int i = 0; i < 20; i++) {
 			DrawCircle(DEST2[i].Getx() + DISP_WIDTH / 2.0 - player.Getx(), DEST2[i].Gety() + DISP_HEIGHT / 2.0 - player.Gety(), 5, BLUE, 1);
 		}
@@ -440,6 +544,3 @@ int EnemyMngDraw(Dot player,int floor) {
 	return 0;
 }
 
-bool Son::Getischase() {
-	return ischase;
-}

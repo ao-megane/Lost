@@ -19,7 +19,7 @@ int Player::Initialize() {	//•¡”ƒvƒŒƒCƒ„[‚È‚ç‚à‚Á‚Æ’š”J‚É‚â‚é‚±‚Æ
 	PWalk[0] = LoadSoundMem("sounds/player/1.wav");
 	PWalk[1] = LoadSoundMem("sounds/player/2.wav");
 	PWalk[2] = LoadSoundMem("sounds/player/3.wav");
-	PWalk[3] = LoadSoundMem("sounds/player/4.wav");
+	PWalk[3] = LoadSoundMem("sounds/player/3.wav");
 	PWalk[4] = LoadSoundMem("sounds/player/5.wav");
 	PWalk[5] = LoadSoundMem("sounds/player/6.wav");
 	PWalk[6] = LoadSoundMem("sounds/player/7.wav");

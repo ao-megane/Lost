@@ -113,16 +113,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			flag = 2;
 			break;
 		case 2://playing
-			//EnemyMngSet(count);
 			player.Updata(Key,0);
 			if (player.GetFloor() == GetKeyFloor()) {
-				if (player.GetCircle() & GetKeyCircle()) {
+				if (player.GetCircle() & GetKeyCircle() && !player.GetKeyflag()) {
 					player.keyGet();
+					PlayKeyPickup();
 				}
 			}
 			if (player.GetKeyflag() && player.GetFloor() == 1 && Rock.IsHitCircle(player.GetCircle(), GetFloor1SoftHandle())) {
 				flag = 4;
 				keepCount = count;
+				PlayKeyUnlock();
 			}
 			switch (EnemyMngUpdata(player.GetCircle(), player.GetFloor())) {//husband,madam,son,daughterÇÃèá
 			case 0:
@@ -151,7 +152,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			player.DrawMask();
 
 			player.UIDraw(count);
-			
+			//DrawFormatString(200, 80, RED, "distance:%f", CalcDistance(player.GetDot(), GetKeyCircle().GetDot()));
+
 			//DrawLine(0, GROUND_HEIGHT, DISP_WIDTH, GROUND_HEIGHT, RED, FALSE);
 			//DrawLine(0, BIRD_HIGH, DISP_WIDTH, BIRD_HIGH, RED, FALSE);
 
@@ -210,7 +212,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		count++;
 		if (CheckHitKey(KEY_INPUT_DELETE)) break;
 
-		PrintInput(Key);
+		//PrintInput(Key);
 		//FpsTimeFanction();
 		ScreenFlip();
 	}

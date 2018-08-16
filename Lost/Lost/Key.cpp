@@ -5,9 +5,13 @@
 Circle key;
 int keyfloor;
 int keyImage;
+int keypickup;
+int keyunlock;
 
 int KeyInitialize() {
 	keyImage = LoadGraph("images/key/1.png");
+	keypickup = LoadSoundMem("sounds/key/pickup.wav");
+	keyunlock = LoadSoundMem("sounds/key/open.wav");
 	key.Set(0, 0, KEY_SIZE, 0);
 	return 0;
 }
@@ -101,5 +105,15 @@ int KeyDraw(Dot player,int floor) {
 
 	//DrawFormatString(200, 20, RED, "floor:%d,x:%d,y:%d", keyfloor, key.Getx(), key.Gety());
 
+	return 0;
+}
+
+int PlayKeyPickup() {
+	PlaySoundMem(keypickup, DX_PLAYTYPE_BACK);
+	return 0;
+}
+
+int PlayKeyUnlock() {
+	PlaySoundMem(keyunlock, DX_PLAYTYPE_BACK);
 	return 0;
 }
