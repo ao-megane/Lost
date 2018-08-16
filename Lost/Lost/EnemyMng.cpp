@@ -145,7 +145,7 @@ int Son::Set() {
 	kakashi_e = GetRand() % 20;
 	enemy.Set(ENEPOSI_2[2 * kakashi_e], ENEPOSI_2[2 * kakashi_e + 1], SON_RANGE, 0);
 	nextNum = kakashi_e;
-	printfDx("%d", nextNum);
+	//printfDx("%d", nextNum);
 	move.Set(0, 0);
 	stateflag = 0;
 	Speed = SON_HALF_SPEED;
@@ -370,7 +370,7 @@ int Son::Updata(Circle player) {
 		Speed = SON_HALF_SPEED;
 		//enemy.MoveandTurn(dest);
 		if (CalcDistance(enemy.GetDot(), DEST2[nextNum]) < 100) {
-			printfDx("到着！！！！！！！！！！！！！\n");
+			//printfDx("到着！！！！！！！！！！！！！\n");
 			stateflag = 0;
 		}
 	}
@@ -405,6 +405,9 @@ int Son::Updata(Circle player) {
 		enemy.Gety() + SON_SERCH_HEIGHT / 2.0 + DISP_HEIGHT / 2.0 - player.Gety());
 	serch.Set(decoi_e[0], decoi_e[1], enemy.GetDir());
 
+	if (serch.isHitCenter(player.GetRadius(),enemy.GetRadius())) {
+		printfDx("HIT!!!!!\n");
+	}
 	/*-------壁ら-------*/
 	if (GetDoor().IsHitMoving(enemy, GetFloor2SoftHandle())) {	//ドアにぶつかれば
 		PlayerMoveInColor(&enemy, GetMove());
@@ -419,8 +422,7 @@ int Son::Updata(Circle player) {
 		return 0;
 	}
 	
-	/*if(serch&player)
-		ischase = true;*/
+	
 	//if(見失う処理)
 	//	ischase = false;
 

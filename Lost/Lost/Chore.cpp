@@ -475,6 +475,11 @@ double CalcDistance(Dot a, Dot b) {
 		(a.Getx() - b.Getx())*(a.Getx() - b.Getx()) + (a.Gety() - b.Gety())*(a.Gety() - b.Gety())
 			);
 }
+double CalcDistance(Dot a) {
+	return sqrt(
+		(a.Getx())*(a.Getx()) + (a.Gety())*(a.Gety())
+	);
+}
 
 Dot RotateDot(double thita, Dot x, Dot c) {
 	Dot ans;

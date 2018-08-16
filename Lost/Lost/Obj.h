@@ -59,6 +59,39 @@ private:
 	double y;
 };
 
+class Circle {//•ûŒü•t‚«‰~
+public:
+	int Set(int x, int y, double range, double dir);
+	int Set(Dot a, double range, double dir);
+	int SetDir(double thita);
+	int MoveandTurn(double dx, double dy);
+	int Move(double dx, double dy);
+	int MoveandTurn(Dot a);
+	int Move(Dot a);
+	int Back(double dx, double dy);
+	Dot GetDot();
+	int Getx();
+	int Gety();
+	double GetDir();
+	double GetRadius();
+	//int Updata();
+	bool operator & (Circle a) {
+		if (sqrt(
+			(center.Getx() - a.GetDot().Getx())*(center.Getx() - a.GetDot().Getx()) +
+			(center.Gety() - a.GetDot().Gety())*(center.Gety() - a.GetDot().Gety())
+			)
+			<= radius + a.GetRadius())
+			return true;
+		else
+			return false;
+	};
+
+private:
+	double radius;
+	double dir;	//0~2PI
+	Dot center;
+};
+
 class Square{//doubleDot2‚Â{•ûŒü ’†S‚Í¶‚Ì^‚ñ’†
 public:
 	int Set(Dot a, Dot b, double c);
@@ -67,6 +100,7 @@ public:
 	int Set(int a, int b, int c, int d, double thita);
 	int Getup();
 	int Getleft();
+	bool isHitCenter(double p_radius,double e_radius);
 	Dot GetLU();
 	Dot GetRD();
 	int Draw(int colorHandle,double circleradius);
@@ -85,6 +119,7 @@ public:
 		else
 			return true;
 	};
+	bool operator & (Circle a) ;
 
 private:
 	Dot LU;
@@ -92,35 +127,6 @@ private:
 	double dir;	//0~2PI
 };
 
-class Circle {//•ûŒü•t‚«‰~
-public:
-	int Set(int x, int y, double range, double dir);
-	int Set(Dot a, double range, double dir);
-	int SetDir(double thita);
-	int MoveandTurn(double dx, double dy);
-	int Move(double dx, double dy);
-	int MoveandTurn(Dot a);
-	int Move(Dot a);
-	int Back(double dx, double dy);
-	Dot GetDot();
-	int Getx();
-	int Gety();
-	double GetDir();
-	double GetRadius();
-	//int Updata();
-	bool operator & (Circle a) {
-		if (sqrt((center.Getx() - a.GetDot().Getx())*(center.Getx() - a.GetDot().Getx()) + (center.Gety() - a.GetDot().Gety())*(center.Gety() - a.GetDot().Gety()))
-			<= radius + a.GetRadius())
-			return true;
-		else
-			return false;
-	}
-
-private:
-	double radius;
-	double dir;	//0~2PI
-	Dot center;
-};
 
 
 #endif // !OBJH

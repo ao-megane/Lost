@@ -129,6 +129,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			case 0:
 				break;
 			case 1:
+				//DrawFormatString(600, 0, RED, "HIT!!!");
 				break;
 			case 2:
 				break;
@@ -142,14 +143,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			
 			if (PAUSE == 1) flag = 7;
 
-			player.Draw();
+			//player.Draw();
 			if (!player.GetKeyflag()) {
 				KeyDraw(player.GetDot(), player.GetFloor());
 			}
 
 			EnemyMngDraw(player.GetDot(), player.GetFloor());
 
-			player.DrawMask();
+			//player.DrawMask();
 
 			player.UIDraw(count);
 			//DrawFormatString(200, 80, RED, "distance:%f", CalcDistance(player.GetDot(), GetKeyCircle().GetDot()));
