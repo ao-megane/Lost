@@ -131,6 +131,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			case 1:
 				DrawFormatString(600, 0, RED, "HIT!!!");
 				player.Set();
+				EnemyMngSet();
 				break;
 			case 2:
 				break;

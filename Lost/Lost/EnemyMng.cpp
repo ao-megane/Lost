@@ -142,7 +142,7 @@ int Son::Initialize() {
 
 int kakashi_e;
 int Son::Set() {
-	kakashi_e = GetRand() % 20;
+	kakashi_e = GetRand() % 20;//0~19
 	enemy.Set(ENEPOSI_2[2 * kakashi_e], ENEPOSI_2[2 * kakashi_e + 1], SON_RANGE, 0);
 	nextNum = kakashi_e;
 	//printfDx("%d", nextNum);
@@ -339,8 +339,8 @@ int Son::Updata(Circle player) {
 			break;
 		case 18:
 			if (kakashi_e < 100){
-				dest_ene = DEST2[18 - 1];
-				nextNum = 18 - 1;
+				dest_ene = DEST2[17 - 1];
+				nextNum = 17 - 1;
 			}
 			break;
 		case 19:
@@ -385,17 +385,30 @@ int Son::Updata(Circle player) {
 	}
 	else if (stateflag == 3) {//プレイヤー探す
 		Speed = SON_FULL_SPEED;
-		//ここ大変，近い点を探して行って，そこから角度込みで近い点をdestにする
+		//ここ大変，行ける点を探して行って，そこから角度込みで近い点をdestにする
 		double minDistance = 10000.0;
-		int minNum;
+		int ableNum[20];
+		int ablenum = 0;
 		for (int i = 0; i < 20; i++) {
-			if (CalcDistance(enemy.GetDot(), DEST2[i]) < minDistance) {
-				minDistance = CalcDistance(enemy.GetDot(), DEST2[i]);
-				minNum = i;
+			if (!GetWall().IsHitDottoDot(enemy.GetDot(), DEST2[i], GetFloor2SoftHandle()) &&	//壁もドアもさえぎられなければ
+				!GetDoor().IsHitDottoDot(enemy.GetDot(), DEST2[i], GetFloor2SoftHandle())
+				) {
+				ableNum[ablenum++] = i;	//行ける点を20つまでkeep
+				if (ablenum >= 20) break;
 			}
 		}
-		UpdataMove(DEST2[minNum]);
-		stateflag = 0;
+		double minDir = 2.0 * PI;
+		int minDirNum;
+		for (int i = 0; i < ablenum; i++) {
+			if (CalcDirDiff(enemy.GetDir(),CalcDir(enemy.GetDot(),DEST2[ableNum[i]])) < minDir) {	//使える点のうち，一番向かってる方向と矛盾しないやつ
+				minDir = CalcDirDiff(enemy.GetDir(), CalcDir(enemy.GetDot(), DEST2[ableNum[i]]));
+				minDirNum = ableNum[i];
+			}
+		}
+		UpdataMove(DEST2[minDirNum]);
+		stateflag = 1;
+		nextNum = minDirNum;
+
 	}
 
 	if (player&enemy) {
@@ -538,7 +551,7 @@ int EnemyMngDraw(Dot player,int floor) {
 		DrawFormatString(300, 20, RED, "dest:(%5f,%5f)",son.GetDest().Getx(),son.GetDest().Gety());
 		DrawFormatString(300, 40, RED, "move:(%5f,%5f)", son.GetMove().Getx(), son.GetMove().Gety());
 		DrawFormatString(300, 60, RED, "stateflag:%d", son.GetState());
-		DrawFormatString(300, 80, RED, "nextNum:%d", son.GetNextNum());
+		DrawFormatString(300, 80, RED, "nextNum:%d", son.GetNextNum() + 1);
 		for (int i = 0; i < 20; i++) {
 			DrawCircle(DEST2[i].Getx() + DISP_WIDTH / 2.0 - player.Getx(), DEST2[i].Gety() + DISP_HEIGHT / 2.0 - player.Gety(), 5, BLUE, 1);
 		}

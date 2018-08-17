@@ -481,6 +481,12 @@ double CalcDistance(Dot a) {
 	);
 }
 
+double CalcDirDiff(double dir1, double dir2) {
+	if (dir2 - dir1 < 0) dir2 += 2 * PI;
+	if (dir2 - dir1 <= PI) return dir2 - dir1;
+	else return 2 * PI - dir2 + dir1;
+}
+
 Dot RotateDot(double thita, Dot x, Dot c) {
 	Dot ans;
 	ans.Setx((x.Getx() - c.Getx())*cos(-thita) - (x.Gety() - c.Gety())*sin(-thita) + c.Getx());
