@@ -50,8 +50,8 @@ int SystemInitialize() {
 	Prologue[4] = LoadGraph("images/system/prologue/5.png");
 	Prologue[5] = LoadGraph("images/system/prologue/6.png");
 
-	Choice = LoadSoundMem("sounds/system/1.wav");
-	Move = LoadSoundMem("sounds/system/2.wav");
+	Choice = LoadSoundMem("sounds/system/choice/1.wav");
+	Move = LoadSoundMem("sounds/system/choice/2.wav");
 
 	if (AddFontResourceEx("Font/nishiki-teki.ttf", FR_PRIVATE, NULL) == 0) {
 		//printfDx("AddFontResourceExé∏îs\n");

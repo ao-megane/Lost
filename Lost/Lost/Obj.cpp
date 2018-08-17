@@ -164,7 +164,7 @@ bool Square::operator & (Circle a) {
 
 Dot decoi_obj2[4];
 bool Square::isHitCenter(double Pradius,double Eradius) {
-	//平行移動 プレイヤーは中心で固定なので必要ない
+	//描画してるやつを写す
 	center_obj.Set(LU.Getx() - Eradius, (RD.Gety() - LU.Gety()) / 2 + LU.Gety());
 	decoi_obj[0] = LU;
 	decoi_obj[0] = RotateDot(dir, decoi_obj[0], center_obj);
@@ -187,10 +187,10 @@ bool Square::isHitCenter(double Pradius,double Eradius) {
 	decoi_obj[2] = RotateDot(-dir, decoi_obj[2], center_obj);
 	decoi_obj[3] = RotateDot(-dir, decoi_obj[3], center_obj);
 
-	/*DrawLineByDot(decoi_obj[0], decoi_obj[1], BLUE);
-	DrawLineByDot(decoi_obj[1], decoi_obj[2], BLUE);
-	DrawLineByDot(decoi_obj[2], decoi_obj[3], BLUE);
-	DrawLineByDot(decoi_obj[3], decoi_obj[0], BLUE);*/
+	/*DrawLineByDot(decoi_obj[0], decoi_obj[1], GREEN);
+	DrawLineByDot(decoi_obj[1], decoi_obj[2], GREEN);
+	DrawLineByDot(decoi_obj[2], decoi_obj[3], GREEN);
+	DrawLineByDot(decoi_obj[3], decoi_obj[0], GREEN);*/
 	int i;
 	bool flag = true;
 	for (i = 0; i < 4; i++) {
@@ -207,20 +207,21 @@ bool Square::isHitCenter(double Pradius,double Eradius) {
 	decoi_obj2[2] = decoi_obj[(i + 2) % 4];
 	decoi_obj2[3] = decoi_obj[(i + 3) % 4];
 
-	DrawCircle(decoi_obj2[0].Getx(), decoi_obj2[0].Gety(), 30, RED);
+	/*DrawCircle(decoi_obj2[0].Getx(), decoi_obj2[0].Gety(), 30, RED);
 	DrawLineByDot(decoi_obj2[0], decoi_obj2[1], RED);
 	DrawLineByDot(decoi_obj2[1], decoi_obj2[2], BLUE);
 	DrawLineByDot(decoi_obj2[2], decoi_obj2[3], GREEN);
-	DrawLineByDot(decoi_obj2[3], decoi_obj2[0], BLUE);
+	DrawLineByDot(decoi_obj2[3], decoi_obj2[0], BLUE);*/
 
+	//平行移動（原点に持っていく）
 	for (i = 0; i < 4; i++) {
 		decoi_obj2[i] = decoi_obj2[i] - center_obj;
 	}
-	DrawCircle(center_obj.Getx(), center_obj.Gety(), 30, RED);
-	DrawLineByDot(decoi_obj2[0], decoi_obj2[1], BLUE);
-	DrawLineByDot(decoi_obj2[1], decoi_obj2[2], BLUE);
-	DrawLineByDot(decoi_obj2[2], decoi_obj2[3], BLUE);
-	DrawLineByDot(decoi_obj2[3], decoi_obj2[0], BLUE);
+	//DrawCircle(center_obj.Getx(), center_obj.Gety(), 30, RED);
+	//DrawLineByDot(decoi_obj2[0], decoi_obj2[1], BLUE);
+	//DrawLineByDot(decoi_obj2[1], decoi_obj2[2], BLUE);
+	//DrawLineByDot(decoi_obj2[2], decoi_obj2[3], BLUE);
+	//DrawLineByDot(decoi_obj2[3], decoi_obj2[0], BLUE);
 
 	//点判定
 	decoidist_obj = 10000000;

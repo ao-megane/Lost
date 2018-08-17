@@ -27,26 +27,38 @@ private:
 	int y;
 };
 
-class Dot{//double型の点
+class Dot {//double型の点
 public:/*
 	Dot();
 	~Dot();*/
 	double Setx(double x);
 	double Sety(double y);
-	double Set(double x,double y);			//左上、右下
+	double Set(double x, double y);			//左上、右下
 	double Getx();
 	double Gety();
-	
+
 	void operator = (Dot d) {		//Dotの代入
 		x = d.Getx();
 		y = d.Gety();
-	};		
-	Dot operator - (Dot d) {		//Dotの平行移動
-		Dot a;
-		a.x -= d.Getx();
-		a.y -= d.Gety();
-		return a;
 	};
+	void operator -= (Dot d) {		//Dotの平行移動
+		x -= d.Getx();
+		y -= d.Gety();
+	};
+	Dot operator - (Dot d) {
+		Dot a;
+		a.Set(x - d.Getx(), y - d.Gety());
+		return a;
+	}
+	void operator -= (double b){
+		x -= b;
+		y -= b;
+	}
+	Dot operator - (double d) {
+		Dot a;
+		a.Set(x - d, y - d);
+		return a;
+	}
 	Dot operator + (Dot d) {		//Dotの平行移動
 		Dot b;
 		b.x = Getx() + d.Getx();

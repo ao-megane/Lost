@@ -143,7 +143,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			
 			if (PAUSE == 1) flag = 7;
 
-			//player.Draw();
+			player.Draw();
 			if (!player.GetKeyflag()) {
 				KeyDraw(player.GetDot(), player.GetFloor());
 			}
