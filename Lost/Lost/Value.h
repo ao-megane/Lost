@@ -116,7 +116,7 @@ const double ENEPOSI_2[20 * 2] = {
 
 /*--------’·’j--------*/
 const int SON_RANGE = 60;
-const double SON_FULL_SPEED = 35.0;
+const double SON_FULL_SPEED = P_FULL_SPEED - 1.5;
 const double SON_HALF_SPEED = 20.0;
 const int SON_SERCH_WIDTH = 1100;
 const int SON_SERCH_HEIGHT = 150;

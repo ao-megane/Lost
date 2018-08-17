@@ -129,7 +129,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			case 0:
 				break;
 			case 1:
-				//DrawFormatString(600, 0, RED, "HIT!!!");
+				DrawFormatString(600, 0, RED, "HIT!!!");
+				player.Set();
 				break;
 			case 2:
 				break;

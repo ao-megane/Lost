@@ -21,7 +21,7 @@ protected:
 	Dot dest;			//目的地的な moveに渡すから必要はない debug用
 	//bool ischase;		//プレイヤーを追っているか
 	int nextNum;		//destの通し番号,0base
-	bool stateflag;		//0塁上 1走塁 2プレイヤー目視 3プレイヤー見失い
+	int stateflag;		//0塁上 1走塁 2プレイヤー目視 3プレイヤー見失い
 	double Speed;		//なうのスピード
 	int image[8];		//アニメーション用
 	int Eimage;

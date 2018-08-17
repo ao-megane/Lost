@@ -121,14 +121,6 @@ bool Square::operator & (Circle a) {
 	decoi_obj[1].Set(RD.Getx() - a.Getx(), LU.Gety() - a.Gety());
 	decoi_obj[2] = RD - a.GetDot();
 	decoi_obj[3].Set(LU.Getx() - a.Getx(), RD.Gety() - a.Gety());
-	/*decoi_obj[0].Set(100, 100);
-	decoi_obj[1].Set(600, 100);
-	decoi_obj[2].Set(600, 600);
-	decoi_obj[3].Set(100, 600);*/
-	/*decoi_obj[0] = LU;
-	decoi_obj[1].Set(RD.Getx(), LU.Gety());
-	decoi_obj[2] = RD;
-	decoi_obj[3].Set(LU.Getx(), RD.Gety());*/
 	//回転
 	decoi_obj[0] = RotateDot(-dir, decoi_obj[0]);
 	decoi_obj[1] = RotateDot(-dir, decoi_obj[1]);
@@ -187,10 +179,6 @@ bool Square::isHitCenter(double Pradius,double Eradius) {
 	decoi_obj[2] = RotateDot(-dir, decoi_obj[2], center_obj);
 	decoi_obj[3] = RotateDot(-dir, decoi_obj[3], center_obj);
 
-	/*DrawLineByDot(decoi_obj[0], decoi_obj[1], GREEN);
-	DrawLineByDot(decoi_obj[1], decoi_obj[2], GREEN);
-	DrawLineByDot(decoi_obj[2], decoi_obj[3], GREEN);
-	DrawLineByDot(decoi_obj[3], decoi_obj[0], GREEN);*/
 	int i;
 	bool flag = true;
 	for (i = 0; i < 4; i++) {
@@ -207,21 +195,10 @@ bool Square::isHitCenter(double Pradius,double Eradius) {
 	decoi_obj2[2] = decoi_obj[(i + 2) % 4];
 	decoi_obj2[3] = decoi_obj[(i + 3) % 4];
 
-	/*DrawCircle(decoi_obj2[0].Getx(), decoi_obj2[0].Gety(), 30, RED);
-	DrawLineByDot(decoi_obj2[0], decoi_obj2[1], RED);
-	DrawLineByDot(decoi_obj2[1], decoi_obj2[2], BLUE);
-	DrawLineByDot(decoi_obj2[2], decoi_obj2[3], GREEN);
-	DrawLineByDot(decoi_obj2[3], decoi_obj2[0], BLUE);*/
-
 	//平行移動（原点に持っていく）
 	for (i = 0; i < 4; i++) {
 		decoi_obj2[i] = decoi_obj2[i] - center_obj;
 	}
-	//DrawCircle(center_obj.Getx(), center_obj.Gety(), 30, RED);
-	//DrawLineByDot(decoi_obj2[0], decoi_obj2[1], BLUE);
-	//DrawLineByDot(decoi_obj2[1], decoi_obj2[2], BLUE);
-	//DrawLineByDot(decoi_obj2[2], decoi_obj2[3], BLUE);
-	//DrawLineByDot(decoi_obj2[3], decoi_obj2[0], BLUE);
 
 	//点判定
 	decoidist_obj = 10000000;
@@ -231,13 +208,13 @@ bool Square::isHitCenter(double Pradius,double Eradius) {
 		}
 	}
 	if (decoidist_obj < Pradius) {
-		printfDx("INNNER!!");
+		//printfDx("INNNER!!");
 		return true;	//内側に点がある
 	}
 	
 	//辺判定
 	if (decoi_obj2[0].Getx() * decoi_obj2[1].Getx() < 0 && decoi_obj2[0].Gety() * decoi_obj2[3].Gety() < 0) {//四角の中に〇がある
-		printfDx("OUTER!!");
+		//printfDx("OUTER!!");
 		return true;
 	}
 	else if (decoi_obj2[0].Getx() * decoi_obj2[1].Getx() < 0) {//y軸を跨げば

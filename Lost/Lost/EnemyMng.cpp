@@ -369,32 +369,38 @@ int Son::Updata(Circle player) {
 	else if (stateflag == 1) {//走塁,暇
 		Speed = SON_HALF_SPEED;
 		//enemy.MoveandTurn(dest);
-		if (CalcDistance(enemy.GetDot(), DEST2[nextNum]) < 100) {
+		if (CalcDistance(enemy.GetDot(), DEST2[nextNum]) < 100) {	//塁上にいれば
 			//printfDx("到着！！！！！！！！！！！！！\n");
 			stateflag = 0;
 		}
 	}
 	else if (stateflag == 2) {//プレイヤーを目視
+		//printfDx("目視！！\n");
 		Speed = SON_FULL_SPEED;
-		//if(遮蔽がなければ)
+		if (GetWall().IsHitDottoDot(enemy.GetDot(), player.GetDot(),GetFloor2SoftHandle())) {//壁越しだったら
+			//DrawFormatString(0,40,GREEN,"壁越し！！\n");
+			stateflag = 3;
+		}
 		UpdataMove(player.GetDot());
-		//if(遮蔽があれば)
-		//stateflag = 3
 	}
 	else if (stateflag == 3) {//プレイヤー探す
 		Speed = SON_FULL_SPEED;
 		//ここ大変，近い点を探して行って，そこから角度込みで近い点をdestにする
-		//dest = 
+		double minDistance = 10000.0;
+		int minNum;
+		for (int i = 0; i < 20; i++) {
+			if (CalcDistance(enemy.GetDot(), DEST2[i]) < minDistance) {
+				minDistance = CalcDistance(enemy.GetDot(), DEST2[i]);
+				minNum = i;
+			}
+		}
+		UpdataMove(DEST2[minNum]);
+		stateflag = 0;
 	}
 
-	/*if (player&enemy) {
+	if (player&enemy) {
 		return 1;
-	}*/
-
-	/*------移動---------*/
-	//if (!(GetMove().Getx() == 0 && GetMove().Gety() == 0)) { //移動してれば
-	//	enemy.SetDir(CalcDir(move.Getx(),move.Gety()));
-	//}
+	}
 
 	/*------索敵更新-------*/
 	decoi_e[0].Set(
@@ -405,9 +411,16 @@ int Son::Updata(Circle player) {
 		enemy.Gety() + SON_SERCH_HEIGHT / 2.0 + DISP_HEIGHT / 2.0 - player.Gety());
 	serch.Set(decoi_e[0], decoi_e[1], enemy.GetDir());
 
-	if (serch.isHitCenter(player.GetRadius(),enemy.GetRadius())) {
-		printfDx("HIT!!!!!\n");
+	if (serch.isHitCenter(player.GetRadius(),enemy.GetRadius())) {//索敵範囲内にプレイヤーがいて
+		if (!GetWall().IsHitDottoDot(enemy.GetDot(), player.GetDot(), GetFloor2SoftHandle())) {//壁越しでなければ
+			 //DrawFormatString(0,40,GREEN,"壁越し！！\n");
+			stateflag = 2;
+		}
+		//stateflag = 2;
+		//printfDx("発見！！！");
 	}
+
+	/*------移動---------*/
 	/*-------壁ら-------*/
 	if (GetDoor().IsHitMoving(enemy, GetFloor2SoftHandle())) {	//ドアにぶつかれば
 		PlayerMoveInColor(&enemy, GetMove());
@@ -421,10 +434,6 @@ int Son::Updata(Circle player) {
 		PlayerMoveInColor(&enemy, GetMove());
 		return 0;
 	}
-	
-	
-	//if(見失う処理)
-	//	ischase = false;
 
 	enemy.MoveandTurn(GetMove());
 	

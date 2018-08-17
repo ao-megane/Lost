@@ -111,6 +111,24 @@ bool Color::IsHitDot(Dot x,int Handle) {
 	else
 		return false;
 }
+bool Color::IsHitDottoDot(Dot a1, Dot a2, int Handle) {
+	if (Handle == 0) {
+		printfDx("‚±‚ê‚Í‚È‚¢");
+		return false;
+	}
+	if (a1.Getx() > a2.Getx()) {
+		Dot decoi;
+		decoi = a1;
+		a1 = a2;
+		a2 = decoi;
+	}
+	for (double i = 0; i < a2.Getx() - a1.Getx(); i++) {
+		GetPixelSoftImage(Handle, i + a1.Getx(), (a2.Gety() - a1.Gety()) / (a2.Getx() - a1.Getx()) * i + a1.Gety(), &colordecoi[0], &colordecoi[1], &colordecoi[2], 0);
+		if (r == colordecoi[0] && g == colordecoi[1] && b == colordecoi[2])
+			return true;
+	}
+	return false;
+}
 
 Color Wall;
 Color Door;
