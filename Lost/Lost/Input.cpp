@@ -58,6 +58,7 @@ void InputUpdata(XINPUT_STATE input, int Key[]) {
 		if (CheckHitKey(KEY_INPUT_S)) A++; else A = 0;
 		if (CheckHitKey(KEY_INPUT_W)) Y++; else Y = 0;
 		if (CheckHitKey(KEY_INPUT_A)) X++; else X = 0;
+		if (CheckHitKey(KEY_INPUT_LSHIFT)) LEFT++; else LEFT = 0;
 
 		if (CheckHitKey(KEY_INPUT_P)) PAUSE++; else PAUSE = 0;
 	}

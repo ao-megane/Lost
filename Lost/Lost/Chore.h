@@ -16,15 +16,9 @@
 
 int SystemInitialize();
 
-//int Floor1Draw();
-
-//int Floor2Draw();
-
 int GetFloor1SoftHandle();
 
-int GetLowstepSoftHandle();
-
-int GetHighstepSoftHandle();
+int GetStepSoftHandle();
 
 int GetFloor2SoftHandle();
 
@@ -37,7 +31,15 @@ int* ScorePass();
 
 int DrawOP();
 
-int PlayBGM();
+int PlayTitleBGM();
+
+int PlaynormalBGM();
+
+int PlayChaseBGM();
+
+int StopChaseBGM();
+
+int PlaybeLooked();
 
 int DrawPrologue(int b);
 
@@ -50,16 +52,6 @@ int DrawPause();
 //void DrawChore();
 
 int SetBack();
-//
-//int SetFloor1();
-//
-//int SetStep1();
-//
-//int SetStep2();
-//
-//int SetFloor2();
-//
-//int UpdataBack();
 
 int DrawBack(int floor,Dot player);
 
@@ -75,7 +67,7 @@ int SetLoser(int levelFlag,int count);
 
 int LoserUpdata(int count);
 
-int DrawLoseBord(int count);
+int DrawGameOverBord(int count);
 
 int DrawClearBord(int count);
 

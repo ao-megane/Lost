@@ -32,6 +32,10 @@ public:
 	int GetFloor();	//1.2.3.4.
 	int SetFloor(int a);
 	double GetSpeed();
+	int LostEye();
+	int LostLeg();
+	int LostEar();
+	int LostArm();
 	Dot GetDot();
 	int SetSpeed(double a);
 	Circle GetCircle();
@@ -39,6 +43,7 @@ public:
 	int Updata(int Key[],int flag);
 	int keyGet();
 	bool GetKeyflag();
+	bool isGameOver();
 	int Draw();
 	int DrawMask();
 	int UIDraw(int count);

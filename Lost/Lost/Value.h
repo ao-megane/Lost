@@ -32,7 +32,7 @@ const int ThumbTrig = 16383; //thumb‚Ì–³‹‚·‚é”ÍˆÍ `32767
 const int DISP_WIDTH = 2160;	//‰æ–Ê‚Ì‘å‚«‚³(Surfacepro3)
 const int DISP_HEIGHT = 1440;
 
-const int MAP_WIDTH = 5500;
+const int MAP_WIDTH = 5500;		//”»’è—p‰æ‘œ‚Ì‘å‚«‚³
 const int MAP_HEIGHT = 3700;
 
 const int MASK_WIDTH = 2600;
@@ -157,7 +157,7 @@ const int KEY_SIZE = 60;
 
 /*-----------------------*/
 
-
+const int BATSU_SIZE = 30;
 const int UI_HEIGHT = 400;
 const int UI_WIDTH = 300;
 const int UI_MARGIN_HEIGHT = 20;

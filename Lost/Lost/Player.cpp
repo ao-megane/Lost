@@ -9,6 +9,9 @@ int normalImage;
 int larmImage;
 int maskImage;
 int PWalk[8];
+int Batu;
+int haveKey;
+int PUI;
 Dot center;
 
 int Player::Initialize() {	//ï°êîÉvÉåÉCÉÑÅ[Ç»ÇÁÇ‡Ç¡Ç∆íöîJÇ…Ç‚ÇÈÇ±Ç∆
@@ -16,14 +19,20 @@ int Player::Initialize() {	//ï°êîÉvÉåÉCÉÑÅ[Ç»ÇÁÇ‡Ç¡Ç∆íöîJÇ…Ç‚ÇÈÇ±Ç∆
 	larmImage = LoadGraph("images/player/larm.png");
 	maskImage = LoadGraph("images/player/mask.png");
 
+	Batu = LoadGraph("images/player/UI/batsu.png");
+	haveKey = LoadGraph("images/player/UI/havekey.png");
+	PUI = LoadGraph("images/player/UI/UI.png");
+
 	PWalk[0] = LoadSoundMem("sounds/player/1.wav");
 	PWalk[1] = LoadSoundMem("sounds/player/2.wav");
 	PWalk[2] = LoadSoundMem("sounds/player/3.wav");
-	PWalk[3] = LoadSoundMem("sounds/player/3.wav");
+	PWalk[3] = LoadSoundMem("sounds/player/4.wav");
 	PWalk[4] = LoadSoundMem("sounds/player/5.wav");
 	PWalk[5] = LoadSoundMem("sounds/player/6.wav");
 	PWalk[6] = LoadSoundMem("sounds/player/7.wav");
 	PWalk[7] = LoadSoundMem("sounds/player/8.wav");
+
+	
 
 	SetPimage(normalImage);
 	move.Set(0, 0);
@@ -49,6 +58,59 @@ int Player::Set() {
 	move.Set(0, 0);
 	return 0;
 }
+int Player::LostArm() {
+	if (GetRand() % 2) {
+		if (lArm)
+			lArm = false;
+		else rArm = false;
+	}
+	else {
+		if (rArm)
+			rArm = false;
+		else rArm = false;
+	}
+	return 0;
+}
+int Player::LostEar() {
+	if (GetRand() % 2) {
+		if (lEar)
+			lEar = false;
+		else rEar = false;
+	}
+	else {
+		if (rEar)
+			rEar = false;
+		else rEar = false;
+	}
+	return 0;
+}
+int Player::LostEye() {
+	if (GetRand() % 2) {
+		if (lEye)
+			lEye = false;
+		else rEye = false;
+	}
+	else {
+		if (rEye)
+			rEye = false;
+		else rEye = false;
+	}
+	return 0;
+}
+int Player::LostLeg() {
+	if (GetRand() % 2) {
+		if (lLeg)
+			lLeg = false;
+		else rLeg = false;
+	}
+	else {
+		if (rLeg)
+			rLeg = false;
+		else rLeg = false;
+	}
+	return 0;
+}
+
 
 int Player::Reborn() {
 	player.Set(P_REBORN_X, P_REBORN_Y, P_SIZE, 0);
@@ -113,7 +175,8 @@ int Player::Updata(int Key[], int flag) {
 	if (floor == 4) {	//2äKÇ…Ç¢ÇÈÇ∆Ç´
 		if (!lArm) {
 			if (GetDoor().IsHitMoving(player, GetFloor2SoftHandle())) {	//ÉhÉAÇ…Ç‘Ç¬Ç©ÇÍÇŒ
-				PlayerMoveInColor(&player, GetMove());
+				if(rArm)	//âEòrÇ™Ç†ÇÍÇŒ
+					PlayerMoveInColor(&player, GetMove());
 				return 0;
 			}
 		}
@@ -139,6 +202,10 @@ int Player::Updata(int Key[], int flag) {
 			SetFloor(2);
 			return 0;
 		}
+		if (GetWall().IsHitMoving(player, GetStepSoftHandle())) {	//ï«Ç…Ç‘Ç¬Ç©ÇÍÇŒ
+			PlayerMoveInColor(&player, GetMove());
+			return 0;
+		}
 	}
 	else if (floor == 2) {
 		//if (Wall.IsHitMoving(player, GetFloor2SoftHandle()) || Wall.IsHitMoving(player, GetFloor1SoftHandle())) {	//ï«Ç…Ç‘Ç¬Ç©ÇÍÇŒ
@@ -151,6 +218,10 @@ int Player::Updata(int Key[], int flag) {
 		}
 		if (GetHighstep().IsHitCircle(player, GetFloor2SoftHandle())) {
 			SetFloor(3);
+			return 0;
+		}
+		if (GetWall().IsHitMoving(player, GetStepSoftHandle())) {	//ï«Ç…Ç‘Ç¬Ç©ÇÍÇŒ
+			PlayerMoveInColor(&player, GetMove());
 			return 0;
 		}
 	}
@@ -179,9 +250,6 @@ int Player::Updata(int Key[], int flag) {
 Dot decoi[4];
 int Player::Draw() {//Ç±Ç±Ç‡ëÂïœÅAì¡Ç…É}ÉXÉNèàóù Å©Å@É}ÉXÉNÇÕâÊëúÇÃè„èëÇ´Ç≈çsÇ≠ÅCÇ∆ÇËÇ†Ç¶Ç∏ëSëÃï\é¶ÇÇµÇ¡Ç©ÇË
 
-	
-	//if (!lArm) DrawFormatString(300, 20, RED, "Lost!");
-
 	if (rEye) {
 
 	}
@@ -206,8 +274,6 @@ int Player::Draw() {//Ç±Ç±Ç‡ëÂïœÅAì¡Ç…É}ÉXÉNèàóù Å©Å@É}ÉXÉNÇÕâÊëúÇÃè„èëÇ´Ç≈çsÇ≠Å
 
 	DrawModiGraph(decoi[0].Getx(),decoi[0].Gety(), decoi[1].Getx(), decoi[1].Gety(), 
 		decoi[2].Getx(), decoi[2].Gety(), decoi[3].Getx(), decoi[3].Gety(), Pimage, true);
-
-	
 
 	DrawFormatString(300, 0, RED, "PLAYER DRAW");
 	//DrawFormatString(300, 20, RED, "dir:%f", player.GetDir() * 180 / PI);
@@ -240,6 +306,79 @@ int Player::DrawMask(){
 	return 0;
 }
 int Player::UIDraw(int count) {
+	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, PUI, true);
+	if (!lArm) {
+		DrawModiGraph(
+			-BATSU_SIZE / 2.0, -BATSU_SIZE / 2.0,
+			+BATSU_SIZE / 2.0, -BATSU_SIZE / 2.0,
+			+BATSU_SIZE / 2.0, +BATSU_SIZE / 2.0,
+			-BATSU_SIZE / 2.0, +BATSU_SIZE / 2.0
+			, Batu, true);
+	}
+	if (!rArm) {
+		DrawModiGraph(
+			-BATSU_SIZE / 2.0, -BATSU_SIZE / 2.0,
+			+BATSU_SIZE / 2.0, -BATSU_SIZE / 2.0,
+			+BATSU_SIZE / 2.0, +BATSU_SIZE / 2.0,
+			-BATSU_SIZE / 2.0, +BATSU_SIZE / 2.0
+			, Batu, true);
+	}
+	if (!lEye) {
+		DrawModiGraph(
+			-BATSU_SIZE / 2.0, -BATSU_SIZE / 2.0,
+			+BATSU_SIZE / 2.0, -BATSU_SIZE / 2.0,
+			+BATSU_SIZE / 2.0, +BATSU_SIZE / 2.0,
+			-BATSU_SIZE / 2.0, +BATSU_SIZE / 2.0
+			, Batu, true);
+	}
+	if (!rEye) {
+		DrawModiGraph(
+			-BATSU_SIZE / 2.0, -BATSU_SIZE / 2.0,
+			+BATSU_SIZE / 2.0, -BATSU_SIZE / 2.0,
+			+BATSU_SIZE / 2.0, +BATSU_SIZE / 2.0,
+			-BATSU_SIZE / 2.0, +BATSU_SIZE / 2.0
+			, Batu, true);
+	}
+	if (!lLeg) {
+		DrawModiGraph(
+			-BATSU_SIZE / 2.0, -BATSU_SIZE / 2.0,
+			+BATSU_SIZE / 2.0, -BATSU_SIZE / 2.0,
+			+BATSU_SIZE / 2.0, +BATSU_SIZE / 2.0,
+			-BATSU_SIZE / 2.0, +BATSU_SIZE / 2.0
+			, Batu, true);
+	}
+	if (!rLeg) {
+		DrawModiGraph(
+			-BATSU_SIZE / 2.0, -BATSU_SIZE / 2.0,
+			+BATSU_SIZE / 2.0, -BATSU_SIZE / 2.0,
+			+BATSU_SIZE / 2.0, +BATSU_SIZE / 2.0,
+			-BATSU_SIZE / 2.0, +BATSU_SIZE / 2.0
+			, Batu, true);
+	}
+	if (!lEar) {
+		DrawModiGraph(
+			-BATSU_SIZE / 2.0, -BATSU_SIZE / 2.0,
+			+BATSU_SIZE / 2.0, -BATSU_SIZE / 2.0,
+			+BATSU_SIZE / 2.0, +BATSU_SIZE / 2.0,
+			-BATSU_SIZE / 2.0, +BATSU_SIZE / 2.0
+			, Batu, true);
+	}
+	if (!rEar) {
+		DrawModiGraph(
+			-BATSU_SIZE / 2.0, -BATSU_SIZE / 2.0,
+			+BATSU_SIZE / 2.0, -BATSU_SIZE / 2.0,
+			+BATSU_SIZE / 2.0, +BATSU_SIZE / 2.0,
+			-BATSU_SIZE / 2.0, +BATSU_SIZE / 2.0
+			, Batu, true);
+	}
+	if (havekey) {
+		DrawModiGraph(
+			-BATSU_SIZE / 2.0, -BATSU_SIZE / 2.0,
+			+BATSU_SIZE / 2.0, -BATSU_SIZE / 2.0,
+			+BATSU_SIZE / 2.0, +BATSU_SIZE / 2.0,
+			-BATSU_SIZE / 2.0, +BATSU_SIZE / 2.0
+			, Batu, true);
+	}
 	//DrawFormatString(0, 20, RED, "Draw UI");
 	//if (count < NORMAL_COUNT) {
 	//	DrawModiGraph(
@@ -279,6 +418,11 @@ int Player::keyGet() {
 }
 bool Player::GetKeyflag() {
 	return havekey;
+}
+bool Player::isGameOver() {
+	if (!lLeg && !rLeg) return true;
+	if (!rEye && !lEye) return true;
+	return false;
 }
 
 

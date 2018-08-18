@@ -156,6 +156,7 @@ Dot dest_ene;
 int Son::Updata(Circle player) {
 	//ここが大変，がんばれ
 	if (stateflag == 0) {	//塁上
+		StopChaseBGM();
 		kakashi_e = GetRand() % 100;
 		switch (nextNum + 1)	//ここだけ1base
 		{
@@ -375,6 +376,7 @@ int Son::Updata(Circle player) {
 		}
 	}
 	else if (stateflag == 2) {//プレイヤーを目視
+		PlayChaseBGM();
 		//printfDx("目視！！\n");
 		Speed = SON_FULL_SPEED;
 		if (GetWall().IsHitDottoDot(enemy.GetDot(), player.GetDot(),GetFloor2SoftHandle())) {//壁越しだったら
@@ -384,6 +386,7 @@ int Son::Updata(Circle player) {
 		UpdataMove(player.GetDot());
 	}
 	else if (stateflag == 3) {//プレイヤー探す
+		PlayChaseBGM();
 		Speed = SON_FULL_SPEED;
 		//ここ大変，行ける点を探して行って，そこから角度込みで近い点をdestにする
 		double minDistance = 10000.0;
@@ -391,7 +394,8 @@ int Son::Updata(Circle player) {
 		int ablenum = 0;
 		for (int i = 0; i < 20; i++) {
 			if (!GetWall().IsHitDottoDot(enemy.GetDot(), DEST2[i], GetFloor2SoftHandle()) &&	//壁もドアもさえぎられなければ
-				!GetDoor().IsHitDottoDot(enemy.GetDot(), DEST2[i], GetFloor2SoftHandle())
+				!GetDoor().IsHitDottoDot(enemy.GetDot(), DEST2[i], GetFloor2SoftHandle()) &&
+				!GetRock().IsHitDottoDot(enemy.GetDot(), DEST2[i], GetFloor2SoftHandle()) 
 				) {
 				ableNum[ablenum++] = i;	//行ける点を20つまでkeep
 				if (ablenum >= 20) break;
@@ -408,7 +412,6 @@ int Son::Updata(Circle player) {
 		UpdataMove(DEST2[minDirNum]);
 		stateflag = 1;
 		nextNum = minDirNum;
-
 	}
 
 	if (player&enemy) {
@@ -427,6 +430,7 @@ int Son::Updata(Circle player) {
 	if (serch.isHitCenter(player.GetRadius(),enemy.GetRadius())) {//索敵範囲内にプレイヤーがいて
 		if (!GetWall().IsHitDottoDot(enemy.GetDot(), player.GetDot(), GetFloor2SoftHandle())) {//壁越しでなければ
 			 //DrawFormatString(0,40,GREEN,"壁越し！！\n");
+			if (stateflag != 2) PlaybeLooked();
 			stateflag = 2;
 		}
 		//stateflag = 2;
@@ -511,15 +515,6 @@ int EnemyMngInitialize() {
 	madam.Initialize();
 	son.Initialize();
 	daughter.Initialize();
-
-	return 0;
-}
-
-int EnemyMngSet() {
-	husband.Set();
-	madam.Set();
-	son.Set();
-	daughter.Set();
 	for (int i = 0; i < 27; i++) {
 		DEST1[i].Set(ENEPOSI_1[2 * i], ENEPOSI_1[2 * i + 1]);
 	}
@@ -529,18 +524,31 @@ int EnemyMngSet() {
 	return 0;
 }
 
+int EnemyMngSet() {
+	husband.Set();
+	madam.Set();
+	son.Set();
+	daughter.Set();
+	
+	return 0;
+}
+
 int EnemyMngUpdata(Circle player,int floor) {
 	if (floor == 4) {
-		if (son.Updata(player))
+		if (son.Updata(player)) {
 			return 1;
-		if (daughter.Updata(player))
+		}
+		if (daughter.Updata(player)) {
 			return 2;
+		}
 	}
 	else if (floor == 1) {
-		if (husband.Updata(player))
+		if (husband.Updata(player)) {
 			return 3;
-		if (madam.Updata(player))
+		}
+		if (madam.Updata(player)) {
 			return 4;
+		}
 	}
 	return 0;
 }

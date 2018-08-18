@@ -136,6 +136,7 @@ Color Floor1;
 Color Floor2;
 Color Lowstep;
 Color Highstep;
+Color Rock;
 
 int ColorMngInitialize() {
 	Wall.Initialize(255, 0, 0);
@@ -144,6 +145,7 @@ int ColorMngInitialize() {
 	Floor2.Initialize(255, 255, 0);
 	Lowstep.Initialize(255, 0, 255);
 	Highstep.Initialize(0, 255, 255);
+	Rock.Initialize(0, 0, 0);
 	return 0;
 }
 
@@ -164,4 +166,7 @@ Color GetLowstep() {
 }
 Color GetHighstep() {
 	return Highstep;
+}
+Color GetRock() {
+	return Rock;
 }

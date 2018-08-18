@@ -5,8 +5,7 @@ int LowstepImage;
 int HighstepImage;
 int Floor2Image;
 int Floor1data;
-int Lowstepdata;
-int Highstepdata;
+int Stepdata;
 int Floor2data;
 
 int Clear;
@@ -25,7 +24,10 @@ int UIIcon;
 int Keeper;	//透過用カウントキーパー
 int flag;	//現状態フラグ 0 normal 1 ending 2 bord
 
-int BGM;
+int TitleBGM;
+int ChaseBGM;
+int beLooked;
+int normalBGM;
 int Move;
 int Choice;
 
@@ -36,11 +38,14 @@ int Score;
 
 int nishiki;
 int SystemInitialize() {
-	Clear = LoadGraph("images/System/Clear1.png");
+	Clear = LoadGraph("images/system/gameclear.png");
+	GameOver = LoadGraph("images/system/gameover.png");
+	Pause = LoadGraph("images/system/pause.png");
 
 	Floor1Image = LoadGraph("images/maps/floor1.png");
 	Floor1data = LoadSoftImage("images/maps/floor1-data.png");
-	Floor2Image = LoadGraph("images/maps/floor2-data.png");
+	Stepdata = LoadSoftImage("images/maps/step-data.png");
+	Floor2Image = LoadGraph("images/maps/floor2.png");
 	Floor2data = LoadSoftImage("images/maps/floor2-data.png");
 
 	Prologue[0] = LoadGraph("images/system/prologue/1.png");
@@ -50,8 +55,12 @@ int SystemInitialize() {
 	Prologue[4] = LoadGraph("images/system/prologue/5.png");
 	Prologue[5] = LoadGraph("images/system/prologue/6.png");
 
-	Choice = LoadSoundMem("sounds/system/choice/1.wav");
-	Move = LoadSoundMem("sounds/system/choice/2.wav");
+	Choice = LoadSoundMem("sounds/system/choice/2.wav");
+	Move = LoadSoundMem("sounds/system/choice/1.wav");
+	TitleBGM = LoadSoundMem("sounds/system/title.wav");
+	//ChaseBGM = LoadSoundMem("sounds/system/title.wav");
+	beLooked = LoadSoundMem("sounds/system/discovery.wav");
+	normalBGM = LoadSoundMem("sounds/system/normal.wav");
 
 	if (AddFontResourceEx("Font/nishiki-teki.ttf", FR_PRIVATE, NULL) == 0) {
 		//printfDx("AddFontResourceEx失敗\n");
@@ -70,13 +79,18 @@ int SystemInitialize() {
 
 int PlayMove() {
 	PlaySoundMem(Move, DX_PLAYTYPE_BACK);
-	DrawFormatString(0, 40, RED, "Sound!");
+	//DrawFormatString(0, 40, RED, "Sound!");
 	return 0;
 }
 
 int PlayChoice() {
 	PlaySoundMem(Choice, DX_PLAYTYPE_BACK);
-	DrawFormatString(0, 40, RED, "Sound!");
+	//DrawFormatString(0, 40, RED, "Sound!");
+	return 0;
+}
+
+int PlaybeLooked() {
+	PlaySoundMem(beLooked, DX_PLAYTYPE_BACK);
 	return 0;
 }
 
@@ -84,8 +98,30 @@ int* ScorePass() {
 	return &Score;
 }
 
-int PlayBGM() {
-	PlaySoundMem(BGM, DX_PLAYTYPE_LOOP);
+int PlayTitleBGM() {
+	StopSoundMem(TitleBGM);
+	StopSoundMem(normalBGM);
+	StopSoundMem(ChaseBGM);
+	PlaySoundMem(TitleBGM, DX_PLAYTYPE_LOOP);
+	return 0;
+}
+
+int PlaynormalBGM() {
+	StopSoundMem(TitleBGM);
+	StopSoundMem(normalBGM);
+	StopSoundMem(ChaseBGM);
+	PlaySoundMem(normalBGM, DX_PLAYTYPE_LOOP);
+	return 0;
+}
+
+int PlayChaseBGM() {
+	StopSoundMem(ChaseBGM);
+	PlaySoundMem(ChaseBGM, DX_PLAYTYPE_LOOP);
+	return 0;
+}
+
+int StopChaseBGM() {
+	StopSoundMem(ChaseBGM);;
 	return 0;
 }
 
@@ -134,7 +170,7 @@ int DrawPrologue(int b) {
 }
 
 int DrawPause() {
-	//DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Pause, true);
+	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Pause, true);
 	DrawFormatString(0, 0, RED, "PAUSE");
 	return 0;
 }
@@ -229,11 +265,8 @@ int SetFloor2() {
 int GetFloor1SoftHandle() {
 	return Floor1data;
 }
-int GetLowstepSoftHandle() {
-	return Lowstepdata;
-}
-int GetHighstepSoftHandle() {
-	return Highstepdata;
+int GetStepSoftHandle() {
+	return Stepdata;
 }
 int GetFloor2SoftHandle() {
 	return Floor2data;
@@ -363,20 +396,21 @@ int WinnerUpdata(int count) {
 	return 0;
 }
 int LoserUpdata(int count) {
-	DrawLoseBord(count);
+	//DrawLoseBord(count);
 	return 1;
 }
 int DrawClearBord(int count) {
-	//if ((count - Keeper2) <= 90) {
-	//	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (count - Keeper2) / 60.0 * 255.0);		//ブレンドモードを設定
-	//	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Clear, true);
-	//	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//ブレンドモードをオフ
-	//}
-	DrawFormatString(1000, 1000, RED, "CLEAR!!");
+	if (count <= 180) {
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (count - Keeper2) / 60.0 * 255.0);		//ブレンドモードを設定
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Clear, true);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//ブレンドモードをオフ
+	}
+	//DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Clear, true);
+	//DrawFormatString(1000, 1000, RED, "CLEAR!!");
 	return 0;
 }
-int DrawLoseBord(int count) {
-	if ((count - Keeper) <= 90) {
+int DrawGameOverBord(int count) {
+	if ((count - Keeper) <= 180) {
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (count - Keeper) / 60.0 * 255);		//ブレンドモードを設定
 		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, GameOver, true);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//ブレンドモードをオフ

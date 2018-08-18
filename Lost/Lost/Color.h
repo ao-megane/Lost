@@ -36,6 +36,8 @@ Color GetLowstep();
 
 Color GetHighstep();
 
+Color GetRock();
+
 //Color::Color()
 //{
 //}

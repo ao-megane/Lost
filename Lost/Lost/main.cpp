@@ -30,19 +30,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	int count = 0;
 	int keepCount = 0;
 	Player player;
-	Color Rock;
+	
 	InputInitialize(Key);
 	player.Initialize();
 	KeyInitialize();
 	SetRand();
-	Rock.Initialize(0, 0, 0);
+	
 	EnemyMngInitialize();
 	SystemInitialize();
 	ColorMngInitialize();
 	//InputFile("kanuma2017.txt");
 
 	SetBack();
-	PlayBGM();
+	PlayTitleBGM();
 
 	flag = 0;
 	int down = 0;
@@ -60,6 +60,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		case 0://OP
 			DrawOP();
 			DrawData();
+			
 			if (THUMB_Y >= 80) down++; else down = 0;
 			if (THUMB_Y <= -80) up++; else up = 0;
 
@@ -111,8 +112,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			SetKeyPosi();
 			EnemyMngSet();
 			flag = 2;
+			PlaynormalBGM();
 			break;
 		case 2://playing
+			/*PlaynormalBGM();*/
 			player.Updata(Key,0);
 			if (player.GetFloor() == GetKeyFloor()) {
 				if (player.GetCircle() & GetKeyCircle() && !player.GetKeyflag()) {
@@ -120,30 +123,40 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 					PlayKeyPickup();
 				}
 			}
-			if (player.GetKeyflag() && player.GetFloor() == 1 && Rock.IsHitCircle(player.GetCircle(), GetFloor1SoftHandle())) {
+			if (player.GetKeyflag() && player.GetFloor() == 1 && GetRock().IsHitCircle(player.GetCircle(), GetFloor1SoftHandle())) {
+				//クリア
 				flag = 4;
 				keepCount = count;
 				PlayKeyUnlock();
 			}
 			switch (EnemyMngUpdata(player.GetCircle(), player.GetFloor())) {//husband,madam,son,daughterの順
-			case 0:
-				break;
 			case 1:
-				DrawFormatString(600, 0, RED, "HIT!!!");
-				player.Set();
+				player.LostEye();
+				player.Reborn();
 				EnemyMngSet();
 				break;
 			case 2:
+				DrawFormatString(600, 0, RED, "HIT!!!");
+				player.LostLeg();
+				player.Reborn();
+				EnemyMngSet();
 				break;
 			case 3:
+				player.LostArm();
+				player.Reborn();
+				EnemyMngSet();
+				break;
+			case 4:
+				player.LostEar();
+				player.Reborn();
+				EnemyMngSet();
 				break;
 			default:
 				break;
 			}
-
-			//EnemyMngJudge(&player, &girl, count, ScorePass(), levelFlag);
+			if (player.isGameOver()) flag = 3;
 			
-			if (PAUSE == 1) flag = 7;
+			if (PAUSE == 1 || RIGHT == 1) flag = 7;
 
 			player.Draw();
 			if (!player.GetKeyflag()) {
@@ -152,7 +165,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 			EnemyMngDraw(player.GetDot(), player.GetFloor());
 
-			//player.DrawMask();
+			player.DrawMask();
 
 			player.UIDraw(count);
 			//DrawFormatString(200, 80, RED, "distance:%f", CalcDistance(player.GetDot(), GetKeyCircle().GetDot()));
@@ -172,6 +185,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			if (LoserUpdata(count))
 				if (B == 1)
 					flag = 0;*/
+			DrawGameOverBord(count - keepCount);
+			if (count - keepCount > 180) flag = 0;
 			break;
 		case 4://gameclear
 			
@@ -184,8 +199,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 					flag = 0;
 			DrawChore(count, girl.GetHP(), levelFlag);
 			*/
-			DrawClearBord(count);
-			if (count - keepCount > 40) flag = 0;
+			DrawClearBord(count - keepCount);
+			if (count - keepCount > 180) flag = 0;
 			break;
 		case 5://マニュアル
 			   /*if (B == 1)
@@ -204,6 +219,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			break;
 		case 7://ポーズ
 			DrawPause();
+			player.UIDraw(count);
 			count--;
 			if (B == 1) flag = 2;
 			if (A == 1) flag = 0;
@@ -215,7 +231,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		count++;
 		if (CheckHitKey(KEY_INPUT_DELETE)) break;
 
-		//PrintInput(Key);
+		PrintInput(Key);
 		//FpsTimeFanction();
 		ScreenFlip();
 	}
