@@ -1,9 +1,10 @@
 #include"Chore.h"
 
 int Floor1Image;
-int LowstepImage;
-int HighstepImage;
+int Floor1WallsImage;
+int StepImage;
 int Floor2Image;
+int Floor2WallsImage;
 int Floor1data;
 int Stepdata;
 int Floor2data;
@@ -41,11 +42,16 @@ int SystemInitialize() {
 	Clear = LoadGraph("images/system/gameclear.png");
 	GameOver = LoadGraph("images/system/gameover.png");
 	Pause = LoadGraph("images/system/pause.png");
+	Credit = LoadGraph("images/system/credit.png");
+	Tytle = LoadGraph("images/system/title.png");
 
-	Floor1Image = LoadGraph("images/maps/floor1.png");
+	Floor1Image = LoadGraph("images/maps/floor1-floor.png");
+	Floor1WallsImage = LoadGraph("images/maps/floor1-wall.png");
 	Floor1data = LoadSoftImage("images/maps/floor1-data.png");
+	StepImage = LoadGraph("images/maps/step.png");
 	Stepdata = LoadSoftImage("images/maps/step-data.png");
-	Floor2Image = LoadGraph("images/maps/floor2.png");
+	Floor2Image = LoadGraph("images/maps/floor2-floor.png");
+	Floor2WallsImage = LoadGraph("images/maps/floor2-wall.png");
 	Floor2data = LoadSoftImage("images/maps/floor2-data.png");
 
 	Prologue[0] = LoadGraph("images/system/prologue/1.png");
@@ -126,8 +132,8 @@ int StopChaseBGM() {
 }
 
 int DrawOP() {
-	//DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Tytle, true);
-	DrawFormatString(0, 0, RED, "TYTLE");
+	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Tytle, true);
+	//DrawFormatString(0, 0, RED, "TYTLE");
 	/*DrawModiGraph(
 		DISP_WIDTH / 2 + 185	  , DISP_HEIGHT / 2 + 170 + (levelFlag) * 110,
 		DISP_WIDTH / 2 + 200 + 185, DISP_HEIGHT / 2 + 170 + (levelFlag) * 110,
@@ -200,8 +206,8 @@ int DrawManual(int b) {
 }
 
 int DrawCredit() {
-	DrawFormatStringFToHandle(DISP_WIDTH / 2, DISP_HEIGHT / 2, RED, nishiki, "CREDIT!");
-	//DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Credit2, true);
+	//DrawFormatStringFToHandle(DISP_WIDTH / 2, DISP_HEIGHT / 2, RED, nishiki, "CREDIT!");
+	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Credit, true);
 	return 0;
 }
 
@@ -298,7 +304,7 @@ int DrawBack(int floor,Dot player) {
 			DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety(),
 			DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
 			DISP_WIDTH / 2.0 - player.Getx(), DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
-			Floor1Image, true);
+			StepImage, true);
 		/*---要検討---*/
 	}
 	else if (floor == 3) {
@@ -307,7 +313,7 @@ int DrawBack(int floor,Dot player) {
 			DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety(),
 			DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
 			DISP_WIDTH / 2.0 - player.Getx(), DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
-			Floor2Image, true);
+			StepImage, true);
 		/*---要検討---*/
 	}
 	else if (floor == 4) {
@@ -317,6 +323,52 @@ int DrawBack(int floor,Dot player) {
 			DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
 			DISP_WIDTH / 2.0 - player.Getx(), DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
 			Floor2Image, true);
+	}
+	return 0;
+}
+
+
+int DrawWalls(int floor,Dot player) {
+	/*DrawModiGraph(
+	DISP_WIDTH / 2.0 - player.Getx(), DISP_HEIGHT / 2.0 - player.Gety(),
+	DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety(),
+	DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
+	DISP_WIDTH / 2.0 - player.Getx(), DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
+	Floor1, true);*/
+	if (floor == 1) {
+		DrawModiGraph(
+			DISP_WIDTH / 2.0 - player.Getx(), DISP_HEIGHT / 2.0 - player.Gety(),
+			DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety(),
+			DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
+			DISP_WIDTH / 2.0 - player.Getx(), DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
+			Floor1WallsImage, true);
+		//DrawFormatString(0, 20, RED, "Draw BackGround");
+	}
+	else if (floor == 2) {
+		/*DrawModiGraph(
+			DISP_WIDTH / 2.0 - player.Getx(), DISP_HEIGHT / 2.0 - player.Gety(),
+			DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety(),
+			DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
+			DISP_WIDTH / 2.0 - player.Getx(), DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
+			StepImage, true);*/
+		/*---要検討---*/
+	}
+	else if (floor == 3) {
+		/*DrawModiGraph(
+			DISP_WIDTH / 2.0 - player.Getx(), DISP_HEIGHT / 2.0 - player.Gety(),
+			DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety(),
+			DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
+			DISP_WIDTH / 2.0 - player.Getx(), DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
+			StepImage, true);*/
+		/*---要検討---*/
+	}
+	else if (floor == 4) {
+		DrawModiGraph(
+			DISP_WIDTH / 2.0 - player.Getx(), DISP_HEIGHT / 2.0 - player.Gety(),
+			DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety(),
+			DISP_WIDTH / 2.0 - player.Getx() + MAP_WIDTH, DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
+			DISP_WIDTH / 2.0 - player.Getx(), DISP_HEIGHT / 2.0 - player.Gety() + MAP_HEIGHT,
+			Floor2WallsImage, true);
 	}
 	return 0;
 }

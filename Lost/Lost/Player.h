@@ -20,6 +20,7 @@ private:
 	double Speed;
 	int floor;
 	int bodyClock;	//アニメ用クロック，音にも使う
+	int animeNum;	//アニメ用クロックの結果 0~2
 	int Pimage;
 public:
 	//Player();

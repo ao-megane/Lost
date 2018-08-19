@@ -48,15 +48,15 @@ const int P_CLOCK = 20;//足音用みたいになってるがもっと使い道はありそう
 
 /*--------主人--------*/
 const int HUSBAND_RANGE = 60;
-const int HUSBAND_FULL_SPEED = 35;
-const int HUSBAND_HALF_SPEED = 20;
+const int HUSBAND_FULL_SPEED = P_FULL_SPEED - 1.5;
+const int HUSBAND_HALF_SPEED = P_HALF_SPEED - 1.5;
 const int HUSBAND_SERCH_WIDTH = 440;
 const int HUSBAND_SERCH_HEIGHT = 90;
 
 /*--------夫人--------*/
 const int MADAM_RANGE = 60;
-const int MADAM_FULL_SPEED = 35;
-const int MADAM_HALF_SPEED = 20;
+const int MADAM_FULL_SPEED = P_FULL_SPEED - 1.5;
+const int MADAM_HALF_SPEED = P_HALF_SPEED - 1.5;
 const int MADAM_SERCH_WIDTH = 440;
 const int MADAM_SERCH_HEIGHT = 90;
 
@@ -117,15 +117,15 @@ const double ENEPOSI_2[20 * 2] = {
 /*--------長男--------*/
 const int SON_RANGE = 60;
 const double SON_FULL_SPEED = P_FULL_SPEED - 1.5;
-const double SON_HALF_SPEED = 20.0;
+const double SON_HALF_SPEED = P_HALF_SPEED - 1.5;
 const int SON_SERCH_WIDTH = 1100;
 const int SON_SERCH_HEIGHT = 150;
 
 
 /*--------長女--------*/
 const int DAUGHTER_RANGE = 60;
-const int DAUGHTER_FULL_SPEED = 35;
-const int DAUGHTER_HALF_SPEED = 20;
+const int DAUGHTER_FULL_SPEED = P_FULL_SPEED - 1.5;
+const int DAUGHTER_HALF_SPEED = P_HALF_SPEED - 1.5;
 const int DAUGHTER_SERCH_WIDTH = 440;
 const int DAUGHTER_SERCH_HEIGHT = 90;
 
@@ -155,13 +155,27 @@ const int KEYPOSI_2[7 * 2] = {
 };
 const int KEY_SIZE = 60;
 
+
 /*-----------------------*/
 
 const int BATSU_SIZE = 30;
+const int KEY_WIDTH = 60 * 2;
+const int KEY_HEIGHT = 80 * 2;
 const int UI_HEIGHT = 400;
 const int UI_WIDTH = 300;
 const int UI_MARGIN_HEIGHT = 20;
 const int UI_MARGIN_WIDTH = 20;
+const int UI_POSI[2 * 9] = {
+	1970,100,	//rEye
+	2000,100,	//lEye
+	1950,110,	//rEar
+	2020,110,	//lEar
+	1950,160,	//rArm
+	2020,160,	//lArm
+	1970,240,	//rLeg
+	2000,240,	//lLeg
+	1850,150,	//Key
+};
 
 //const int HPBAR_WIDTH = 900 * 0.75;
 //const int HPBAR_HEIGHT = 150 * 0.75;

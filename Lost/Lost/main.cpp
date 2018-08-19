@@ -54,7 +54,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//InputUpdata(Key);
 
 		//UpdataBack();
-		DrawBack(player.GetFloor(),player.GetCircle().GetDot());
+		
 
 		switch (flag) {
 		case 0://OP
@@ -129,34 +129,38 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				keepCount = count;
 				PlayKeyUnlock();
 			}
-			switch (EnemyMngUpdata(player.GetCircle(), player.GetFloor())) {//husband,madam,son,daughter‚Ì‡
+			switch (EnemyMngUpdata(player.GetCircle(), player.GetFloor())) {//son,daughter,husband,madam‚Ì‡
 			case 1:
-				player.LostEye();
-				player.Reborn();
-				EnemyMngSet();
-				break;
-			case 2:
-				DrawFormatString(600, 0, RED, "HIT!!!");
-				player.LostLeg();
-				player.Reborn();
-				EnemyMngSet();
-				break;
-			case 3:
 				player.LostArm();
 				player.Reborn();
 				EnemyMngSet();
 				break;
-			case 4:
+			case 2:
 				player.LostEar();
+				player.Reborn();
+				EnemyMngSet();
+				break;
+			case 3:
+				player.LostEye();
+				player.Reborn();
+				EnemyMngSet();
+				break;
+			case 4:
+				player.LostLeg();
 				player.Reborn();
 				EnemyMngSet();
 				break;
 			default:
 				break;
 			}
-			if (player.isGameOver()) flag = 3;
+			if (player.isGameOver()) {
+				keepCount = count;
+				flag = 3;
+			}
 			
 			if (PAUSE == 1 || RIGHT == 1) flag = 7;
+
+			DrawBack(player.GetFloor(), player.GetCircle().GetDot());
 
 			player.Draw();
 			if (!player.GetKeyflag()) {
@@ -164,6 +168,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			}
 
 			EnemyMngDraw(player.GetDot(), player.GetFloor());
+			
+			DrawWalls(player.GetFloor(),player.GetDot());
 
 			player.DrawMask();
 
@@ -176,29 +182,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			//DrawChore();
 			break;
 		case 3://gameover
-			/*EnemyMngUpdata(count);
-			EnemyMngDraw();
-
-			girl.Draw();
-			player.Draw();
-			DrawChore(count, girl.GetHP(), levelFlag);
-			if (LoserUpdata(count))
-				if (B == 1)
-					flag = 0;*/
 			DrawGameOverBord(count - keepCount);
 			if (count - keepCount > 180) flag = 0;
 			break;
 		case 4://gameclear
-			
-			/*player.Updata(count, Key);
-			girl.Updata(count, player.PriJump);
-			girl.Draw();
-			player.Draw();
-			if (WinnerUpdata(count))
-				if (B == 1)
-					flag = 0;
-			DrawChore(count, girl.GetHP(), levelFlag);
-			*/
 			DrawClearBord(count - keepCount);
 			if (count - keepCount > 180) flag = 0;
 			break;
@@ -231,7 +218,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		count++;
 		if (CheckHitKey(KEY_INPUT_DELETE)) break;
 
-		PrintInput(Key);
+		//PrintInput(Key);
 		//FpsTimeFanction();
 		ScreenFlip();
 	}

@@ -55,6 +55,8 @@ int SetBack();
 
 int DrawBack(int floor,Dot player);
 
+int DrawWalls(int floor,Dot player);
+
 int EndBack();
 
 int InputFile(std::string file);
