@@ -204,11 +204,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			break;
 		case 3://gameover
 			DrawGameOverBord(count - keepCount);
-			if (count - keepCount > 180) flag = 0;
+			if (count - keepCount > 180) {
+				flag = 0;
+				PlayTitleBGM();
+			}
 			break;
 		case 4://gameclear
 			DrawClearBord(count - keepCount);
-			if (count - keepCount > 180) flag = 0;
+			if (count - keepCount > 180) {
+				flag = 0;
+				PlayTitleBGM();
+			}
 			break;
 		case 5://ƒ}ƒjƒ…ƒAƒ‹
 			if (B == 1)
