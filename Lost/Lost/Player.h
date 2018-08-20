@@ -8,7 +8,7 @@ private:
 	//int Max_Stm;
 	Circle player;
 	Dot move;
-	bool rEye;
+	bool rEye;	//true‚Å‚Á‚Ä‚é
 	bool lEye;
 	bool rArm;
 	bool lArm;
@@ -48,9 +48,13 @@ public:
 	int Draw();
 	int DrawMask();
 	int UIDraw(int count);
+	bool isEar();
+	bool isArm();
 };
 
 int PlayPWalk();
+int yesPSounds();
+int noPSounds();
 
 
 #endif // !PLAYER

@@ -29,7 +29,7 @@ int PlayChoice();
 
 int* ScorePass();
 
-int DrawOP();
+int DrawOP(int count);
 
 int PlayTitleBGM();
 
@@ -76,6 +76,12 @@ int DrawClearBord(int count);
 int SetWinner(int levelFlag,int count,int* score);
 
 int WinnerUpdata(int count);
+
+int DrawWhite(int count, int keepcount);
+
+int yesBGM();
+
+int noBGM();
 
 //bool IsHitColorCtoAll(Circle x,int colorHandle,int imageHandle);
 

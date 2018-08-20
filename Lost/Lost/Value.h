@@ -39,7 +39,7 @@ const int MASK_WIDTH = 2600;
 
 const double JUDGE_MARGIN = 1.0;	//プレイヤーと壁の追突について，埋め込まれないために
 
-const int P_SIZE = 60;	//プレイヤーの半径
+const int P_SIZE = 80;	//プレイヤーの半径
 const int P_REBORN_X = 145;
 const int P_REBORN_Y = 1937;
 const double P_FULL_SPEED = 30;
@@ -47,16 +47,16 @@ const double P_HALF_SPEED = 15;
 const int P_CLOCK = 20;//足音用みたいになってるがもっと使い道はありそう
 
 /*--------主人--------*/
-const int HUSBAND_RANGE = 60;
+const int HUSBAND_RANGE = P_SIZE;
 const int HUSBAND_FULL_SPEED = P_FULL_SPEED - 1.5;
-const int HUSBAND_HALF_SPEED = P_HALF_SPEED - 1.5;
+const int HUSBAND_HALF_SPEED = P_HALF_SPEED - 3.0;
 const int HUSBAND_SERCH_WIDTH = 440;
 const int HUSBAND_SERCH_HEIGHT = 90;
 
 /*--------夫人--------*/
-const int MADAM_RANGE = 60;
+const int MADAM_RANGE = P_SIZE;
 const int MADAM_FULL_SPEED = P_FULL_SPEED - 1.5;
-const int MADAM_HALF_SPEED = P_HALF_SPEED - 1.5;
+const int MADAM_HALF_SPEED = P_HALF_SPEED - 3.0;
 const int MADAM_SERCH_WIDTH = 440;
 const int MADAM_SERCH_HEIGHT = 90;
 
@@ -115,17 +115,17 @@ const double ENEPOSI_2[20 * 2] = {
 
 
 /*--------長男--------*/
-const int SON_RANGE = 60;
+const int SON_RANGE = P_SIZE;
 const double SON_FULL_SPEED = P_FULL_SPEED - 1.5;
-const double SON_HALF_SPEED = P_HALF_SPEED - 1.5;
+const double SON_HALF_SPEED = P_HALF_SPEED - 3.0;
 const int SON_SERCH_WIDTH = 1100;
 const int SON_SERCH_HEIGHT = 150;
 
 
 /*--------長女--------*/
-const int DAUGHTER_RANGE = 60;
+const int DAUGHTER_RANGE = P_SIZE;
 const int DAUGHTER_FULL_SPEED = P_FULL_SPEED - 1.5;
-const int DAUGHTER_HALF_SPEED = P_HALF_SPEED - 1.5;
+const int DAUGHTER_HALF_SPEED = P_HALF_SPEED - 3.0;
 const int DAUGHTER_SERCH_WIDTH = 440;
 const int DAUGHTER_SERCH_HEIGHT = 90;
 

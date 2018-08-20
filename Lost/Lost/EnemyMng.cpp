@@ -1029,3 +1029,21 @@ int PlayMadamWalk() {
 	//DrawFormatString(0, 40, RED, "Sound!");
 	return 0;
 }
+int yesESounds() {
+	for (int i = 0; i < 4; i++) {
+		ChangeVolumeSoundMem(255, SonWalk[i]);
+		ChangeVolumeSoundMem(255, DaughterWalk[i]);
+		ChangeVolumeSoundMem(255, MadamWalk[i]);
+		ChangeVolumeSoundMem(255, HusbandWalk[i]);
+	}
+	return 0;
+}
+int noESounds() {
+	for (int i = 0; i < 4; i++) {
+		ChangeVolumeSoundMem(0, SonWalk[i]);
+		ChangeVolumeSoundMem(0, DaughterWalk[i]);
+		ChangeVolumeSoundMem(0, MadamWalk[i]);
+		ChangeVolumeSoundMem(0, HusbandWalk[i]);
+	}
+	return 0;
+}

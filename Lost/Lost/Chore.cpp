@@ -14,13 +14,14 @@ int GameOver;
 int Loading;
 int Credit;
 int Result;
-int Tytle;
+int Tytle[3];
 int Logo;
 int Pause;
-int Manual;
+int Manual[2];
 int Prologue[6];
 int UIBack;
 int UIIcon;
+int White;
 
 int Keeper;	//透過用カウントキーパー
 int flag;	//現状態フラグ 0 normal 1 ending 2 bord
@@ -43,7 +44,12 @@ int SystemInitialize() {
 	GameOver = LoadGraph("images/system/gameover.png");
 	Pause = LoadGraph("images/system/pause.png");
 	Credit = LoadGraph("images/system/credit.png");
-	Tytle = LoadGraph("images/system/title.png");
+	Tytle[0] = LoadGraph("images/system/title1.png");
+	Tytle[1] = LoadGraph("images/system/title2.png");
+	Tytle[2] = LoadGraph("images/system/title3.png");
+	White = LoadGraph("images/system/white.png");
+	Manual[0] = LoadGraph("images/system/manual1.png");
+	Manual[1] = LoadGraph("images/system/manual2.png");
 
 	Floor1Image = LoadGraph("images/maps/floor1-floor.png");
 	Floor1WallsImage = LoadGraph("images/maps/floor1-wall.png");
@@ -130,9 +136,27 @@ int StopChaseBGM() {
 	StopSoundMem(ChaseBGM);;
 	return 0;
 }
+int clockcount;
+int DrawOP(int count) {
+	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Tytle[0], true);
+	clockcount = count % (20 * 60);
+	DrawModiGraph(
+		-clockcount / (20.0 * 60.0) * DISP_WIDTH, 0,
+		DISP_WIDTH * 2 - clockcount / (20.0 * 60) * DISP_WIDTH, 0,
+		DISP_WIDTH * 2 - clockcount / (20.0 * 60) * DISP_WIDTH, DISP_HEIGHT,
+		-clockcount / (20.0 * 60) * DISP_WIDTH, DISP_HEIGHT,
+		Tytle[1], true
+	);
+	DrawModiGraph(
+		DISP_WIDTH * 2 - clockcount / 3.0 * 60 * DISP_WIDTH, 0,
+		DISP_WIDTH * 4 - clockcount / 3 * 60 * DISP_WIDTH, 0,
+		DISP_WIDTH * 4 - clockcount / 3 * 60 * DISP_WIDTH, DISP_HEIGHT,
+		DISP_WIDTH * 2 - clockcount / 3.0 * 60 * DISP_WIDTH, DISP_HEIGHT,
+		Tytle[1], true
+	);
+	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Tytle[2], true);
+	//DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Tytle[3], true);
 
-int DrawOP() {
-	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Tytle, true);
 	//DrawFormatString(0, 0, RED, "TYTLE");
 	/*DrawModiGraph(
 		DISP_WIDTH / 2 + 185	  , DISP_HEIGHT / 2 + 170 + (levelFlag) * 110,
@@ -186,12 +210,12 @@ int DrawManual(int b) {
 	switch (manFlag)
 	{
 	case 0:
-		//DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Manual, true);
-		DrawFormatString(0, 0, RED, "MANUAL");
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Manual[0], true);
+		//DrawFormatString(0, 0, RED, "MANUAL");
 		break;
-	//case 1:
-	//	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Manual2, true);
-	//	//DrawFormatString(0, 0, RED, "2");
+	case 1:
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Manual[1], true);
+		//DrawFormatString(0, 0, RED, "2");
 		break;
 	}
 
@@ -471,6 +495,35 @@ int DrawGameOverBord(int count) {
 		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, GameOver, true);
 		return 1;
 	}
+	return 0;
+}
+
+int DrawWhite(int count,int keeper) {
+	if (keeper != 0) {
+		if ((count - keeper) <= 40 && (count - keeper) > 0) {
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - (count - keeper) / 60.0 * 255);		//ブレンドモードを設定
+			DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, White, true);
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//ブレンドモードをオフ
+		}
+		else {
+			//DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, White, true);
+			return 1;
+		}
+	}
+	return 0;
+}
+
+int yesBGM() {
+	ChangeVolumeSoundMem(255, normalBGM);
+	ChangeVolumeSoundMem(255, ChaseBGM);
+	ChangeVolumeSoundMem(255, beLooked);
+	return 0;
+}
+
+int noBGM() {
+	ChangeVolumeSoundMem(0, normalBGM);
+	ChangeVolumeSoundMem(0, ChaseBGM);
+	ChangeVolumeSoundMem(0, beLooked);
 	return 0;
 }
 

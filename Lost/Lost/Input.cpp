@@ -61,6 +61,11 @@ void InputUpdata(XINPUT_STATE input, int Key[]) {
 		if (CheckHitKey(KEY_INPUT_LSHIFT)) LEFT++; else LEFT = 0;
 
 		if (CheckHitKey(KEY_INPUT_P)) PAUSE++; else PAUSE = 0;
+
+		if (fabs(THUMB_X) == 100 && fabs(THUMB_Y) == 100) {
+			THUMB_X /= 1.41421356;
+			THUMB_Y /= 1.41421356;
+		}
 	}
 
 }

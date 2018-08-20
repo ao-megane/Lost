@@ -7,9 +7,11 @@
 
 int normalImage;
 int larmImage;
-int maskEye[3];//l r all
-int maskLight[3];
-int maskEar[3];
+int maskEye;
+int maskLight;
+int maskEar;
+int maskRight;
+int maskLeft;
 int PWalk[8];
 int PWalkimage[12];
 int PWalkUp[3];
@@ -39,15 +41,11 @@ int Player::Initialize() {	//複数プレイヤーならもっと丁寧にやること
 
 	normalImage = LoadGraph("images/player/normal.png");
 
-	maskEye[0] = LoadGraph("images/player/masks/li.png");
-	maskEye[1] = LoadGraph("images/player/masks/ri.png");
-	maskEye[2] = LoadGraph("images/player/masks/bi.png");
-	maskLight[0] = LoadGraph("images/player/masks/lo.png");
-	maskLight[1] = LoadGraph("images/player/masks/ro.png");
-	maskLight[2] = LoadGraph("images/player/masks/bo.png");
-	maskEye[0] = LoadGraph("images/player/masks/le.png");
-	maskEye[0] = LoadGraph("images/player/masks/re.png");
-	maskEye[0] = LoadGraph("images/player/masks/be.png");
+	maskEye = LoadGraph("images/player/masks/eye.png");
+	maskLight = LoadGraph("images/player/masks/light.png");
+	maskEar = LoadGraph("images/player/masks/ear.png");
+	maskRight = LoadGraph("images/player/masks/right.png");
+	maskLeft= LoadGraph("images/player/masks/left.png");
 
 	Batu = LoadGraph("images/player/UI/batsu.png");
 	haveKey = LoadGraph("images/player/UI/havekey.png");
@@ -148,6 +146,7 @@ int Player::Reborn() {
 }
 
 int Player::UpdataMove(double a, double b) {
+	
 	move.Setx(a);
 	move.Sety(b);
 	return 0;
@@ -378,35 +377,21 @@ int Player::DrawMask(){
 	decoi[3] = RotateDot(player.GetDir(), decoi[3], center);
 
 	if (rArm) {	//ライトがあって
-		if(lEye && rEye){	//両目があれば
-			DrawModiGraph(decoi[0].Getx(), decoi[0].Gety(), decoi[1].Getx(), decoi[1].Gety(),
-				decoi[2].Getx(), decoi[2].Gety(), decoi[3].Getx(), decoi[3].Gety(), maskLight[2], true);
-		}
-		else if (lEye) {	//左目があれば
-			DrawModiGraph(decoi[0].Getx(), decoi[0].Gety(), decoi[1].Getx(), decoi[1].Gety(),
-				decoi[2].Getx(), decoi[2].Gety(), decoi[3].Getx(), decoi[3].Gety(), maskLight[0], true);
-		}
-		else if (rEye) {	//左目があれば
-			DrawModiGraph(decoi[0].Getx(), decoi[0].Gety(), decoi[1].Getx(), decoi[1].Gety(),
-				decoi[2].Getx(), decoi[2].Gety(), decoi[3].Getx(), decoi[3].Gety(), maskLight[2], true);
-		}
+		DrawModiGraph(decoi[0].Getx(), decoi[0].Gety(), decoi[1].Getx(), decoi[1].Gety(),
+			decoi[2].Getx(), decoi[2].Gety(), decoi[3].Getx(), decoi[3].Gety(), maskLight, true);
 	}
-	else {	//ライトがなくて
-		if (lEye && rEye) {	//両目があれば
-			DrawModiGraph(decoi[0].Getx(), decoi[0].Gety(), decoi[1].Getx(), decoi[1].Gety(),
-				decoi[2].Getx(), decoi[2].Gety(), decoi[3].Getx(), decoi[3].Gety(), maskEye[2], true);
-		}
-		else if (lEye) {	//左目があれば
-			DrawModiGraph(decoi[0].Getx(), decoi[0].Gety(), decoi[1].Getx(), decoi[1].Gety(),
-				decoi[2].Getx(), decoi[2].Gety(), decoi[3].Getx(), decoi[3].Gety(), maskEye[0], true);
-		}
-		else if (rEye) {	//左目があれば
-			DrawModiGraph(decoi[0].Getx(), decoi[0].Gety(), decoi[1].Getx(), decoi[1].Gety(),
-				decoi[2].Getx(), decoi[2].Gety(), decoi[3].Getx(), decoi[3].Gety(), maskEye[2], true);
-		}
+	else {
+		DrawModiGraph(decoi[0].Getx(), decoi[0].Gety(), decoi[1].Getx(), decoi[1].Gety(),
+			decoi[2].Getx(), decoi[2].Gety(), decoi[3].Getx(), decoi[3].Gety(), maskEye, true);
 	}
-	
-
+	if (!lEye) {	//左目がなければ
+		DrawModiGraph(decoi[0].Getx(), decoi[0].Gety(), decoi[1].Getx(), decoi[1].Gety(),
+			decoi[2].Getx(), decoi[2].Gety(), decoi[3].Getx(), decoi[3].Gety(), maskRight,true);
+	}
+	if (!rEye) {	//右目がなければ
+		DrawModiGraph(decoi[0].Getx(), decoi[0].Gety(), decoi[1].Getx(), decoi[1].Gety(),
+			decoi[2].Getx(), decoi[2].Gety(), decoi[3].Getx(), decoi[3].Gety(), maskLeft, true);
+	}
 	return 0;
 }
 int Player::UIDraw(int count) {
@@ -533,6 +518,20 @@ bool Player::isGameOver() {
 	if (!rEye && !lEye) return true;
 	return false;
 }
+bool Player::isEar() {
+	if (!lEar && !rEar) {
+		return false;
+	}
+	else
+		return true;
+}
+bool Player::isArm() {
+	if (!lArm && !rArm) {
+		return false;
+	}
+	else
+		return true;
+}
 
 
 int pram;
@@ -540,5 +539,17 @@ int PlayPWalk() {
 	pram = GetRand();
 	PlaySoundMem(PWalk[pram%8], DX_PLAYTYPE_BACK);
 	//DrawFormatString(0, 40, RED, "Sound!");
+	return 0;
+}
+int yesPSounds() {
+	for (int i = 0; i < 8; i++) {
+		ChangeVolumeSoundMem(255, PWalk[i]);
+	}
+	return 0;
+}
+int noPSounds() {
+	for (int i = 0; i < 8; i++) {
+		ChangeVolumeSoundMem(0, PWalk[i]);
+	}
 	return 0;
 }

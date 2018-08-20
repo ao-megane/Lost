@@ -112,8 +112,19 @@ int PlayKeyPickup() {
 	PlaySoundMem(keypickup, DX_PLAYTYPE_BACK);
 	return 0;
 }
-
 int PlayKeyUnlock() {
 	PlaySoundMem(keyunlock, DX_PLAYTYPE_BACK);
 	return 0;
 }
+
+int yesKeySounds() {
+	ChangeVolumeSoundMem(255, keypickup);
+	ChangeVolumeSoundMem(255, keyunlock);
+	return 0;
+}
+int noKeySounds() {
+	ChangeVolumeSoundMem(0, keypickup);
+	ChangeVolumeSoundMem(0, keyunlock);
+	return 0;
+}
+

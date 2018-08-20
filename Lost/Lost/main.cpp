@@ -15,7 +15,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		SetWindowSizeChangeEnableFlag(TRUE);
 		SetWindowSizeExtendRate(0.6);
 		ChangeWindowMode(TRUE);
-		SetBackgroundColor(200, 200, 200);
+		SetBackgroundColor(0, 0, 0);
 	}
 
 
@@ -51,14 +51,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		GetJoypadXInputState(DX_INPUT_PAD1, &input);
 		InputUpdata(input, Key);
-		//InputUpdata(Key);
-
-		//UpdataBack();
-		
 
 		switch (flag) {
 		case 0://OP
-			DrawOP();
+			DrawOP(count);
 			DrawData();
 			
 			if (THUMB_Y >= 80) down++; else down = 0;
@@ -107,6 +103,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			}
 			break;
 		case 1://Loading
+			yesBGM();
+			yesESounds();
+			yesPSounds();
+			yesKeySounds();
 			count = 0;
 			player.Set();
 			SetKeyPosi();
@@ -131,28 +131,47 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			}
 			switch (EnemyMngUpdata(player.GetCircle(), player.GetFloor())) {//son,daughter,husband,madam‚Ì‡
 			case 1:
+				if (!player.isArm()) {
+					flag = 3;
+					keepCount = count;
+				}
 				player.LostArm();
 				player.Reborn();
 				EnemyMngSet();
+				keepCount = count;
 				break;
 			case 2:
+				if (!player.isEar()) {
+					flag = 3;
+					keepCount = count;
+				}
 				player.LostEar();
 				player.Reborn();
 				EnemyMngSet();
+				keepCount = count;
 				break;
 			case 3:
 				player.LostEye();
 				player.Reborn();
 				EnemyMngSet();
+				keepCount = count;
 				break;
 			case 4:
 				player.LostLeg();
 				player.Reborn();
 				EnemyMngSet();
+				keepCount = count;
 				break;
 			default:
 				break;
 			}
+			if (!player.isEar()) {//—¼Ž¨‚È‚­‚È‚Á‚½‚ç
+				noBGM();
+				noESounds();
+				noPSounds();
+				noKeySounds();
+			}
+
 			if (player.isGameOver()) {
 				keepCount = count;
 				flag = 3;
@@ -174,6 +193,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			player.DrawMask();
 
 			player.UIDraw(count);
+
+			DrawWhite(count,keepCount);
 			//DrawFormatString(200, 80, RED, "distance:%f", CalcDistance(player.GetDot(), GetKeyCircle().GetDot()));
 
 			//DrawLine(0, GROUND_HEIGHT, DISP_WIDTH, GROUND_HEIGHT, RED, FALSE);
@@ -190,8 +211,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			if (count - keepCount > 180) flag = 0;
 			break;
 		case 5://ƒ}ƒjƒ…ƒAƒ‹
-			   /*if (B == 1)
-			   PlayChoice;*/
+			if (B == 1)
+				PlayChoice();
 			if (DrawManual(B)) {
 				flag = 0;
 				count = 0;

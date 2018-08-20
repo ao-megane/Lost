@@ -79,5 +79,11 @@ int EnemyMngUpdata(Circle player,int floor);		//•Ï”‚Å‚Ç‚±‚ğ‚à‚ª‚ê‚é‚©•Ô‚·
 int EnemyMngDraw(Dot player,int floor);
 
 int PlaySonWalk();
+int PlayDaughterWalk();
+int PlayHusbandWalk();
+int PlayMadamWalk();
+
+int yesESounds();
+int noESounds();
 
 #endif // !ENEMYMNG_H
