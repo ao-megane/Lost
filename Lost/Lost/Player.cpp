@@ -4,6 +4,7 @@
 #include"Chore.h"
 #include"EnemyMng.h"
 #include"Color.h"
+#include"Sound.h"
 
 int normalImage;
 int larmImage;
@@ -41,8 +42,9 @@ int Player::Initialize() {	//•¡”ƒvƒŒƒCƒ„[‚È‚ç‚à‚Á‚Æ’š”J‚É‚â‚é‚±‚Æ
 
 	normalImage = LoadGraph("images/player/normal.png");
 
-	maskEye = LoadGraph("images/player/masks/eye.png");
-	maskLight = LoadGraph("images/player/masks/light.png");
+	maskEye = LoadGraph("images/player/masks/eye_s.png");
+	maskLight = LoadGraph("images/player/masks/light_l_s.png");
+
 	maskEar = LoadGraph("images/player/masks/ear.png");
 	maskRight = LoadGraph("images/player/masks/right.png");
 	maskLeft= LoadGraph("images/player/masks/left.png");
@@ -82,6 +84,7 @@ int Player::Set() {
 	havekey = false;
 	Speed = P_HALF_SPEED;
 	move.Set(0, 0);
+
 	return 0;
 }
 int Player::LostArm() {
@@ -171,12 +174,6 @@ int Player::Updata(int Key[], int flag) {
 		SetSpeed(GetSpeed() * 2.0 / 3.0);
 	}
 
-	if (Y == 1) {
-		if (lArm)
-			lArm = false;
-		else
-			lArm = true;
-	}
 	if (!lArm)
 		Pimage = larmImage;
 	else
@@ -194,6 +191,7 @@ int Player::Updata(int Key[], int flag) {
 		if (LEFT > 0) {
 			if (bodyClock == 0 || bodyClock == P_CLOCK/2) {
 				PlayPWalk();
+
 			}
 		}
 		else {

@@ -701,7 +701,7 @@ int Enemy::Updata(Circle player,int floor,int half,int full) {
 
 		if (serch.isHitCenter(player.GetRadius(), enemy.GetRadius())) {//索敵範囲内にプレイヤーがいて
 			if (!GetWall().IsHitDottoDot(enemy.GetDot(), player.GetDot(), GetFloor1SoftHandle())) {//壁越しでなければ
-																								   //DrawFormatString(0,40,GREEN,"壁越し！！\n");
+				 //DrawFormatString(0,40,GREEN,"壁越し！！\n");
 				if (stateflag != 2) PlaybeLooked();
 				stateflag = 2;
 			}

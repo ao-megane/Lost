@@ -177,6 +177,8 @@ const int UI_POSI[2 * 9] = {
 	1850,150,	//Key
 };
 
+const int SOUND_SPEED = 1;	//‰¹‚ÌL‚ª‚é‘¬“x@@õ–½
+
 //const int HPBAR_WIDTH = 900 * 0.75;
 //const int HPBAR_HEIGHT = 150 * 0.75;
 //const int HPBAR_MARGIN_HEIGHT = 130;

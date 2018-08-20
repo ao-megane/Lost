@@ -523,7 +523,7 @@ int yesBGM() {
 int noBGM() {
 	ChangeVolumeSoundMem(0, normalBGM);
 	ChangeVolumeSoundMem(0, ChaseBGM);
-	ChangeVolumeSoundMem(0, beLooked);
+	//ChangeVolumeSoundMem(0, beLooked);
 	return 0;
 }
 

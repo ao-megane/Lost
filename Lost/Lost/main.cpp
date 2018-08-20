@@ -167,8 +167,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			}
 			if (!player.isEar()) {//—¼Ž¨‚È‚­‚È‚Á‚½‚ç
 				noBGM();
-				noESounds();
-				noPSounds();
+				//noESounds();
+				//noPSounds();
 				noKeySounds();
 			}
 
