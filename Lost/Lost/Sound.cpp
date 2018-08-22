@@ -81,18 +81,39 @@ int Sound::Draw(Circle player,int count,int handle,int flag) {//0 —¼Ž¨@1@‰EŽ¨‚
 		//		handle);
 		//	printfDx("DRAW!!\n");
 		//}
-		decoi_sound.Set(center.Getx() - player.Getx(), center.Gety() - player.Gety());
+
+		/*decoi_sound.Set(center.Getx() - player.Getx(), center.Gety() - player.Gety());
 		decoi_sound = RotateDot(-player.GetDir(), decoi_sound);
 		if(decoi_sound.Gety() > 0 && decoi_sound.Getx() > 0)
+			DrawCircle(
+				center.Getx() + DISP_WIDTH / 2.0 - player.Getx(), center.Gety() + DISP_HEIGHT / 2.0 - player.Gety(),
+				(count - keepCount) * SOUND_SPEED, handle, 0
+			);*/
+		Dot decoi;
+		decoi = center - player.GetDot();
+		double dir = CalcDir(decoi) - player.GetDir();
+		while (dir < 0) dir += 2 * PI;
+		while (dir > 2 * PI) dir -= 2 * PI;
+		if(dir <= PI - PI / 4.0)
 			DrawCircle(
 				center.Getx() + DISP_WIDTH / 2.0 - player.Getx(), center.Gety() + DISP_HEIGHT / 2.0 - player.Gety(),
 				(count - keepCount) * SOUND_SPEED, handle, 0
 			);
 	}
 	else if (flag == 2) {
-		decoi_sound.Set(center.Getx() - player.Getx(), center.Gety() - player.Gety());
+		/*decoi_sound.Set(center.Getx() - player.Getx(), center.Gety() - player.Gety());
 		decoi_sound = RotateDot(-player.GetDir(), decoi_sound);
 		if (decoi_sound.Gety() < 0 && decoi_sound.Getx() > 0)
+			DrawCircle(
+				center.Getx() + DISP_WIDTH / 2.0 - player.Getx(), center.Gety() + DISP_HEIGHT / 2.0 - player.Gety(),
+				(count - keepCount) * SOUND_SPEED, handle, 0
+			);*/
+		Dot decoi;
+		decoi = center - player.GetDot();
+		double dir = CalcDir(decoi) - player.GetDir();
+		while (dir < 0) dir += 2 * PI;
+		while (dir > 2 * PI) dir -= 2 * PI;
+		if (dir >= PI + PI / 4.0)
 			DrawCircle(
 				center.Getx() + DISP_WIDTH / 2.0 - player.Getx(), center.Gety() + DISP_HEIGHT / 2.0 - player.Gety(),
 				(count - keepCount) * SOUND_SPEED, handle, 0

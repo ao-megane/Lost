@@ -63,8 +63,8 @@ int Player::Initialize() {	//•¡”ƒvƒŒƒCƒ„[‚È‚ç‚à‚Á‚Æ’š”J‚É‚â‚é‚±‚Æ
 
 	PUI_bui[0] = LoadGraph("images/player/UI/lEye.png");
 	PUI_bui[1] = LoadGraph("images/player/UI/rEye.png");
-	PUI_bui[2] = LoadGraph("images/player/UI/lEar.png");
-	PUI_bui[3] = LoadGraph("images/player/UI/rEar.png");
+	PUI_bui[2] = LoadGraph("images/player/UI/rEar.png");
+	PUI_bui[3] = LoadGraph("images/player/UI/lEar.png");
 	PUI_bui[4] = LoadGraph("images/player/UI/lArm.png");
 	PUI_bui[5] = LoadGraph("images/player/UI/rArm.png");
 	PUI_bui[6] = LoadGraph("images/player/UI/lLeg.png");
