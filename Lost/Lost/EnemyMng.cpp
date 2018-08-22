@@ -679,15 +679,15 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 			Speed = full;
 			//ここ大変，行ける点を探して行って，そこから角度込みで近い点をdestにする
 			double minDistance = 10000.0;
-			int ableNum[20];
+			int ableNum[27];
 			int ablenum = 0;
-			for (int i = 0; i < 20; i++) {
+			for (int i = 0; i < 27; i++) {
 				if (!GetWall().IsHitDottoDot(enemy.GetDot(), DEST1[i], GetFloor1SoftHandle()) &&	//壁もドアもさえぎられなければ
 					!GetDoor().IsHitDottoDot(enemy.GetDot(), DEST1[i], GetFloor1SoftHandle()) &&
 					!GetRock().IsHitDottoDot(enemy.GetDot(), DEST1[i], GetFloor1SoftHandle())
 					) {
 					ableNum[ablenum++] = i;	//行ける点を20つまでkeep
-					if (ablenum >= 20) break;
+					if (ablenum >= 27) break;
 				}
 			}
 			double minDir = 2.0 * PI;

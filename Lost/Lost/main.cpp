@@ -113,6 +113,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			if (player.GetKeyflag() && player.GetFloor() == 1 && GetRock().IsHitCircle(player.GetCircle(), GetFloor1SoftHandle())) {
 				//ÉNÉäÉA
 				flag = 4;
+				Winner++;
 				keepCount = count;
 				PlayKeyUnlock();
 			}
@@ -120,6 +121,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			case 1:
 				if (!player.isArm()) {
 					flag = 3;
+					Loser++;
 					keepCount = count;
 				}
 				player.LostArm();
@@ -130,6 +132,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			case 2:
 				if (!player.isEar()) {
 					flag = 3;
+					Loser++;
 					keepCount = count;
 				}
 				player.LostEar();

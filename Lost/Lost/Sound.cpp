@@ -62,7 +62,7 @@ int Sound::Draw(Circle player,int count,int handle,int flag) {//0 óºé®Å@1Å@âEé®Ç
 			(count - keepCount) * SOUND_SPEED, handle, 0
 		);
 	}
-	else if (flag == 2) {//âEé®ÇÃÇ›
+	else if (flag == 1) {//âEé®ÇÃÇ›
 		//for (double i = 0.0; i < 2 * PI; i += PI / 180.0) {
 		//	decoi_sound[0].Setx(center.Getx() + (count - keepCount) * SOUND_SPEED * cos(i) - player.Getx()/* - MASK_WIDTH / 2.0*/);
 		//	decoi_sound[0].Sety(center.Gety() + (count - keepCount) * SOUND_SPEED * -sin(i) - player.Gety()/* - MASK_WIDTH / 2.0*/);
@@ -89,7 +89,7 @@ int Sound::Draw(Circle player,int count,int handle,int flag) {//0 óºé®Å@1Å@âEé®Ç
 				(count - keepCount) * SOUND_SPEED, handle, 0
 			);
 	}
-	else if (flag == 1) {
+	else if (flag == 2) {
 		decoi_sound.Set(center.Getx() - player.Getx(), center.Gety() - player.Gety());
 		decoi_sound = RotateDot(-player.GetDir(), decoi_sound);
 		if (decoi_sound.Gety() < 0 && decoi_sound.Getx() > 0)
