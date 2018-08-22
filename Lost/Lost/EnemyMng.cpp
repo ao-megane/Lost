@@ -28,11 +28,14 @@ int Enemy::Set(int speed, int floor) {
 	move.Set(0, 0);
 	stateflag = 0;
 	Speed = speed;
+	esound.Initialzie();
 	return 0;
 }
 
 Dot dest_ene;
-int Enemy::Updata(Circle player,int floor,int half,int full) {
+int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,SoundMng psound) {
+	if (psound.isHitDot(enemy.GetDot(),count))
+		stateflag = 2;
 	if (floor == 2) {
 		if (stateflag == 0) {	//ó€è„
 			StopChaseBGM();
@@ -41,201 +44,161 @@ int Enemy::Updata(Circle player,int floor,int half,int full) {
 			{
 			case 1:
 				if (kakashi_e < 30) {
-					dest_ene = DEST2[6 - 1];
 					nextNum = 6 - 1;
 				}
 				else if (kakashi_e < 30 + 35) {
-					dest_ene = DEST2[3 - 1];
 					nextNum = 3 - 1;
 				}
 				else if (kakashi_e < 100) {
-					dest_ene = DEST2[2 - 1];
 					nextNum = 2 - 1;
 				}
 				break;
 			case 2:
 				if (kakashi_e < 49) {
-					dest_ene = DEST2[1 - 1];
 					nextNum = 1 - 1;
 				}
 				else if (kakashi_e < 100) {
-					dest_ene = DEST2[19 - 1];
 					nextNum = 19 - 1;
 				}
 				break;
 			case 3:
 				if (kakashi_e < 33) {
-					dest_ene = DEST2[1 - 1];
 					nextNum = 1 - 1;
 				}
 				else if (kakashi_e < 33 + 33) {
-					dest_ene = DEST2[4 - 1];
 					nextNum = 4 - 1;
 				}
 				else if (kakashi_e < 100) {
-					dest_ene = DEST2[5 - 1];
 					nextNum = 5 - 1;
 				}
 				break;
 			case 4:
 				if (kakashi_e < 30) {
-					dest_ene = DEST2[20 - 1];
 					nextNum = 20 - 1;
 				}
 				else if (kakashi_e < 100) {
-					dest_ene = DEST2[3 - 1];
 					nextNum = 3 - 1;
 				}
 				break;
 			case 5:
 				if (kakashi_e < 50) {
-					dest_ene = DEST2[3 - 1];
 					nextNum = 3 - 1;
 				}
 				else if (kakashi_e < 100) {
-					dest_ene = DEST2[8 - 1];
 					nextNum = 8 - 1;
 				}
 				break;
 			case 6:
 				if (kakashi_e < 30) {
-					dest_ene = DEST2[7 - 1];
 					nextNum = 7 - 1;
 				}
 				else if (kakashi_e < 100) {
-					dest_ene = DEST2[1 - 1];
 					nextNum = 1 - 1;
 				}
 				break;
 			case 7:
 				if (kakashi_e < 100) {
-					dest_ene = DEST2[6 - 1];
 					nextNum = 6 - 1;
 				}
 				break;
 			case 8:
 				if (kakashi_e < 30) {
-					dest_ene = DEST2[9 - 1];
 					nextNum = 9 - 1;
 				}
 				else if (kakashi_e < 30 + 35) {
-					dest_ene = DEST2[5 - 1];
 					nextNum = 5 - 1;
 				}
 				else if (kakashi_e < 100) {
-					dest_ene = DEST2[12 - 1];
 					nextNum = 12 - 1;
 				}
 				break;
 			case 9:
 				if (kakashi_e < 30) {
-					dest_ene = DEST2[10 - 1];
 					nextNum = 10 - 1;
 				}
 				else if (kakashi_e < 100) {
-					dest_ene = DEST2[8 - 1];
 					nextNum = 8 - 1;
 				}
 				break;
 			case 10:
 				if (kakashi_e < 30) {
-					dest_ene = DEST2[11 - 1];
 					nextNum = 11 - 1;
 				}
 				else if (kakashi_e < 100) {
-					dest_ene = DEST2[9 - 1];
 					nextNum = 9 - 1;
 				}
 				break;
 			case 11:
 				if (kakashi_e < 100) {
-					dest_ene = DEST2[10 - 1];
 					nextNum = 10 - 1;
 				}
 				break;
 			case 12:
 				if (kakashi_e < 33) {
-					dest_ene = DEST2[8 - 1];
 					nextNum = 8 - 1;
 				}
 				else if (kakashi_e < 33 + 33) {
-					dest_ene = DEST2[16 - 1];
 					nextNum = 16 - 1;
 				}
 				else if (kakashi_e < 100) {
-					dest_ene = DEST2[13 - 1];
 					nextNum = 13 - 1;
 				}
 				break;
 			case 13:
 				if (kakashi_e < 30) {
-					dest_ene = DEST2[14 - 1];
 					nextNum = 14 - 1;
 				}
 				else if (kakashi_e < 30 + 30) {
-					dest_ene = DEST2[15 - 1];
 					nextNum = 15 - 1;
 				}
 				else if (kakashi_e < 100) {
-					dest_ene = DEST2[12 - 1];
 					nextNum = 12 - 1;
 				}
 				break;
 			case 14:
 				if (kakashi_e < 100) {
-					dest_ene = DEST2[13 - 1];
 					nextNum = 13 - 1;
 				}
 				break;
 			case 15:
 				if (kakashi_e < 100) {
-					dest_ene = DEST2[13 - 1];
 					nextNum = 13 - 1;
 				}
 				break;
 			case 16:
 				if (kakashi_e < 50) {
-					dest_ene = DEST2[12 - 1];
 					nextNum = 12 - 1;
 				}
 				else if (kakashi_e < 100) {
-					dest_ene = DEST2[17 - 1];
 					nextNum = 17 - 1;
 				}
 				break;
 			case 17:
 				if (kakashi_e < 30) {
-					dest_ene = DEST2[18 - 1];
 					nextNum = 18 - 1;
 				}
 				else if (kakashi_e < 30 + 35) {
-					dest_ene = DEST2[16 - 1];
 					nextNum = 16 - 1;
 				}
 				else if (kakashi_e < 100) {
-					dest_ene = DEST2[19 - 1];
 					nextNum = 19 - 1;
 				}
 				break;
 			case 18:
 				if (kakashi_e < 100) {
-					dest_ene = DEST2[17 - 1];
 					nextNum = 17 - 1;
 				}
 				break;
 			case 19:
 				if (kakashi_e < 50) {
-					dest_ene = DEST2[17 - 1];
 					nextNum = 17 - 1;
 				}
 				else if (kakashi_e < 100) {
-					dest_ene = DEST2[2 - 1];
 					nextNum = 2 - 1;
 				}
 				break;
 			case 20:
 				if (kakashi_e < 100) {
-					dest_ene = DEST2[4 - 1];
 					nextNum = 4 - 1;
 				}
 				break;
@@ -308,7 +271,7 @@ int Enemy::Updata(Circle player,int floor,int half,int full) {
 
 		if (serch.isHitCenter(player.GetRadius(), enemy.GetRadius())) {//çıìGîÕàÕì‡Ç…ÉvÉåÉCÉÑÅ[Ç™Ç¢Çƒ
 			if (!GetWall().IsHitDottoDot(enemy.GetDot(), player.GetDot(), GetFloor2SoftHandle())) {//ï«âzÇµÇ≈Ç»ÇØÇÍÇŒ
-																									//DrawFormatString(0,40,GREEN,"ï«âzÇµÅIÅI\n");
+				//DrawFormatString(0,40,GREEN,"ï«âzÇµÅIÅI\n");
 				if (stateflag != 2) PlaybeLooked();
 				stateflag = 2;
 			}
@@ -321,33 +284,75 @@ int Enemy::Updata(Circle player,int floor,int half,int full) {
 			enemy.SetDir(CalcDir(GetMove()));
 			bodyClock++;
 			if (bodyClock >= P_CLOCK) bodyClock = 0;
-			if (stateflag == 2 || stateflag == 3) {
+			if (stateflag == 2 || stateflag == 3) {//ëÅÇ¢
+				if (bodyClock == 0 || bodyClock == P_CLOCK / 4 || bodyClock == P_CLOCK / 2 || bodyClock == P_CLOCK * 3 / 4) {
+					if (CalcDistance(player.GetDot(), enemy.GetDot()) < 1500) {
+						switch (flag) {
+						case 0:
+							PlaySonWalk();
+							break;
+						case 1:
+							PlayDaughterWalk();
+							break;
+						case 2:
+							PlayHusbandWalk();
+							break;
+						case 3:
+							PlayMadamWalk();
+							break;
+						default:
+							break;
+						}
+					}
+					esound.Born(enemy.GetDot(), SOUND_SPEED, SOUND_LIFESPAN, count);
+				}
+			}
+			else {//íxÇ¢
 				if (bodyClock == 0 || bodyClock == P_CLOCK / 2) {
-					PlaySonWalk();
+					if (CalcDistance(player.GetDot(), enemy.GetDot()) < 1500) {
+						switch (flag) {
+						case 0:
+							PlaySonWalk();
+							break;
+						case 1:
+							PlayDaughterWalk();
+							break;
+						case 2:
+							PlayHusbandWalk();
+							break;
+						case 3:
+							PlayMadamWalk();
+							break;
+						default:
+							break;
+						}
+					}
+					esound.Born(enemy.GetDot(), SOUND_SPEED, SOUND_LIFESPAN, count);
 				}
 			}
-			else {
-				if (bodyClock == 0) {
-					PlaySonWalk();
-				}
-			}
-			if (stateflag == 2 || stateflag == 3) {
+			if (stateflag == 2 || stateflag == 3) {//ëÅÇ¢
 				if (bodyClock == 0) {
 					animeNum = 1;
 				}
-				else if (bodyClock == 4) {
+				else if (bodyClock == 5) {
 					animeNum = 2;
-				}
-				else if (bodyClock == 7) {
-					animeNum = 0;
 				}
 				else if (bodyClock == 10) {
 					animeNum = 1;
 				}
-				else if (bodyClock == 14) {
+				else if (bodyClock == 15) {
+					animeNum = 0;
+				}
+				else if (bodyClock == 20) {
+					animeNum = 1;
+				}
+				else if (bodyClock == 25) {
 					animeNum = 2;
 				}
-				else if (bodyClock == 17) {
+				else if (bodyClock == 30) {
+					animeNum = 1;
+				}
+				else if (bodyClock == 35) {
 					animeNum = 0;
 				}
 			}
@@ -355,10 +360,13 @@ int Enemy::Updata(Circle player,int floor,int half,int full) {
 				if (bodyClock == 0) {
 					animeNum = 1;
 				}
-				else if (bodyClock == 8) {
+				else if (bodyClock == 10) {
 					animeNum = 2;
 				}
-				else if (bodyClock == 14) {
+				else if (bodyClock == 20) {
+					animeNum = 1;
+				}
+				else if (bodyClock == 30) {
 					animeNum = 0;
 				}
 			}
@@ -686,7 +694,9 @@ int Enemy::Updata(Circle player,int floor,int half,int full) {
 			UpdataMove(DEST1[minDirNum]);
 			stateflag = 1;
 			nextNum = minDirNum;
-		}if (player&enemy) {
+		}
+		
+		if (player&enemy) {
 			return 1;
 		}
 
@@ -714,14 +724,50 @@ int Enemy::Updata(Circle player,int floor,int half,int full) {
 			enemy.SetDir(CalcDir(GetMove()));
 			bodyClock++;
 			if (bodyClock >= P_CLOCK) bodyClock = 0;
-			if (stateflag == 2 || stateflag == 3) {
+			if (stateflag == 2 || stateflag == 3 ) {	//ëñÇ¡ÇƒÇΩÇÁ
 				if (bodyClock == 0 || bodyClock == P_CLOCK / 2) {
-					PlaySonWalk();
+					if (CalcDistance(player.GetDot(), enemy.GetDot()) < 1500) {
+						switch (flag) {
+						case 0:
+							PlaySonWalk();
+							break;
+						case 1:
+							PlayDaughterWalk();
+							break;
+						case 2:
+							PlayHusbandWalk();
+							break;
+						case 3:
+							PlayMadamWalk();
+							break;
+						default:
+							break;
+						}
+					}
+					esound.Born(enemy.GetDot(), SOUND_SPEED, SOUND_LIFESPAN, count);
 				}
 			}
 			else {
 				if (bodyClock == 0) {
-					PlaySonWalk();
+					if (CalcDistance(player.GetDot(), enemy.GetDot()) < 1500) {
+						switch (flag) {
+						case 0:
+							PlaySonWalk();
+							break;
+						case 1:
+							PlayDaughterWalk();
+							break;
+						case 2:
+							PlayHusbandWalk();
+							break;
+						case 3:
+							PlayMadamWalk();
+							break;
+						default:
+							break;
+						}
+					}
+					esound.Born(enemy.GetDot(), SOUND_SPEED, SOUND_LIFESPAN, count);
 				}
 			}
 			if (stateflag == 2 || stateflag == 3) {
@@ -788,6 +834,10 @@ int Enemy::Updata(Circle player,int floor,int half,int full) {
 	return 0;
 }
 
+int Enemy::SoundDraw(Circle player, int count,int flag) {
+	esound.Draw(player, count, RED, flag);
+	return 0;
+}
 int Enemy::Draw(Dot player) {
 	DrawModiGraph(
 		enemy.Getx() + DISP_WIDTH / 2.0 - player.Getx() - enemy.GetRadius(), enemy.Gety() + DISP_HEIGHT / 2.0 - player.Gety() - enemy.GetRadius(),
@@ -962,30 +1012,36 @@ int EnemyMngSet() {
 	return 0;
 }
 
-int EnemyMngUpdata(Circle player,int floor) {
+int EnemyMngUpdata(Circle player,int floor,int count,SoundMng psound) {
 	if (floor == 4) {
-		if (son.Updata(player,2,SON_HALF_SPEED,SON_FULL_SPEED)) {
+		if (son.Updata(player,2,SON_HALF_SPEED,SON_FULL_SPEED,0,count,psound)) {
 			return 1;
 		}
-		if (daughter.Updata(player,2,DAUGHTER_HALF_SPEED,DAUGHTER_FULL_SPEED)) {
+		if (daughter.Updata(player,2,DAUGHTER_HALF_SPEED,DAUGHTER_FULL_SPEED,1,count,psound)) {
 			return 2;
 		}
 	}
 	else if (floor == 1) {
-		if (husband.Updata(player,1,HUSBAND_HALF_SPEED,HUSBAND_FULL_SPEED)) {
+		if (husband.Updata(player,1,HUSBAND_HALF_SPEED,HUSBAND_FULL_SPEED,2,count,psound)) {
 			return 3;
 		}
-		if (madam.Updata(player,1,MADAM_HALF_SPEED,MADAM_FULL_SPEED)) {
+		if (madam.Updata(player,1,MADAM_HALF_SPEED,MADAM_FULL_SPEED,3,count,psound)) {
 			return 4;
 		}
 	}
 	return 0;
 }
 
+int EnemyMngSoundDraw(Circle player, int count,int flag) {
+	son.SoundDraw(player, count,flag);
+	daughter.SoundDraw(player, count,flag);
+	madam.SoundDraw(player, count,flag);
+	husband.SoundDraw(player, count,flag);
+	return 0;
+}
 int EnemyMngDraw(Dot player,int floor) {
 	if (floor == 4) {
 		son.Draw(player);
-		
 		daughter.Draw(player);
 		//DrawFormatString(500, 0, RED, "SON_DRAWING");
 	}

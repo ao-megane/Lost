@@ -22,6 +22,10 @@ int GetStepSoftHandle();
 
 int GetFloor2SoftHandle();
 
+int GetmaskRight();
+int GetmaskLeft();
+int GetmaskRightSoft();
+int GetmaskLeftSoft();
 
 int PlayMove();
 
@@ -30,6 +34,10 @@ int PlayChoice();
 int* ScorePass();
 
 int DrawOP(int count);
+
+int DrawTitleSentence(int flag);
+
+int DrawTime(int count);
 
 int PlayTitleBGM();
 
@@ -51,7 +59,7 @@ int DrawPause();
 
 //void DrawChore();
 
-int SetBack();
+//int SetBack();
 
 int DrawBack(int floor,Dot player);
 

@@ -4,15 +4,12 @@
 #include"Chore.h"
 #include"EnemyMng.h"
 #include"Color.h"
-#include"Sound.h"
 
 int normalImage;
 int larmImage;
 int maskEye;
 int maskLight;
 int maskEar;
-int maskRight;
-int maskLeft;
 int PWalk[8];
 int PWalkimage[12];
 int PWalkUp[3];
@@ -22,7 +19,9 @@ int PWalkLeft[3];
 int Batu;
 int haveKey;
 int PUI;
+int PUI_bui[9];
 Dot center;
+SoundMng psound;
 
 int Player::Initialize() {	//複数プレイヤーならもっと丁寧にやること
 	LoadDivGraph("images/player/player.png", 12, 3, 4, 32, 32, PWalkimage);
@@ -46,8 +45,8 @@ int Player::Initialize() {	//複数プレイヤーならもっと丁寧にやること
 	maskLight = LoadGraph("images/player/masks/light_l_s.png");
 
 	maskEar = LoadGraph("images/player/masks/ear.png");
-	maskRight = LoadGraph("images/player/masks/right.png");
-	maskLeft= LoadGraph("images/player/masks/left.png");
+	//maskRight = LoadGraph("images/player/masks/right.png");
+	//maskLeft= LoadGraph("images/player/masks/left.png");
 
 	Batu = LoadGraph("images/player/UI/batsu.png");
 	haveKey = LoadGraph("images/player/UI/havekey.png");
@@ -62,10 +61,22 @@ int Player::Initialize() {	//複数プレイヤーならもっと丁寧にやること
 	PWalk[6] = LoadSoundMem("sounds/player/7.wav");
 	PWalk[7] = LoadSoundMem("sounds/player/8.wav");
 
+	PUI_bui[0] = LoadGraph("images/player/UI/rEye.png");
+	PUI_bui[1] = LoadGraph("images/player/UI/lEye.png");
+	PUI_bui[2] = LoadGraph("images/player/UI/rEar.png");
+	PUI_bui[3] = LoadGraph("images/player/UI/lEar.png");
+	PUI_bui[4] = LoadGraph("images/player/UI/lArm.png");
+	PUI_bui[5] = LoadGraph("images/player/UI/rArm.png");
+	PUI_bui[6] = LoadGraph("images/player/UI/rLeg.png");
+	PUI_bui[7] = LoadGraph("images/player/UI/lLeg.png");
+	//PUI_bui[8] = LoadSoundMem("sounds/player/light.wav");
+
+
 	SetPimage(PWalkDown[1]);
 	move.Set(0, 0);
 	SetFloor(4);
 	center.Set(DISP_WIDTH / 2.0, DISP_HEIGHT / 2.0);
+	psound.Initialzie();
 	return 0;
 }
 
@@ -84,7 +95,7 @@ int Player::Set() {
 	havekey = false;
 	Speed = P_HALF_SPEED;
 	move.Set(0, 0);
-
+	psound.Initialzie();
 	return 0;
 }
 int Player::LostArm() {
@@ -96,20 +107,22 @@ int Player::LostArm() {
 	else {
 		if (rArm)
 			rArm = false;
-		else rArm = false;
+		else lArm = false;
 	}
 	return 0;
 }
 int Player::LostEar() {
 	if (GetRand() % 2) {
-		if (lEar)
+		if (lEar) {
 			lEar = false;
-		else rEar = false;
+		}
+		else { rEar = false; }
 	}
 	else {
-		if (rEar)
+		if (rEar) {
 			rEar = false;
-		else rEar = false;
+		}
+		else { lEar = false; }
 	}
 	return 0;
 }
@@ -122,7 +135,7 @@ int Player::LostEye() {
 	else {
 		if (rEye)
 			rEye = false;
-		else rEye = false;
+		else lEye = false;
 	}
 	return 0;
 }
@@ -135,7 +148,7 @@ int Player::LostLeg() {
 	else {
 		if (rLeg)
 			rLeg = false;
-		else rLeg = false;
+		else lLeg = false;
 	}
 	return 0;
 }
@@ -145,11 +158,11 @@ int Player::Reborn() {
 	player.Set(P_REBORN_X, P_REBORN_Y, P_SIZE, 0);
 	SetFloor(4);
 	move.Set(0, 0);
+	psound.Initialzie();
 	return 0;
 }
 
 int Player::UpdataMove(double a, double b) {
-	
 	move.Setx(a);
 	move.Sety(b);
 	return 0;
@@ -163,9 +176,9 @@ int Player::SetFloor(int a) {
 	return 0;
 }
 
-int Player::Updata(int Key[], int flag) {
+int Player::Updata(int Key[], int flag,int count) {
 	if (LEFT > 0) {
-			SetSpeed(P_FULL_SPEED);
+		SetSpeed(P_FULL_SPEED);
 	}
 	else {
 		SetSpeed(P_HALF_SPEED);
@@ -173,12 +186,7 @@ int Player::Updata(int Key[], int flag) {
 	if (!lLeg || !rLeg) {//片足なければ
 		SetSpeed(GetSpeed() * 2.0 / 3.0);
 	}
-
-	if (!lArm)
-		Pimage = larmImage;
-	else
-		Pimage = normalImage;
-
+	//if (Y == 1) LostEar();
 	//DrawFormatString(0, 60, RED, "%d", WALL);
 	//DrawFormatString(0, 80, RED, "%d", GetPixelPalCodeSoftImage(GetNowFloorSoftHandle(), player.GetDot().Getx(), player.GetDot().Gety()));
 
@@ -189,33 +197,40 @@ int Player::Updata(int Key[], int flag) {
 		bodyClock++;
 		if (bodyClock >= P_CLOCK) bodyClock = 0;
 		if (LEFT > 0) {
-			if (bodyClock == 0 || bodyClock == P_CLOCK/2) {
+			if (bodyClock == 0 || bodyClock == P_CLOCK/4 || bodyClock == P_CLOCK/2 || bodyClock == P_CLOCK*3/4) {
 				PlayPWalk();
-
+				psound.Born(player.GetDot(),SOUND_SPEED*2,SOUND_LIFESPAN*2,count);
 			}
 		}
 		else {
-			if (bodyClock == 0) {
+			if (bodyClock == 0 || bodyClock == P_CLOCK / 2) {
 				PlayPWalk();
+				psound.Born(player.GetDot(), SOUND_SPEED, SOUND_LIFESPAN/2.0, count);
 			}
 		}
 		if (LEFT > 0) {
 			if (bodyClock == 0) {
 				animeNum = 1;
 			}
-			else if (bodyClock == 4) {
+			else if (bodyClock == 5) {
 				animeNum = 2;
-			}
-			else if (bodyClock == 7) {
-				animeNum = 0;
 			}
 			else if (bodyClock == 10) {
 				animeNum = 1;
 			}
-			else if (bodyClock == 14) {
+			else if (bodyClock == 15) {
+				animeNum = 0;
+			}
+			else if (bodyClock == 20) {
+				animeNum = 1;
+			}
+			else if (bodyClock == 25) {
 				animeNum = 2;
 			}
-			else if (bodyClock == 17) {
+			else if (bodyClock == 30) {
+				animeNum = 1;
+			}
+			else if (bodyClock == 35) {
 				animeNum = 0;
 			}
 		}
@@ -223,10 +238,13 @@ int Player::Updata(int Key[], int flag) {
 			if (bodyClock == 0) {
 				animeNum = 1;
 			}
-			else if(bodyClock == 8){
+			else if(bodyClock == 10){
 				animeNum = 2;
 			}
-			else if(bodyClock == 14) {
+			else if(bodyClock == 20) {
+				animeNum = 1;
+			}
+			else if (bodyClock == 30) {
 				animeNum = 0;
 			}
 		}
@@ -374,97 +392,111 @@ int Player::DrawMask(){
 	decoi[3].Sety(center.Gety() + MASK_WIDTH / 2.0);
 	decoi[3] = RotateDot(player.GetDir(), decoi[3], center);
 
-	if (rArm) {	//ライトがあって
+	if (rArm) {	//ライトがある
 		DrawModiGraph(decoi[0].Getx(), decoi[0].Gety(), decoi[1].Getx(), decoi[1].Gety(),
 			decoi[2].Getx(), decoi[2].Gety(), decoi[3].Getx(), decoi[3].Gety(), maskLight, true);
 	}
-	else {
+	else {//ライトがない
 		DrawModiGraph(decoi[0].Getx(), decoi[0].Gety(), decoi[1].Getx(), decoi[1].Gety(),
 			decoi[2].Getx(), decoi[2].Gety(), decoi[3].Getx(), decoi[3].Gety(), maskEye, true);
 	}
 	if (!lEye) {	//左目がなければ
 		DrawModiGraph(decoi[0].Getx(), decoi[0].Gety(), decoi[1].Getx(), decoi[1].Gety(),
-			decoi[2].Getx(), decoi[2].Gety(), decoi[3].Getx(), decoi[3].Gety(), maskRight,true);
+			decoi[2].Getx(), decoi[2].Gety(), decoi[3].Getx(), decoi[3].Gety(), GetmaskRight(),true);
 	}
 	if (!rEye) {	//右目がなければ
 		DrawModiGraph(decoi[0].Getx(), decoi[0].Gety(), decoi[1].Getx(), decoi[1].Gety(),
-			decoi[2].Getx(), decoi[2].Gety(), decoi[3].Getx(), decoi[3].Gety(), maskLeft, true);
+			decoi[2].Getx(), decoi[2].Gety(), decoi[3].Getx(), decoi[3].Gety(), GetmaskLeft(), true);
 	}
+	return 0;
+}
+int Player::DrawEarMask() {
+	DrawModiGraph(decoi[0].Getx(), decoi[0].Gety(), decoi[1].Getx(), decoi[1].Gety(),
+		decoi[2].Getx(), decoi[2].Gety(), decoi[3].Getx(), decoi[3].Gety(), maskEar, true);
 	return 0;
 }
 int Player::UIDraw(int count) {
 	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, PUI, true);
 	if (!rEye) {
-		DrawModiGraph(
+		/*DrawModiGraph(
 			UI_POSI[0] - BATSU_SIZE / 2.0, UI_POSI[1] - BATSU_SIZE / 2.0,
 			UI_POSI[0] + BATSU_SIZE / 2.0, UI_POSI[1] - BATSU_SIZE / 2.0,
 			UI_POSI[0] + BATSU_SIZE / 2.0, UI_POSI[1] + BATSU_SIZE / 2.0,
 			UI_POSI[0] - BATSU_SIZE / 2.0, UI_POSI[1] + BATSU_SIZE / 2.0
-			, Batu, true);
+			, PUI_bui[0], true);*/
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, PUI_bui[0], true);
 	}
 	if (!lEye) {
-		DrawModiGraph(
+		/*DrawModiGraph(
 			UI_POSI[2] - BATSU_SIZE / 2.0, UI_POSI[3] -BATSU_SIZE / 2.0,
 			UI_POSI[2] + BATSU_SIZE / 2.0, UI_POSI[3] -BATSU_SIZE / 2.0,
 			UI_POSI[2] + BATSU_SIZE / 2.0, UI_POSI[3] +BATSU_SIZE / 2.0,
 			UI_POSI[2] - BATSU_SIZE / 2.0, UI_POSI[3] +BATSU_SIZE / 2.0
-			, Batu, true);
+			, PUI_bui[1], true);*/
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, PUI_bui[1], true);
 	}
 	if (!rEar) {
-		DrawModiGraph(
+		/*DrawModiGraph(
 			UI_POSI[4] -BATSU_SIZE / 2.0, UI_POSI[5] -BATSU_SIZE / 2.0,
 			UI_POSI[4] +BATSU_SIZE / 2.0, UI_POSI[5] -BATSU_SIZE / 2.0,
 			UI_POSI[4] +BATSU_SIZE / 2.0, UI_POSI[5] +BATSU_SIZE / 2.0,
 			UI_POSI[4] -BATSU_SIZE / 2.0, UI_POSI[5] +BATSU_SIZE / 2.0
-			, Batu, true);
+			, PUI_bui[2], true);*/
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, PUI_bui[2], true);
 	}
 	if (!lEar) {
-		DrawModiGraph(
+		/*DrawModiGraph(
 			UI_POSI[6] -BATSU_SIZE / 2.0, UI_POSI[7] -BATSU_SIZE / 2.0,
 			UI_POSI[6] +BATSU_SIZE / 2.0, UI_POSI[7] -BATSU_SIZE / 2.0,
 			UI_POSI[6] +BATSU_SIZE / 2.0, UI_POSI[7] +BATSU_SIZE / 2.0,
 			UI_POSI[6] -BATSU_SIZE / 2.0, UI_POSI[7] +BATSU_SIZE / 2.0
-			, Batu, true);
+			, PUI_bui[3], true);*/
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, PUI_bui[3], true);
 	}
 	if (!rArm) {
-		DrawModiGraph(
+		/*DrawModiGraph(
 			UI_POSI[8] -BATSU_SIZE / 2.0, UI_POSI[9] -BATSU_SIZE / 2.0,
 			UI_POSI[8] +BATSU_SIZE / 2.0, UI_POSI[9] -BATSU_SIZE / 2.0,
 			UI_POSI[8] +BATSU_SIZE / 2.0, UI_POSI[9] +BATSU_SIZE / 2.0,
 			UI_POSI[8] -BATSU_SIZE / 2.0, UI_POSI[9] +BATSU_SIZE / 2.0
-			, Batu, true);
+			, PUI_bui[4], true);*/
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, PUI_bui[4], true);
 	}
 	if (!lArm) {
-		DrawModiGraph(
+		/*DrawModiGraph(
 			UI_POSI[10] -BATSU_SIZE / 2.0, UI_POSI[11] -BATSU_SIZE / 2.0,
 			UI_POSI[10] +BATSU_SIZE / 2.0, UI_POSI[11] -BATSU_SIZE / 2.0,
 			UI_POSI[10] +BATSU_SIZE / 2.0, UI_POSI[11] +BATSU_SIZE / 2.0,
 			UI_POSI[10] -BATSU_SIZE / 2.0, UI_POSI[11] +BATSU_SIZE / 2.0
-			, Batu, true);
+			, PUI_bui[5], true);*/
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, PUI_bui[5], true);
 	}
 	if (!rLeg) {
-		DrawModiGraph(
+		/*DrawModiGraph(
 			UI_POSI[12] -BATSU_SIZE / 2.0, UI_POSI[13] -BATSU_SIZE / 2.0,
 			UI_POSI[12] +BATSU_SIZE / 2.0, UI_POSI[13] -BATSU_SIZE / 2.0,
 			UI_POSI[12] +BATSU_SIZE / 2.0, UI_POSI[13] +BATSU_SIZE / 2.0,
 			UI_POSI[12] -BATSU_SIZE / 2.0, UI_POSI[13] +BATSU_SIZE / 2.0
-			, Batu, true);
+			, PUI_bui[6], true);*/
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, PUI_bui[6], true);
 	}
 	if (!lLeg) {
-		DrawModiGraph(
+		/*DrawModiGraph(
 			UI_POSI[14] -BATSU_SIZE / 2.0, UI_POSI[15] -BATSU_SIZE / 2.0,
 			UI_POSI[14] +BATSU_SIZE / 2.0, UI_POSI[15] -BATSU_SIZE / 2.0,
 			UI_POSI[14] +BATSU_SIZE / 2.0, UI_POSI[15] +BATSU_SIZE / 2.0,
 			UI_POSI[14] -BATSU_SIZE / 2.0, UI_POSI[15] +BATSU_SIZE / 2.0
-			, Batu, true);
+			,PUI_bui[7], true);*/
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, PUI_bui[7], true);
 	}
 	if (havekey) {
 		DrawModiGraph(
-			UI_POSI[16] - KEY_WIDTH / 2.0, UI_POSI[17] - KEY_HEIGHT / 2.0,
-			UI_POSI[16] + KEY_WIDTH / 2.0, UI_POSI[17] - KEY_HEIGHT / 2.0,
-			UI_POSI[16] + KEY_WIDTH / 2.0, UI_POSI[17] + KEY_HEIGHT / 2.0,
-			UI_POSI[16] - KEY_WIDTH / 2.0, UI_POSI[17] + KEY_HEIGHT / 2.0
+			UI_KEYPOSI[0] - KEY_WIDTH / 2.0, UI_KEYPOSI[1] - KEY_HEIGHT / 2.0,
+			UI_KEYPOSI[0] + KEY_WIDTH / 2.0, UI_KEYPOSI[1] - KEY_HEIGHT / 2.0,
+			UI_KEYPOSI[0] + KEY_WIDTH / 2.0, UI_KEYPOSI[1] + KEY_HEIGHT / 2.0,
+			UI_KEYPOSI[0] - KEY_WIDTH / 2.0, UI_KEYPOSI[1] + KEY_HEIGHT / 2.0
 			, haveKey, true);
+		//DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, PUI_bui[0], true);
 	}
 
 	/*for (int i = 0; i < 9; i++) {
@@ -480,6 +512,10 @@ int Player::UIDraw(int count) {
 	//		UI_MARGIN_WIDTH, UI_HEIGHT + UI_MARGIN_HEIGHT, UIBack, true);
 	
 	//DrawFormatStringFToHandle(DISP_WIDTH - 500, 10, BROWN, nishiki, "SCORE : %5d", Score);
+	return 0;
+}
+int Player::SoundDraw(int count){
+	psound.Draw(player,count,WHITE,GetEarflag());
 	return 0;
 }
 
@@ -516,6 +552,12 @@ bool Player::isGameOver() {
 	if (!rEye && !lEye) return true;
 	return false;
 }
+int Player::GetEarflag() {
+	if (lEar && rEar) return 0;
+	if (rEar) return 1;
+	if (lEar) return 2;
+	return 3;
+}
 bool Player::isEar() {
 	if (!lEar && !rEar) {
 		return false;
@@ -550,4 +592,8 @@ int noPSounds() {
 		ChangeVolumeSoundMem(0, PWalk[i]);
 	}
 	return 0;
+}
+
+SoundMng Getpsound() {
+	return psound;
 }

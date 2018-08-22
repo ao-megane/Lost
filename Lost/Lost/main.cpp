@@ -41,7 +41,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ColorMngInitialize();
 	//InputFile("kanuma2017.txt");
 
-	SetBack();
 	PlayTitleBGM();
 
 	flag = 0;
@@ -55,7 +54,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		switch (flag) {
 		case 0://OP
 			DrawOP(count);
-			DrawData();
+			//DrawData();
 			
 			if (THUMB_Y >= 80) down++; else down = 0;
 			if (THUMB_Y <= -80) up++; else up = 0;
@@ -70,20 +69,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				if (selectFlag == 0) selectFlag = 2;
 				else selectFlag--;
 			}
-			switch (selectFlag)
-			{
-			case 0://play
-				DrawFormatString(0, 30, RED, "→PLAY!!");
-				break;
-			case 1://manual
-				DrawFormatString(0, 30, RED, "→MANUAL!!");
-				break;
-			case 2://credit
-				DrawFormatString(0, 30, RED, "→CREDIT!!");
-				break;
-			default:
-				break;
-			}
+			DrawTitleSentence(selectFlag);
 			if (B == 1) {
 				PlayChoice();
 				switch (selectFlag)
@@ -111,12 +97,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			player.Set();
 			SetKeyPosi();
 			EnemyMngSet();
-			flag = 2;
-			PlaynormalBGM();
+			flag = 8;
 			break;
 		case 2://playing
-			/*PlaynormalBGM();*/
-			player.Updata(Key,0);
+			player.Updata(Key,0,count);
 			if (player.GetFloor() == GetKeyFloor()) {
 				if (player.GetCircle() & GetKeyCircle() && !player.GetKeyflag()) {
 					player.keyGet();
@@ -129,7 +113,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				keepCount = count;
 				PlayKeyUnlock();
 			}
-			switch (EnemyMngUpdata(player.GetCircle(), player.GetFloor())) {//son,daughter,husband,madamの順
+			switch (EnemyMngUpdata(player.GetCircle(), player.GetFloor(),count,Getpsound())) {//son,daughter,husband,madamの順
 			case 1:
 				if (!player.isArm()) {
 					flag = 3;
@@ -167,7 +151,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			}
 			if (!player.isEar()) {//両耳なくなったら
 				noBGM();
-				//noESounds();
+				noESounds();
 				//noPSounds();
 				noKeySounds();
 			}
@@ -192,9 +176,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 			player.DrawMask();
 
+			EnemyMngSoundDraw(player.GetCircle(), count, player.GetEarflag());
+			player.SoundDraw(count);
+
 			player.UIDraw(count);
+			DrawTime(count);
 
 			DrawWhite(count,keepCount);
+
 			//DrawFormatString(200, 80, RED, "distance:%f", CalcDistance(player.GetDot(), GetKeyCircle().GetDot()));
 
 			//DrawLine(0, GROUND_HEIGHT, DISP_WIDTH, GROUND_HEIGHT, RED, FALSE);
@@ -236,8 +225,21 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			player.UIDraw(count);
 			count--;
 			if (B == 1) flag = 2;
-			if (A == 1) flag = 0;
+			if (A == 1) {
+				flag = 0;
+				PlayTitleBGM();
+			}
 			break;
+		case 8://ゲーム開始前のマニュアル
+			if (B == 1)
+				PlayChoice();
+			if (DrawManual(B)) {
+				flag = 2;
+				count = 0;
+				PlaynormalBGM();
+			}
+			break;
+
 		default:
 			break;
 		}

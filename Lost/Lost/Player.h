@@ -1,6 +1,7 @@
 #ifndef PLAYER
 #define PLAYER
 #include"Obj.h"
+#include"Sound.h"
 
 class Player {
 private:
@@ -41,17 +42,21 @@ public:
 	int SetSpeed(double a);
 	Circle GetCircle();
 	Dot GetMove();
-	int Updata(int Key[],int flag);
+	int Updata(int Key[],int flag,int count);
 	int keyGet();
 	bool GetKeyflag();
 	bool isGameOver();
+	int SoundDraw(int count);
 	int Draw();
 	int DrawMask();
+	int DrawEarMask();
 	int UIDraw(int count);
+	int GetEarflag();
 	bool isEar();
 	bool isArm();
 };
 
+SoundMng Getpsound();
 int PlayPWalk();
 int yesPSounds();
 int noPSounds();

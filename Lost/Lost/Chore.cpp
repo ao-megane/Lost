@@ -9,6 +9,12 @@ int Floor1data;
 int Stepdata;
 int Floor2data;
 
+
+int maskRight;
+int maskLeft;
+int maskRightSoft;
+int maskLeftSoft;
+
 int Clear;
 int GameOver;
 int Loading;
@@ -38,7 +44,8 @@ int manFlag;
 
 int Score;
 
-int nishiki;
+int lemagne;
+int slemagne;
 int SystemInitialize() {
 	Clear = LoadGraph("images/system/gameclear.png");
 	GameOver = LoadGraph("images/system/gameover.png");
@@ -52,13 +59,18 @@ int SystemInitialize() {
 	Manual[1] = LoadGraph("images/system/manual2.png");
 
 	Floor1Image = LoadGraph("images/maps/floor1-floor.png");
-	Floor1WallsImage = LoadGraph("images/maps/floor1-wall.png");
+	Floor1WallsImage = LoadGraph("images/maps/floor1-wall-2.png");
 	Floor1data = LoadSoftImage("images/maps/floor1-data.png");
 	StepImage = LoadGraph("images/maps/step.png");
 	Stepdata = LoadSoftImage("images/maps/step-data.png");
 	Floor2Image = LoadGraph("images/maps/floor2-floor.png");
 	Floor2WallsImage = LoadGraph("images/maps/floor2-wall.png");
 	Floor2data = LoadSoftImage("images/maps/floor2-data.png");
+
+	maskRight = LoadGraph("images/player/masks/right.png");
+	maskLeft = LoadGraph("images/player/masks/left.png");
+	maskRightSoft = LoadSoftImage("images/player/masks/right.png");
+	maskLeftSoft = LoadSoftImage("images/player/masks/left.png");
 
 	Prologue[0] = LoadGraph("images/system/prologue/1.png");
 	Prologue[1] = LoadGraph("images/system/prologue/2.png");
@@ -74,12 +86,16 @@ int SystemInitialize() {
 	beLooked = LoadSoundMem("sounds/system/discovery.wav");
 	normalBGM = LoadSoundMem("sounds/system/normal.wav");
 
-	if (AddFontResourceEx("Font/nishiki-teki.ttf", FR_PRIVATE, NULL) == 0) {
-		//printfDx("AddFontResourceExé∏îs\n");
+	if (AddFontResourceEx("font/Charlemagne.ttf", FR_PRIVATE, NULL) == 0) {
+		printfDx("AddFontResourceExé∏îs\n");
 	}
-	nishiki = CreateFontToHandle("Nishiki-teki", 60, -1, DX_FONTTYPE_ANTIALIASING_8X8);
-	if (nishiki == -1) {
-		//printfDx("CreateFontToHandleé∏îs\n");
+	lemagne = CreateFontToHandle("Charlemagne", 60, -1, DX_FONTTYPE_ANTIALIASING_8X8);
+	if (lemagne == -1) {
+		printfDx("CreateFontToHandleé∏îs\n");
+	}
+	slemagne = CreateFontToHandle("Charlemagne", 40, -1, DX_FONTTYPE_ANTIALIASING_8X8);
+	if (lemagne == -1) {
+		printfDx("CreateFontToHandleé∏îs\n");
 	}
 	Keeper = 0;
 	flag = 0;
@@ -155,17 +171,34 @@ int DrawOP(int count) {
 		Tytle[1], true
 	);
 	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Tytle[2], true);
-	//DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Tytle[3], true);
-
-	//DrawFormatString(0, 0, RED, "TYTLE");
-	/*DrawModiGraph(
-		DISP_WIDTH / 2 + 185	  , DISP_HEIGHT / 2 + 170 + (levelFlag) * 110,
-		DISP_WIDTH / 2 + 200 + 185, DISP_HEIGHT / 2 + 170 + (levelFlag) * 110,
-		DISP_WIDTH / 2 + 200 + 185, DISP_HEIGHT / 2 + 200 + 170 + (levelFlag) * 110,
-		DISP_WIDTH / 2 + 185	  , DISP_HEIGHT / 2 + 200 + 170 + (levelFlag) * 110,
-		Allow, true);*/
 	return 0;
 }
+int DrawTitleSentence(int flag) {
+	//DrawFormatStringToHandle(1575, 880, GRAY, lemagne, "");
+	switch (flag)
+	{
+	case 0://play
+		//DrawFormatString(0, 30, RED, "Å®PLAY!!");
+		DrawFormatStringToHandle(1575, 900, BLACK, lemagne, "PLAY");
+		break;
+	case 1://manual
+		//DrawFormatString(0, 30, RED, "Å®MANUAL!!");
+		DrawFormatStringToHandle(1500, 900, BLACK, lemagne, "MANUAL");
+		break;
+	case 2://credit
+		//DrawFormatString(0, 30, RED, "Å®CREDIT!!");
+		DrawFormatStringToHandle(1530, 900, BLACK, lemagne, "CREDIT");
+		break;
+	default:
+		break;
+	}
+	DrawFormatStringToHandle(1350, 960, GRAY, slemagne, "Choose by UP or DOWN");
+	DrawFormatStringToHandle(1350, 1010, GRAY, slemagne, "Select by B");
+	//DrawFormatStringToHandle(1250, 1080, GRAY, lemagne, "Select by B");
+	DrawFormatStringToHandle(1350, 1060, GRAY, slemagne, "PLEASE READ MANUAL");
+	return 0;
+}
+
 int DrawPrologue(int b) {
 	//DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, ProBack, true);
 	switch (proFlag)
@@ -201,7 +234,11 @@ int DrawPrologue(int b) {
 
 int DrawPause() {
 	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Pause, true);
-	DrawFormatString(0, 0, RED, "PAUSE");
+	//DrawFormatString(0, 0, RED, "PAUSE");
+	return 0;
+}
+int DrawTime(int count) {
+	DrawFormatStringToHandle(1800, 185, WHITE, lemagne, "%d", (COUNT - count) / 30);
 	return 0;
 }
 
@@ -217,11 +254,25 @@ int DrawManual(int b) {
 		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Manual[1], true);
 		//DrawFormatString(0, 0, RED, "2");
 		break;
+	case 2:
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Floor1Image, true);
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Floor1WallsImage, true);
+		DrawFormatStringToHandle(52, 52, BLACK, lemagne, "floor1");
+		DrawFormatStringToHandle(50, 50, ORANGE, lemagne, "floor1");
+		//DrawFormatString(0, 0, RED, "2");
+		break;
+	case 3:
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Floor2Image, true);
+		DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Floor2WallsImage, true);
+		DrawFormatStringToHandle(52, 52, BLACK, lemagne, "floor2");
+		DrawFormatStringToHandle(50, 50, ORANGE, lemagne, "floor2");
+		//DrawFormatString(0, 0, RED, "2");
+		break;
 	}
 
 	if (b == 1) {
 		manFlag++;
-		if (manFlag == 2) {
+		if (manFlag == 4) {
 			manFlag = 0;
 			return 1;
 		}
@@ -236,7 +287,7 @@ int DrawCredit() {
 }
 
 void DrawChore() {
-	DrawFormatString(0, 0, RED, "UI?");
+	//DrawFormatString(0, 0, RED, "UI?");
 	//if (count < NORMAL_COUNT) {
 	//	DrawModiGraph(
 	//		UI_MARGIN_WIDTH, UI_MARGIN_HEIGHT,
@@ -247,51 +298,6 @@ void DrawChore() {
 	//DrawFormatStringFToHandle(DISP_WIDTH - 500, 10, BROWN, nishiki, "SCORE : %5d", Score);
 }
 
-int SetBack() {
-	/*if (floor1) {
-		DrawFormatString(0, 0, RED, "FLOOR1");
-	}
-	else if (step1) {
-		DrawFormatString(0, 0, RED, "step1");
-	}
-	else if (step2) {
-		DrawFormatString(0, 0, RED, "step2");
-	}
-	else if (floor2) {
-		DrawFormatString(0, 0, RED, "floor2");
-	}*/
-	return 0;
-}
-
-/*int SetFloor1() {
-	floor1 = true;
-	step1 = false;
-	step2 = false;
-	floor2 = false;
-	return 0;
-}
-int SetStep1() {
-	floor1 = false;
-	step1 = true;
-	step2 = false;
-	floor2 = false;
-	return 0;
-}
-int SetStep2() {
-	floor1 = false;
-	step1 = false;
-	step2 = true;
-	floor2 = false;
-	return 0;
-}
-int SetFloor2() {
-	floor1 = false;
-	step1 = false;
-	step2 = false;
-	floor2 = true;
-	return 0;
-}*/
-
 int GetFloor1SoftHandle() {
 	return Floor1data;
 }
@@ -300,6 +306,18 @@ int GetStepSoftHandle() {
 }
 int GetFloor2SoftHandle() {
 	return Floor2data;
+}
+int GetmaskRight() {
+	return maskRight;
+}
+int GetmaskLeft() {
+	return maskLeft;
+}
+int GetmaskRightSoft() {
+	return maskRightSoft;
+}
+int GetmaskLeftSoft() {
+	return maskLeftSoft;
 }
 
 int UpdataBack(int count) {//countégÇÌÇ»Ç≠ÇƒÇ‡Ç≈Ç´ÇÈ(?)

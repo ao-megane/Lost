@@ -4,43 +4,38 @@
 #include"Obj.h"
 #include"DxLib.h"
 #include"Value.h"
+#include"Chore.h"
 
 class Sound {//方向付き円
 public:
-	int Set(int x, int y, double speed,int lifeSpan,int count);
-	int Set(Dot a, double speed,int lifeSpan, int count);
+	int Initialize();
+	int Set(int x, int y, double speed,double lifeSpan,int count);
+	int Set(Dot a, double speed,double lifeSpan, int count);
 	Dot GetDot();
 	int Getx();
 	int Gety();
 	double GetRadius(int count);
-	int Draw(Dot player,int count,int handle);
-	//int Updata();
-	/*bool operator & (Circle a) {
-		if (sqrt(
-			(center.Getx() - a.GetDot().Getx())*(center.Getx() - a.GetDot().Getx()) +
-			(center.Gety() - a.GetDot().Gety())*(center.Gety() - a.GetDot().Gety())
-		)
-			<= radius + a.GetRadius())
-			return true;
-		else
-			return false;
-	};*/
+	int GetLifeSpan();
+	int GetKeepCount();
+	int Draw(Circle player,int count,int handle,int flag);//0 両耳ある　1　右耳のみ　2　左耳のみ 3 両耳ない
+	bool isHitDot(Dot a,int count);
 
 private:
 	int keepCount;	//発生時のカウント
 	double speed;	//1fに何px大きくなるか
-	int lifeSpan;	//何fで消えるか
+	double lifeSpan;	//何fで消えるか
 	Dot center;
 };
 
 class SoundMng {
 public:
 	int Initialzie();
-	int Born(Dot dot, int speed,int lifespan,int count);
-	int Draw(Dot player);
+	int Born(Dot dot, double speed,double lifespan,int count);
+	int Draw(Circle player,int count,int handle,int flag);
+	bool isHitDot(Dot a,int count);
 private:
-	Sound sound[10];
-	int num;
+	Sound sound[20];
+	//int num;
 };
 
 #endif // !SOUND_H

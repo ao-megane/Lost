@@ -3,13 +3,15 @@
 #include"Chore.h"
 #include"Obj.h"
 #include"Player.h"
+#include"Sound.h"
 
 class Enemy{
 public:
 	/*Enemy();
 	~Enemy();*/
 	int Set(int speed,int floor);
-	int Updata(Circle player,int floor,int halfSpeed,int fullSpeed);	//キャラごとに作る
+	int Updata(Circle player,int floor,int halfSpeed,int fullSpeed,int flag,int count,SoundMng psound);	//0 son 1 daughter 2 husband 3 madam
+	int SoundDraw(Circle player,int count,int flag);
 	int Draw(Dot player);		//描画
 	Dot GetMove();
 	int UpdataMove(Dot Destination);
@@ -20,7 +22,7 @@ protected:
 	Square serch;		//探索範囲(四角)
 	Dot move;			//進行方向的な
 	Dot dest;			//目的地的な moveに渡すから必要はない debug用
-	//bool ischase;		//プレイヤーを追っているか
+	SoundMng esound;
 	int nextNum;		//destの通し番号,0base
 	int stateflag;		//0塁上 1走塁 2プレイヤー目視 3プレイヤー見失い
 	double Speed;		//なうのスピード
@@ -74,8 +76,9 @@ private:
 
 int EnemyMngInitialize();			//画像ハンドル周り
 int EnemyMngSet();	//ステージ、時間ごとに配置
-int EnemyMngUpdata(Circle player,int floor);		//変数でどこをもがれるか返す
+int EnemyMngUpdata(Circle player,int floor,int count,SoundMng psound);		//変数でどこをもがれるか返す
 //int EnemyMngJudge(Player* player,int count,int* score,int levelFlag);	//判定、state、HP等の更新
+int EnemyMngSoundDraw(Circle player, int count,int flag);
 int EnemyMngDraw(Dot player,int floor);
 
 int PlaySonWalk();

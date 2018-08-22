@@ -44,7 +44,7 @@ const int P_REBORN_X = 145;
 const int P_REBORN_Y = 1937;
 const double P_FULL_SPEED = 30;
 const double P_HALF_SPEED = 15;
-const int P_CLOCK = 20;//足音用みたいになってるがもっと使い道はありそう
+const int P_CLOCK = 40;//P_CLOCK/2 フレームに一回足音
 
 /*--------主人--------*/
 const int HUSBAND_RANGE = P_SIZE;
@@ -129,7 +129,8 @@ const int DAUGHTER_HALF_SPEED = P_HALF_SPEED - 3.0;
 const int DAUGHTER_SERCH_WIDTH = 440;
 const int DAUGHTER_SERCH_HEIGHT = 90;
 
-const int HARD_COUNT = 5500;
+/*------システム--------*/
+const int COUNT = 30*60*6;//30*60*3//3m
 
 /*---------鍵---------*/
 
@@ -154,30 +155,32 @@ const int KEYPOSI_2[7 * 2] = {
 	5377,1481
 };
 const int KEY_SIZE = 60;
-
-
 /*-----------------------*/
 
 const int BATSU_SIZE = 30;
-const int KEY_WIDTH = 60 * 2;
-const int KEY_HEIGHT = 80 * 2;
+const int KEY_WIDTH = 60 * 1;
+const int KEY_HEIGHT = 80 * 1;
 const int UI_HEIGHT = 400;
 const int UI_WIDTH = 300;
 const int UI_MARGIN_HEIGHT = 20;
 const int UI_MARGIN_WIDTH = 20;
-const int UI_POSI[2 * 9] = {
-	1970,100,	//rEye
-	2000,100,	//lEye
-	1950,110,	//rEar
-	2020,110,	//lEar
-	1950,160,	//rArm
-	2020,160,	//lArm
-	1970,240,	//rLeg
-	2000,240,	//lLeg
-	1850,150,	//Key
+//const int UI_POSI[2 * 9] = {
+//	1970,100,	//rEye
+//	2000,100,	//lEye
+//	1950,110,	//rEar
+//	2020,110,	//lEar
+//	1950,160,	//rArm
+//	2020,160,	//lArm
+//	1970,240,	//rLeg
+//	2000,240,	//lLeg
+//	1850,150,	//Key
+//};
+const int UI_KEYPOSI[2] = {
+	1900,125,
 };
 
-const int SOUND_SPEED = 1;	//音の広がる速度　＝　寿命
+const int SOUND_SPEED = 20;	//音の広がる速度　＝　寿命
+const int SOUND_LIFESPAN = 15;
 
 //const int HPBAR_WIDTH = 900 * 0.75;
 //const int HPBAR_HEIGHT = 150 * 0.75;
