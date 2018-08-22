@@ -273,7 +273,10 @@ int Circle::Move(Dot a) {
 	return 0;
 }
 int Circle::MoveandTurn(Dot a) {
-	if (a.Getx() == 0 && a.Gety() == 0) return 0;
+	if (a.Getx() == 0 && a.Gety() == 0) {
+		return 0;
+	}
+
 	center.Setx(center.Getx() + a.Getx());
 	center.Sety(center.Gety() + a.Gety());
 

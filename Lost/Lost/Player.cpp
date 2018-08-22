@@ -71,7 +71,6 @@ int Player::Initialize() {	//•¡”ƒvƒŒƒCƒ„[‚È‚ç‚à‚Á‚Æ’š”J‚É‚â‚é‚±‚Æ
 	PUI_bui[7] = LoadGraph("images/player/UI/lLeg.png");
 	//PUI_bui[8] = LoadSoundMem("sounds/player/light.wav");
 
-
 	SetPimage(PWalkDown[1]);
 	move.Set(0, 0);
 	SetFloor(4);

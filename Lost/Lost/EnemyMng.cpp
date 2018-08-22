@@ -15,13 +15,13 @@ int kakashi_e;
 
 int Enemy::Set(int speed, int floor) {
 	if (floor == 1) {
-		kakashi_e = GetRand() % 20;//0~19
-		enemy.Set(ENEPOSI_1[2 * kakashi_e], ENEPOSI_1[2 * kakashi_e + 1], enemy.GetRadius(), 0);
+		kakashi_e = GetRand() % 27;//0~19
+		enemy.Set(DEST1[kakashi_e], enemy.GetRadius(), 0);
 		nextNum = kakashi_e;
 	}
 	if (floor == 2) {
 		kakashi_e = GetRand() % 20;//0~19
-		enemy.Set(ENEPOSI_2[2 * kakashi_e], ENEPOSI_2[2 * kakashi_e + 1], enemy.GetRadius(), 0);
+		enemy.Set(DEST2[kakashi_e], enemy.GetRadius(), 0);
 		nextNum = kakashi_e;
 	}
 	//printfDx("%d", nextNum);
@@ -32,12 +32,13 @@ int Enemy::Set(int speed, int floor) {
 	return 0;
 }
 
-Dot dest_ene;
+//Dot dest_ene;
 int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,SoundMng psound) {
-	if (psound.isHitDot(enemy.GetDot(),count))
+	if (psound.isHitDot(enemy.GetDot(), count)) {
 		stateflag = 2;
+	}
 	if (floor == 2) {
-		if (stateflag == 0) {	//塁上
+		if (stateflag == 0) {	//塁上,nextNumの上という前提
 			StopChaseBGM();
 			kakashi_e = GetRand() % 100;
 			switch (nextNum + 1)	//ここだけ1base
@@ -205,17 +206,21 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 			default:
 				break;
 			}
-			UpdataMove(dest_ene);
-			dest = dest_ene;
+			UpdataMove(DEST2[nextNum]);
+			//dest = dest_ene;
 			stateflag = 1;
 		}
 		else if (stateflag == 1) {//走塁,暇
 			Speed = half;
+			/*if (!flag)
+				printfDx("到着？？？？？？\n");*/
 			//enemy.MoveandTurn(dest);
-			if (CalcDistance(enemy.GetDot(), DEST2[nextNum]) < 100) {	//塁上にいれば
-				//printfDx("到着！！！！！！！！！！！！！\n");
+			if (CalcDistance(enemy.GetDot(), DEST2[nextNum]) < ONPOINT) {	//塁上にいれば
+				/*if(!flag)
+					printfDx("到着！！！！！！！！！！！！！\n");*/
 				stateflag = 0;
 			}
+			UpdataMove(DEST2[nextNum]);
 		}
 		else if (stateflag == 2) {//プレイヤーを目視
 			PlayChaseBGM();
@@ -230,7 +235,7 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 		else if (stateflag == 3) {//プレイヤー探す
 			PlayChaseBGM();
 			Speed = full;
-			//ここ大変，行ける点を探して行って，そこから角度込みで近い点をdestにする
+			//ここ大変，行ける点を探して行く
 			double minDistance = 10000.0;
 			int ableNum[20];
 			int ablenum = 0;
@@ -272,8 +277,10 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 		if (serch.isHitCenter(player.GetRadius(), enemy.GetRadius())) {//索敵範囲内にプレイヤーがいて
 			if (!GetWall().IsHitDottoDot(enemy.GetDot(), player.GetDot(), GetFloor2SoftHandle())) {//壁越しでなければ
 				//DrawFormatString(0,40,GREEN,"壁越し！！\n");
-				if (stateflag != 2) PlaybeLooked();
-				stateflag = 2;
+				if (stateflag != 2) {
+					PlaybeLooked();
+					stateflag = 2;
+				}
 			}
 			//stateflag = 2;
 			//printfDx("発見！！！");
@@ -330,6 +337,7 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 					esound.Born(enemy.GetDot(), SOUND_SPEED, SOUND_LIFESPAN, count);
 				}
 			}
+			//アニメ回り
 			if (stateflag == 2 || stateflag == 3) {//早い
 				if (bodyClock == 0) {
 					animeNum = 1;
@@ -399,7 +407,6 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 			return 0;
 		}
 		enemy.MoveandTurn(GetMove());
-
 	}
 	else if (floor == 1) {
 		if (stateflag == 0) {	//塁上
@@ -474,7 +481,6 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 				break;
 			case 8:
 				if (kakashi_e < 100) {
-					dest_ene = DEST2[7 - 1];
 					nextNum = 7 - 1;
 				}
 				break;
@@ -646,16 +652,17 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 				break;
 			}
 			UpdataMove(DEST1[nextNum]);
-			dest = dest_ene;
+			//dest = dest_ene;
 			stateflag = 1;
 		}
 		else if (stateflag == 1) {//走塁,暇
 			Speed = half;
 			//enemy.MoveandTurn(dest);
-			if (CalcDistance(enemy.GetDot(), DEST1[nextNum]) < 100) {	//塁上にいれば
+			if (CalcDistance(enemy.GetDot(), DEST1[nextNum]) < ONPOINT) {	//塁上にいれば
 				//printfDx("到着！！！！！！！！！！！！！\n");
 				stateflag = 0;
 			}
+			UpdataMove(DEST1[nextNum]);
 		}
 		else if (stateflag == 2) {//プレイヤーを目視
 			PlayChaseBGM();
@@ -712,8 +719,10 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 		if (serch.isHitCenter(player.GetRadius(), enemy.GetRadius())) {//索敵範囲内にプレイヤーがいて
 			if (!GetWall().IsHitDottoDot(enemy.GetDot(), player.GetDot(), GetFloor1SoftHandle())) {//壁越しでなければ
 				 //DrawFormatString(0,40,GREEN,"壁越し！！\n");
-				if (stateflag != 2) PlaybeLooked();
-				stateflag = 2;
+				if (stateflag != 2) {
+					PlaybeLooked();
+					stateflag = 2;
+				}
 			}
 			//stateflag = 2;
 			//printfDx("発見！！！");
@@ -944,10 +953,10 @@ int Son::Initialize() {
 Dot Son::GetDest(){
 	return dest;
 }
-int Son::GetState() {
+int Enemy::GetState() {
 	return stateflag;
 }
-int Son::GetNextNum() {
+int Enemy::GetNextNum() {
 	return nextNum;
 }
 int Husband::GetState() {
@@ -1014,6 +1023,8 @@ int EnemyMngSet() {
 
 int EnemyMngUpdata(Circle player,int floor,int count,SoundMng psound) {
 	if (floor == 4) {
+		husband.Set(HUSBAND_HALF_SPEED, 1);
+		madam.Set(MADAM_HALF_SPEED, 1);
 		if (son.Updata(player,2,SON_HALF_SPEED,SON_FULL_SPEED,0,count,psound)) {
 			return 1;
 		}
@@ -1022,6 +1033,8 @@ int EnemyMngUpdata(Circle player,int floor,int count,SoundMng psound) {
 		}
 	}
 	else if (floor == 1) {
+		son.Set(SON_HALF_SPEED, 2);
+		daughter.Set(DAUGHTER_HALF_SPEED, 2);
 		if (husband.Updata(player,1,HUSBAND_HALF_SPEED,HUSBAND_FULL_SPEED,2,count,psound)) {
 			return 3;
 		}
@@ -1044,6 +1057,9 @@ int EnemyMngDraw(Dot player,int floor) {
 		son.Draw(player);
 		daughter.Draw(player);
 		//DrawFormatString(500, 0, RED, "SON_DRAWING");
+		for (int i = 0; i < 20; i++) {
+			DrawCircle(DEST2[i].Getx() + DISP_WIDTH / 2.0 - player.Getx(), DEST2[i].Gety() + DISP_HEIGHT / 2.0 - player.Gety(), ONPOINT, RED, 1);
+		}
 	}
 	else if (floor == 1) {
 		husband.Draw(player);
@@ -1055,7 +1071,10 @@ int EnemyMngDraw(Dot player,int floor) {
 	//DrawFormatString(300, 20, RED, "dest:(%5f,%5f)",son.GetDest().Getx(),son.GetDest().Gety());
 	//DrawFormatString(300, 40, RED, "move:(%5f,%5f)", son.GetMove().Getx(), son.GetMove().Gety());
 	//DrawFormatString(300, 60, RED, "stateflag:%d", husband.GetState());
-	//DrawFormatString(300, 80, RED, "nextNum:%d", husband.GetNextNum() + 1);
+	//DrawFormatString(300, 80, RED, "son:%d,s:%d", son.GetNextNum() + 1,son.GetState());
+	//DrawFormatString(300, 100, RED, "daughter:%d,s:%d", daughter.GetNextNum() + 1,daughter.GetState());
+	//DrawFormatString(300, 120, RED, "husband:%d", husband.GetNextNum() + 1);
+	//DrawFormatString(300, 140, RED, "madam:%d", madam.GetNextNum() + 1);
 	return 0;
 }
 

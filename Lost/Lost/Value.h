@@ -60,6 +60,7 @@ const int MADAM_HALF_SPEED = P_HALF_SPEED - 3.0;
 const int MADAM_SERCH_WIDTH = 440;
 const int MADAM_SERCH_HEIGHT = 90;
 
+const int ONPOINT = P_FULL_SPEED * 1.4;	//ìGÇÃó€è„îªíË
 /*------ÇPäKÇÃìGópê√ì_-----*/
 const double ENEPOSI_1[27 * 2] = {
 	300.0,2200.0,//1

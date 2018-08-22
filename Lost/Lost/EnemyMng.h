@@ -15,6 +15,8 @@ public:
 	int Draw(Dot player);		//•`‰æ
 	Dot GetMove();
 	int UpdataMove(Dot Destination);
+	int GetNextNum();
+	int GetState();
 	//int End();
 
 protected:
@@ -60,8 +62,6 @@ public:
 	int Initialize();
 	//int Updata(Circle player);	//•Ï”‚Å“–‚½‚Á‚½‚©•Ô‚·Š´‚¶
 	Dot GetDest();
-	int GetState();
-	int GetNextNum();
 private:
 };
 

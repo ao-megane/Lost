@@ -18,7 +18,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		SetBackgroundColor(0, 0, 0);
 	}
 
-
 	DxLib_Init();
 	SetDrawScreen(DX_SCREEN_BACK);
 
@@ -44,6 +43,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	PlayTitleBGM();
 
 	flag = 0;
+	int Winner = 0;
+	int Loser = 0;
 	int down = 0;
 	int up = 0;
 	while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen()) {
@@ -58,6 +59,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			
 			if (THUMB_Y >= 80) down++; else down = 0;
 			if (THUMB_Y <= -80) up++; else up = 0;
+
+			if (Y > 0) DrawFormatString(0, 0, BLACK, "ClearRate:%f,Winner:%d,Loser:%d", (double)Winner / (double)(Winner + Loser), Winner, Loser);
 
 			if (down == 1) {
 				PlayMove();
