@@ -41,7 +41,7 @@ const double JUDGE_MARGIN = 1.0;	//ƒvƒŒƒCƒ„[‚Æ•Ç‚Ì’Ç“Ë‚É‚Â‚¢‚ÄC–„‚ß‚Ü‚ê‚È‚¢‚
 
 const int P_SIZE = 80;	//ƒvƒŒƒCƒ„[‚Ì”¼Œa
 const int P_REBORN_X = 145;
-const int P_REBORN_Y = 1937;
+const int P_REBORN_Y = 1450;
 const double P_FULL_SPEED = 30;
 const double P_HALF_SPEED = 15;
 const int P_CLOCK = 40;//P_CLOCK/2 ƒtƒŒ[ƒ€‚Éˆê‰ñ‘«‰¹

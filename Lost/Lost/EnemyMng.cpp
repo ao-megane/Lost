@@ -44,10 +44,10 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 			switch (nextNum + 1)	//‚±‚±‚¾‚¯1base
 			{
 			case 1:
-				if (kakashi_e < 30) {
+				if (kakashi_e < 20) {
 					nextNum = 6 - 1;
 				}
-				else if (kakashi_e < 30 + 35) {
+				else if (kakashi_e < 20 + 60) {
 					nextNum = 3 - 1;
 				}
 				else if (kakashi_e < 100) {
@@ -55,7 +55,7 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 				}
 				break;
 			case 2:
-				if (kakashi_e < 49) {
+				if (kakashi_e < 80) {
 					nextNum = 1 - 1;
 				}
 				else if (kakashi_e < 100) {
@@ -63,10 +63,10 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 				}
 				break;
 			case 3:
-				if (kakashi_e < 33) {
+				if (kakashi_e < 20) {
 					nextNum = 1 - 1;
 				}
-				else if (kakashi_e < 33 + 33) {
+				else if (kakashi_e < 20 + 20) {
 					nextNum = 4 - 1;
 				}
 				else if (kakashi_e < 100) {
@@ -74,7 +74,7 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 				}
 				break;
 			case 4:
-				if (kakashi_e < 30) {
+				if (kakashi_e < 20) {
 					nextNum = 20 - 1;
 				}
 				else if (kakashi_e < 100) {
@@ -82,7 +82,7 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 				}
 				break;
 			case 5:
-				if (kakashi_e < 50) {
+				if (kakashi_e < 20) {
 					nextNum = 3 - 1;
 				}
 				else if (kakashi_e < 100) {
@@ -90,7 +90,7 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 				}
 				break;
 			case 6:
-				if (kakashi_e < 30) {
+				if (kakashi_e < 20) {
 					nextNum = 7 - 1;
 				}
 				else if (kakashi_e < 100) {
@@ -103,10 +103,10 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 				}
 				break;
 			case 8:
-				if (kakashi_e < 30) {
+				if (kakashi_e < 20) {
 					nextNum = 9 - 1;
 				}
-				else if (kakashi_e < 30 + 35) {
+				else if (kakashi_e < 20 + 20) {
 					nextNum = 5 - 1;
 				}
 				else if (kakashi_e < 100) {
@@ -114,7 +114,7 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 				}
 				break;
 			case 9:
-				if (kakashi_e < 30) {
+				if (kakashi_e < 20) {
 					nextNum = 10 - 1;
 				}
 				else if (kakashi_e < 100) {
@@ -122,7 +122,7 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 				}
 				break;
 			case 10:
-				if (kakashi_e < 30) {
+				if (kakashi_e < 20) {
 					nextNum = 11 - 1;
 				}
 				else if (kakashi_e < 100) {
@@ -135,10 +135,10 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 				}
 				break;
 			case 12:
-				if (kakashi_e < 33) {
+				if (kakashi_e < 20) {
 					nextNum = 8 - 1;
 				}
-				else if (kakashi_e < 33 + 33) {
+				else if (kakashi_e < 20 + 60) {
 					nextNum = 16 - 1;
 				}
 				else if (kakashi_e < 100) {
@@ -146,10 +146,10 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 				}
 				break;
 			case 13:
-				if (kakashi_e < 30) {
+				if (kakashi_e < 20) {
 					nextNum = 14 - 1;
 				}
-				else if (kakashi_e < 30 + 30) {
+				else if (kakashi_e < 20 + 20) {
 					nextNum = 15 - 1;
 				}
 				else if (kakashi_e < 100) {
@@ -167,7 +167,7 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 				}
 				break;
 			case 16:
-				if (kakashi_e < 50) {
+				if (kakashi_e < 20) {
 					nextNum = 12 - 1;
 				}
 				else if (kakashi_e < 100) {
@@ -175,10 +175,10 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 				}
 				break;
 			case 17:
-				if (kakashi_e < 30) {
+				if (kakashi_e < 20) {
 					nextNum = 18 - 1;
 				}
-				else if (kakashi_e < 30 + 35) {
+				else if (kakashi_e < 20 + 20) {
 					nextNum = 16 - 1;
 				}
 				else if (kakashi_e < 100) {
@@ -191,7 +191,7 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 				}
 				break;
 			case 19:
-				if (kakashi_e < 50) {
+				if (kakashi_e < 20) {
 					nextNum = 17 - 1;
 				}
 				else if (kakashi_e < 100) {
@@ -1057,9 +1057,9 @@ int EnemyMngDraw(Dot player,int floor) {
 		son.Draw(player);
 		daughter.Draw(player);
 		//DrawFormatString(500, 0, RED, "SON_DRAWING");
-		for (int i = 0; i < 20; i++) {
+		/*for (int i = 0; i < 20; i++) {
 			DrawCircle(DEST2[i].Getx() + DISP_WIDTH / 2.0 - player.Getx(), DEST2[i].Gety() + DISP_HEIGHT / 2.0 - player.Gety(), ONPOINT, RED, 1);
-		}
+		}*/
 	}
 	else if (floor == 1) {
 		husband.Draw(player);
