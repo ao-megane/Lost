@@ -12,9 +12,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetGraphMode(2160, 1440, 32);
 
 	{
-		SetWindowSizeChangeEnableFlag(TRUE);
+		/*SetWindowSizeChangeEnableFlag(TRUE);
 		SetWindowSizeExtendRate(0.6);
-		ChangeWindowMode(TRUE);
+		ChangeWindowMode(TRUE);*/
 		SetBackgroundColor(0, 0, 0);
 	}
 
@@ -167,6 +167,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			if (player.isGameOver()) {
 				keepCount = count;
 				flag = 3;
+				Loser++;
 			}
 			
 			if (PAUSE == 1 || RIGHT == 1) flag = 7;
