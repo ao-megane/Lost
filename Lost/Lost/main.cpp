@@ -123,6 +123,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 					flag = 3;
 					Loser++;
 					keepCount = count;
+					break;
 				}
 				player.LostArm();
 				player.Reborn();
@@ -134,6 +135,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 					flag = 3;
 					Loser++;
 					keepCount = count;
+					break;
 				}
 				player.LostEar();
 				player.Reborn();

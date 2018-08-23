@@ -82,7 +82,7 @@ int SystemInitialize() {
 	Choice = LoadSoundMem("sounds/system/choice/2.wav");
 	Move = LoadSoundMem("sounds/system/choice/1.wav");
 	TitleBGM = LoadSoundMem("sounds/system/title.wav");
-	//ChaseBGM = LoadSoundMem("sounds/system/title.wav");
+	ChaseBGM = LoadSoundMem("sounds/system/chase.wav");
 	beLooked = LoadSoundMem("sounds/system/discovery.wav");
 	normalBGM = LoadSoundMem("sounds/system/normal.wav");
 
@@ -143,7 +143,7 @@ int PlaynormalBGM() {
 }
 
 int PlayChaseBGM() {
-	StopSoundMem(ChaseBGM);
+	//StopSoundMem(ChaseBGM);
 	PlaySoundMem(ChaseBGM, DX_PLAYTYPE_LOOP);
 	return 0;
 }

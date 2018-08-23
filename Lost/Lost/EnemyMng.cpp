@@ -35,11 +35,14 @@ int Enemy::Set(int speed, int floor) {
 //Dot dest_ene;
 int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,SoundMng psound) {
 	if (psound.isHitDot(enemy.GetDot(), count)) {
-		stateflag = 2;
+		if (stateflag != 2) {
+			stateflag = 2;
+			PlayChaseBGM();
+		}
 	}
 	if (floor == 2) {
 		if (stateflag == 0) {	//塁上,nextNumの上という前提
-			StopChaseBGM();
+			//StopChaseBGM();
 			kakashi_e = GetRand() % 100;
 			switch (nextNum + 1)	//ここだけ1base
 			{
@@ -211,6 +214,7 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 			stateflag = 1;
 		}
 		else if (stateflag == 1) {//走塁,暇
+			//StopChaseBGM();
 			Speed = half;
 			/*if (!flag)
 				printfDx("到着？？？？？？\n");*/
@@ -223,7 +227,7 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 			UpdataMove(DEST2[nextNum]);
 		}
 		else if (stateflag == 2) {//プレイヤーを目視
-			PlayChaseBGM();
+			//PlayChaseBGM();
 			//printfDx("目視！！\n");
 			Speed = full;
 			if (GetWall().IsHitDottoDot(enemy.GetDot(), player.GetDot(), GetFloor2SoftHandle())) {//壁越しだったら
@@ -233,7 +237,7 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 			UpdataMove(player.GetDot());
 		}
 		else if (stateflag == 3) {//プレイヤー探す
-			PlayChaseBGM();
+			//PlayChaseBGM();
 			Speed = full;
 			//ここ大変，行ける点を探して行く
 			double minDistance = 10000.0;
@@ -258,6 +262,7 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 			}
 			UpdataMove(DEST2[minDirNum]);
 			stateflag = 1;
+			StopChaseBGM();
 			nextNum = minDirNum;
 		}
 
@@ -279,6 +284,7 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 				//DrawFormatString(0,40,GREEN,"壁越し！！\n");
 				if (stateflag != 2) {
 					PlaybeLooked();
+					PlayChaseBGM();
 					stateflag = 2;
 				}
 			}
@@ -410,7 +416,7 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 	}
 	else if (floor == 1) {
 		if (stateflag == 0) {	//塁上
-			StopChaseBGM();
+			//StopChaseBGM();
 			kakashi_e = GetRand() % 100;
 			switch (nextNum + 1)	//ここだけ1base
 			{
@@ -656,6 +662,7 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 			stateflag = 1;
 		}
 		else if (stateflag == 1) {//走塁,暇
+			//StopChaseBGM();
 			Speed = half;
 			//enemy.MoveandTurn(dest);
 			if (CalcDistance(enemy.GetDot(), DEST1[nextNum]) < ONPOINT) {	//塁上にいれば
@@ -665,7 +672,7 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 			UpdataMove(DEST1[nextNum]);
 		}
 		else if (stateflag == 2) {//プレイヤーを目視
-			PlayChaseBGM();
+			//PlayChaseBGM();
 			//printfDx("目視！！\n");
 			Speed = full;
 			if (GetWall().IsHitDottoDot(enemy.GetDot(), player.GetDot(), GetFloor1SoftHandle())) {//壁越しだったら
@@ -675,7 +682,7 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 			UpdataMove(player.GetDot());
 		}
 		else if (stateflag == 3) {//プレイヤー探す
-			PlayChaseBGM();
+			//PlayChaseBGM();
 			Speed = full;
 			//ここ大変，行ける点を探して行って，そこから角度込みで近い点をdestにする
 			double minDistance = 10000.0;
@@ -721,6 +728,7 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 				 //DrawFormatString(0,40,GREEN,"壁越し！！\n");
 				if (stateflag != 2) {
 					PlaybeLooked();
+					PlayChaseBGM();
 					stateflag = 2;
 				}
 			}
@@ -1031,6 +1039,9 @@ int EnemyMngUpdata(Circle player,int floor,int count,SoundMng psound) {
 		if (daughter.Updata(player,2,DAUGHTER_HALF_SPEED,DAUGHTER_FULL_SPEED,1,count,psound)) {
 			return 2;
 		}
+		if ((son.GetState() == 0 || son.GetState() == 1) && (daughter.GetState() == 0 || daughter.GetState() == 1)) {
+			StopChaseBGM();
+		}
 	}
 	else if (floor == 1) {
 		son.Set(SON_HALF_SPEED, 2);
@@ -1040,6 +1051,9 @@ int EnemyMngUpdata(Circle player,int floor,int count,SoundMng psound) {
 		}
 		if (madam.Updata(player,1,MADAM_HALF_SPEED,MADAM_FULL_SPEED,3,count,psound)) {
 			return 4;
+		}
+		if ((husband.GetState() == 0 || husband.GetState() == 1) && (madam.GetState() == 0 || madam.GetState() == 1)) {
+			StopChaseBGM();
 		}
 	}
 	return 0;
