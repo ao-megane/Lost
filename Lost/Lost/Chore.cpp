@@ -9,7 +9,6 @@ int Floor1data;
 int Stepdata;
 int Floor2data;
 
-
 int maskRight;
 int maskLeft;
 int maskRightSoft;
@@ -155,21 +154,23 @@ int StopChaseBGM() {
 int clockcount;
 int DrawOP(int count) {
 	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Tytle[0], true);
-	clockcount = count % (20 * 60);
+
+	clockcount = count % (20 * 60 * 2);
 	DrawModiGraph(
-		-clockcount / (20.0 * 60.0) * DISP_WIDTH, 0,
-		DISP_WIDTH * 2 - clockcount / (20.0 * 60) * DISP_WIDTH, 0,
-		DISP_WIDTH * 2 - clockcount / (20.0 * 60) * DISP_WIDTH, DISP_HEIGHT,
-		-clockcount / (20.0 * 60) * DISP_WIDTH, DISP_HEIGHT,
+		-clockcount / (20.0 * 60.0 * 2) * DISP_WIDTH * 2, 0,
+		DISP_WIDTH * 2 - clockcount / (20.0 * 60 * 2) * DISP_WIDTH * 2, 0,
+		DISP_WIDTH * 2 - clockcount / (20.0 * 60 * 2) * DISP_WIDTH * 2, DISP_HEIGHT,
+		-clockcount / (20.0 * 60 * 2) * DISP_WIDTH * 2, DISP_HEIGHT,
 		Tytle[1], true
 	);
 	DrawModiGraph(
-		DISP_WIDTH * 2 - clockcount / 3.0 * 60 * DISP_WIDTH, 0,
-		DISP_WIDTH * 4 - clockcount / 3 * 60 * DISP_WIDTH, 0,
-		DISP_WIDTH * 4 - clockcount / 3 * 60 * DISP_WIDTH, DISP_HEIGHT,
-		DISP_WIDTH * 2 - clockcount / 3.0 * 60 * DISP_WIDTH, DISP_HEIGHT,
+		DISP_WIDTH * 2 - clockcount / (20.0 * 60.0 * 2) * DISP_WIDTH * 2, 0,
+		DISP_WIDTH * 4 - clockcount / (20.0 * 60.0 * 2) * DISP_WIDTH * 2, 0,
+		DISP_WIDTH * 4 - clockcount / (20.0 * 60.0 * 2) * DISP_WIDTH * 2, DISP_HEIGHT,
+		DISP_WIDTH * 2 - clockcount / (20.0 * 60.0 * 2) * DISP_WIDTH * 2, DISP_HEIGHT,
 		Tytle[1], true
 	);
+
 	DrawModiGraph(0, 0, DISP_WIDTH, 0, DISP_WIDTH, DISP_HEIGHT, 0, DISP_HEIGHT, Tytle[2], true);
 	return 0;
 }
