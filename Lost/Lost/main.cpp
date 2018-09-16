@@ -12,9 +12,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetGraphMode(2160, 1440, 32);
 
 	{
-		SetWindowSizeChangeEnableFlag(TRUE);
+		/*SetWindowSizeChangeEnableFlag(TRUE);
 		SetWindowSizeExtendRate(0.6);
-		ChangeWindowMode(TRUE);
+		ChangeWindowMode(TRUE);*/
 		SetBackgroundColor(0, 0, 0);
 	}
 
@@ -97,6 +97,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			yesPSounds();
 			yesKeySounds();
 			count = 0;
+			keepCount = 0;
 			player.Set();
 			SetKeyPosi();
 			EnemyMngSet();
@@ -167,6 +168,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			if (player.isGameOver()) {
 				keepCount = count;
 				flag = 3;
+				Loser++;
 			}
 			
 			if (PAUSE == 1 || RIGHT == 1) flag = 7;
@@ -192,7 +194,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 			DrawWhite(count,keepCount);
 
-			//DrawFormatString(200, 80, RED, "distance:%f", CalcDistance(player.GetDot(), GetKeyCircle().GetDot()));
+			//DrawFormatString(200, 80, RED, "keepCount:%d", keepCount);
 
 			//DrawLine(0, GROUND_HEIGHT, DISP_WIDTH, GROUND_HEIGHT, RED, FALSE);
 			//DrawLine(0, BIRD_HIGH, DISP_WIDTH, BIRD_HIGH, RED, FALSE);
