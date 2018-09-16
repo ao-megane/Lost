@@ -44,21 +44,24 @@ const int P_REBORN_X = 145;
 const int P_REBORN_Y = 1450;
 const double P_FULL_SPEED = 30;
 const double P_HALF_SPEED = 15;
+const double P_L_FULL_SPEED = 28;
 const int P_CLOCK = 40;//P_CLOCK/2 フレームに一回足音
+const int P_SOUND_LIFESPAN = 15;
 
 /*--------主人--------*/
 const int HUSBAND_RANGE = P_SIZE;
-const int HUSBAND_FULL_SPEED = P_FULL_SPEED - 1.5;
+const int HUSBAND_FULL_SPEED = P_L_FULL_SPEED - 0.5;
 const int HUSBAND_HALF_SPEED = P_HALF_SPEED - 3.0;
-const int HUSBAND_SERCH_WIDTH = 440;
-const int HUSBAND_SERCH_HEIGHT = 90;
+const int HUSBAND_SOUND_LIFESPAN = 25;
+
+const int SERCH_WIDTH = 1100;
+const int SERCH_HEIGHT = 150;
 
 /*--------夫人--------*/
 const int MADAM_RANGE = P_SIZE;
-const int MADAM_FULL_SPEED = P_FULL_SPEED - 1.5;
+const int MADAM_FULL_SPEED = P_L_FULL_SPEED + 0.5;
 const int MADAM_HALF_SPEED = P_HALF_SPEED - 3.0;
-const int MADAM_SERCH_WIDTH = 440;
-const int MADAM_SERCH_HEIGHT = 90;
+const int MADAM_SOUND_LIFESPAN = 5;
 
 const int ONPOINT = P_FULL_SPEED * 1.4;	//敵の塁上判定
 /*------１階の敵用静点-----*/
@@ -117,18 +120,15 @@ const double ENEPOSI_2[20 * 2] = {
 
 /*--------長男--------*/
 const int SON_RANGE = P_SIZE;
-const double SON_FULL_SPEED = P_FULL_SPEED - 1.5;
+const double SON_FULL_SPEED = P_L_FULL_SPEED + 1.0;
 const double SON_HALF_SPEED = P_HALF_SPEED - 3.0;
-const int SON_SERCH_WIDTH = 1100;
-const int SON_SERCH_HEIGHT = 150;
-
+const int SON_SOUND_LIFESPAN = 20;
 
 /*--------長女--------*/
 const int DAUGHTER_RANGE = P_SIZE;
-const int DAUGHTER_FULL_SPEED = P_FULL_SPEED - 1.5;
+const int DAUGHTER_FULL_SPEED = P_L_FULL_SPEED + 0.5;
 const int DAUGHTER_HALF_SPEED = P_HALF_SPEED - 3.0;
-const int DAUGHTER_SERCH_WIDTH = 440;
-const int DAUGHTER_SERCH_HEIGHT = 90;
+const int DAUGHTER_SOUND_LIFESPAN = 10;
 
 /*------システム--------*/
 const int COUNT = 30*60*6;//30*60*3//3m
@@ -181,7 +181,6 @@ const int UI_KEYPOSI[2] = {
 };
 
 const int SOUND_SPEED = 20;	//音の広がる速度　＝　寿命
-const int SOUND_LIFESPAN = 15;
 
 //const int HPBAR_WIDTH = 900 * 0.75;
 //const int HPBAR_HEIGHT = 150 * 0.75;

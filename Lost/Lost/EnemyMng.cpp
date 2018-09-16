@@ -273,10 +273,10 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 		/*------索敵更新-------*/
 		decoi_e[0].Set(
 			enemy.Getx() + enemy.GetRadius() + DISP_WIDTH / 2.0 - player.Getx(),
-			enemy.Gety() - SON_SERCH_HEIGHT / 2.0 + DISP_HEIGHT / 2.0 - player.Gety());
+			enemy.Gety() - SERCH_HEIGHT / 2.0 + DISP_HEIGHT / 2.0 - player.Gety());
 		decoi_e[1].Set(
-			enemy.Getx() + enemy.GetRadius() + DISP_WIDTH / 2.0 - player.Getx() + SON_SERCH_WIDTH,
-			enemy.Gety() + SON_SERCH_HEIGHT / 2.0 + DISP_HEIGHT / 2.0 - player.Gety());
+			enemy.Getx() + enemy.GetRadius() + DISP_WIDTH / 2.0 - player.Getx() + SERCH_WIDTH,
+			enemy.Gety() + SERCH_HEIGHT / 2.0 + DISP_HEIGHT / 2.0 - player.Gety());
 		serch.Set(decoi_e[0], decoi_e[1], enemy.GetDir());
 
 		if (serch.isHitCenter(player.GetRadius(), enemy.GetRadius())) {//索敵範囲内にプレイヤーがいて
@@ -303,21 +303,24 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 						switch (flag) {
 						case 0:
 							PlaySonWalk();
+							esound.Born(enemy.GetDot(), SOUND_SPEED, SON_SOUND_LIFESPAN, count);
 							break;
 						case 1:
 							PlayDaughterWalk();
+							esound.Born(enemy.GetDot(), SOUND_SPEED, DAUGHTER_SOUND_LIFESPAN, count);
 							break;
 						case 2:
 							PlayHusbandWalk();
+							esound.Born(enemy.GetDot(), SOUND_SPEED, HUSBAND_SOUND_LIFESPAN, count);
 							break;
 						case 3:
 							PlayMadamWalk();
+							esound.Born(enemy.GetDot(), SOUND_SPEED, MADAM_SOUND_LIFESPAN, count);
 							break;
 						default:
 							break;
 						}
 					}
-					esound.Born(enemy.GetDot(), SOUND_SPEED, SOUND_LIFESPAN, count);
 				}
 			}
 			else {//遅い
@@ -326,21 +329,24 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 						switch (flag) {
 						case 0:
 							PlaySonWalk();
+							esound.Born(enemy.GetDot(), SOUND_SPEED, SON_SOUND_LIFESPAN, count);
 							break;
 						case 1:
 							PlayDaughterWalk();
+							esound.Born(enemy.GetDot(), SOUND_SPEED, DAUGHTER_SOUND_LIFESPAN, count);
 							break;
 						case 2:
 							PlayHusbandWalk();
+							esound.Born(enemy.GetDot(), SOUND_SPEED, HUSBAND_SOUND_LIFESPAN, count);
 							break;
 						case 3:
 							PlayMadamWalk();
+							esound.Born(enemy.GetDot(), SOUND_SPEED, MADAM_SOUND_LIFESPAN, count);
 							break;
 						default:
 							break;
 						}
 					}
-					esound.Born(enemy.GetDot(), SOUND_SPEED, SOUND_LIFESPAN, count);
 				}
 			}
 			//アニメ回り
@@ -717,10 +723,10 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 		/*------索敵更新-------*/
 		decoi_e[0].Set(
 			enemy.Getx() + enemy.GetRadius() + DISP_WIDTH / 2.0 - player.Getx(),
-			enemy.Gety() - SON_SERCH_HEIGHT / 2.0 + DISP_HEIGHT / 2.0 - player.Gety());
+			enemy.Gety() - SERCH_HEIGHT / 2.0 + DISP_HEIGHT / 2.0 - player.Gety());
 		decoi_e[1].Set(
-			enemy.Getx() + enemy.GetRadius() + DISP_WIDTH / 2.0 - player.Getx() + SON_SERCH_WIDTH,
-			enemy.Gety() + SON_SERCH_HEIGHT / 2.0 + DISP_HEIGHT / 2.0 - player.Gety());
+			enemy.Getx() + enemy.GetRadius() + DISP_WIDTH / 2.0 - player.Getx() + SERCH_WIDTH,
+			enemy.Gety() + SERCH_HEIGHT / 2.0 + DISP_HEIGHT / 2.0 - player.Gety());
 		serch.Set(decoi_e[0], decoi_e[1], enemy.GetDir());
 
 		if (serch.isHitCenter(player.GetRadius(), enemy.GetRadius())) {//索敵範囲内にプレイヤーがいて
@@ -747,21 +753,25 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 						switch (flag) {
 						case 0:
 							PlaySonWalk();
+							esound.Born(enemy.GetDot(), SOUND_SPEED, SON_SOUND_LIFESPAN, count);
 							break;
 						case 1:
 							PlayDaughterWalk();
+							esound.Born(enemy.GetDot(), SOUND_SPEED, DAUGHTER_SOUND_LIFESPAN, count);
 							break;
 						case 2:
 							PlayHusbandWalk();
+							esound.Born(enemy.GetDot(), SOUND_SPEED, HUSBAND_SOUND_LIFESPAN, count);
 							break;
 						case 3:
 							PlayMadamWalk();
+							esound.Born(enemy.GetDot(), SOUND_SPEED, MADAM_SOUND_LIFESPAN, count);
 							break;
 						default:
 							break;
 						}
 					}
-					esound.Born(enemy.GetDot(), SOUND_SPEED, SOUND_LIFESPAN, count);
+					
 				}
 			}
 			else {
@@ -770,21 +780,24 @@ int Enemy::Updata(Circle player,int floor,int half,int full,int flag,int count,S
 						switch (flag) {
 						case 0:
 							PlaySonWalk();
+							esound.Born(enemy.GetDot(), SOUND_SPEED, SON_SOUND_LIFESPAN, count);
 							break;
 						case 1:
 							PlayDaughterWalk();
+							esound.Born(enemy.GetDot(), SOUND_SPEED, DAUGHTER_SOUND_LIFESPAN, count);
 							break;
 						case 2:
 							PlayHusbandWalk();
+							esound.Born(enemy.GetDot(), SOUND_SPEED, HUSBAND_SOUND_LIFESPAN, count);
 							break;
 						case 3:
 							PlayMadamWalk();
+							esound.Born(enemy.GetDot(), SOUND_SPEED, MADAM_SOUND_LIFESPAN, count);
 							break;
 						default:
 							break;
 						}
 					}
-					esound.Born(enemy.GetDot(), SOUND_SPEED, SOUND_LIFESPAN, count);
 				}
 			}
 			if (stateflag == 2 || stateflag == 3) {

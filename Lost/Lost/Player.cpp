@@ -178,13 +178,14 @@ int Player::SetFloor(int a) {
 int Player::Updata(int Key[], int flag,int count) {
 	if (LEFT > 0) {
 		SetSpeed(P_FULL_SPEED);
+		if (!lLeg || !rLeg) {//•Ð‘«‚È‚¯‚ê‚Î
+			SetSpeed(P_L_FULL_SPEED);
+		}
 	}
 	else {
 		SetSpeed(P_HALF_SPEED);
 	}
-	if (!lLeg || !rLeg) {//•Ð‘«‚È‚¯‚ê‚Î
-		SetSpeed(GetSpeed() * 2.0 / 3.0);
-	}
+	
 	//if (Y == 1) LostEar();
 	//DrawFormatString(0, 60, RED, "%d", WALL);
 	//DrawFormatString(0, 80, RED, "%d", GetPixelPalCodeSoftImage(GetNowFloorSoftHandle(), player.GetDot().Getx(), player.GetDot().Gety()));
@@ -198,13 +199,13 @@ int Player::Updata(int Key[], int flag,int count) {
 		if (LEFT > 0) {
 			if (bodyClock == 0 || bodyClock == P_CLOCK/4 || bodyClock == P_CLOCK/2 || bodyClock == P_CLOCK*3/4) {
 				PlayPWalk();
-				psound.Born(player.GetDot(),SOUND_SPEED*2,SOUND_LIFESPAN*2,count);
+				psound.Born(player.GetDot(),SOUND_SPEED*2,P_SOUND_LIFESPAN*2,count);
 			}
 		}
 		else {
 			if (bodyClock == 0 || bodyClock == P_CLOCK / 2) {
 				PlayPWalk();
-				psound.Born(player.GetDot(), SOUND_SPEED, SOUND_LIFESPAN/2.0, count);
+				psound.Born(player.GetDot(), SOUND_SPEED, P_SOUND_LIFESPAN/2.0, count);
 			}
 		}
 		if (LEFT > 0) {
